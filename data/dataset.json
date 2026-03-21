@@ -1,0 +1,226 @@
+[
+    {
+        "id": 0,
+        "category": "behavioural",
+        "pattern": "template_method",
+        "path_refactored": "pattern_examples/behavioural/template_method/refactored/rescuelogic.py",
+        "path_baseline": "pattern_examples/behavioural/template_method/baseline/rescuelogic.py",
+        "description": ""
+    },
+    {
+        "id": 1,
+        "category": "behavioural",
+        "pattern": "state",
+        "path_refactored": "pattern_examples/behavioural/state/refactored/traffic_light.py",
+        "path_baseline": "pattern_examples/behavioural/state/baseline/traffic_light.py",
+        "description": ""
+    },
+    {
+        "id": 2,
+        "category": "behavioural",
+        "pattern": "state",
+        "path_refactored": "pattern_examples/behavioural/state/refactored/Stall.py",
+        "path_baseline": "pattern_examples/behavioural/state/baseline/Stall.py",
+        "description": ""
+    },
+    {
+        "id": 3,
+        "category": "behavioural",
+        "pattern": "state",
+        "path_refactored": "pattern_examples/behavioural/state/refactored/elevator.py",
+        "path_baseline": "pattern_examples/behavioural/state/baseline/elevator.py",
+        "description": ""
+    },
+    {
+        "id": 4,
+        "category": "behavioural",
+        "pattern": "command",
+        "path_refactored": "pattern_examples/behavioural/command/refactored/bankaccount.py",
+        "path_baseline": "pattern_examples/behavioural/command/baseline/bankaccount.py",
+        "description": ""
+    },
+    {
+        "id": 5,
+        "category": "behavioural",
+        "pattern": "command",
+        "path_refactored": "pattern_examples/behavioural/command/refactored/restaurant.py",
+        "path_baseline": "pattern_examples/behavioural/command/baseline/restaurant.py",
+        "description": ""
+    },
+    {
+        "id": 6,
+        "category": "behavioural",
+        "pattern": "command",
+        "path_refactored": "pattern_examples/behavioural/command/refactored/rover.py",
+        "path_baseline": "pattern_examples/behavioural/command/baseline/rover.py",
+        "description": ""
+    },
+    {
+        "id": 7,
+        "category": "behavioural",
+        "pattern": "strategy",
+        "path_refactored": "pattern_examples/behavioural/strategy/refactored/validator.py",
+        "path_baseline": "pattern_examples/behavioural/strategy/baseline/validator.py",
+        "description": ""
+    },
+    {
+        "id": 8,
+        "category": "behavioural",
+        "pattern": "strategy",
+        "path_refactored": "pattern_examples/behavioural/strategy/refactored/Vector.py",
+        "path_baseline": "pattern_examples/behavioural/strategy/baseline/Vector.py",
+        "description": ""
+    },
+    {
+        "id": 9,
+        "category": "behavioural",
+        "pattern": "strategy",
+        "path_refactored": "pattern_examples/behavioural/strategy/refactored/graphtraversal.py",
+        "path_baseline": "pattern_examples/behavioural/strategy/baseline/graphtraversal.py",
+        "description": ""
+    },
+    {
+        "id": 10,
+        "category": "creational",
+        "pattern": "factory_method",
+        "path_refactored": "pattern_examples/creational/factory_method/refactored/car.py",
+        "path_baseline": "pattern_examples/creational/factory_method/baseline/car.py",
+        "description": ""
+    },
+    {
+        "id": 11,
+        "category": "creational",
+        "pattern": "factory_method",
+        "path_refactored": "pattern_examples/creational/factory_method/refactored/monster.py",
+        "path_baseline": "pattern_examples/creational/factory_method/baseline/monster.py",
+        "description": ""
+    },
+    {
+        "id": 12,
+        "category": "creational",
+        "pattern": "factory_method",
+        "path_refactored": "pattern_examples/creational/factory_method/refactored/wand.py",
+        "path_baseline": "pattern_examples/creational/factory_method/baseline/wand.py",
+        "description": ""
+    },
+    {
+        "id": 13,
+        "category": "creational",
+        "pattern": "abstract_factory",
+        "path_refactored": "pattern_examples/creational/abstract_factory/refactored/house.py",
+        "path_baseline": "pattern_examples/creational/abstract_factory/baseline/house.py",
+        "description": ""
+    },
+    {
+        "id": 14,
+        "category": "creational",
+        "pattern": "abstract_factory",
+        "path_refactored": "pattern_examples/creational/abstract_factory/refactored/tv.py",
+        "path_baseline": "pattern_examples/creational/abstract_factory/baseline/tv.py",
+        "description": ""
+    },
+    {
+        "id": 15,
+        "category": "creational",
+        "pattern": "abstract_factory",
+        "path_refactored": "pattern_examples/creational/abstract_factory/refactored/battle.py",
+        "path_baseline": "pattern_examples/creational/abstract_factory/baseline/battle.py",
+        "description": ""
+    },
+    {
+        "id": 16,
+        "category": "creational",
+        "pattern": "builder",
+        "path_refactored": "pattern_examples/creational/builder/refactored/gamengine.py",
+        "path_baseline": "pattern_examples/creational/builder/baseline/gamengine.py",
+        "description": ""
+    },
+    {
+        "id": 17,
+        "category": "creational",
+        "pattern": "builder",
+        "path_refactored": "pattern_examples/creational/builder/refactored/computer.py",
+        "path_baseline": "pattern_examples/creational/builder/baseline/computer.py",
+        "description": ""
+    },
+    {
+        "id": 18,
+        "category": "creational",
+        "pattern": "builder",
+        "path_refactored": "pattern_examples/creational/builder/refactored/datastructurebuilder.py",
+        "path_baseline": "pattern_examples/creational/builder/baseline/datastructurebuilder.py",
+        "description": ""
+    },
+    {
+        "id": 19,
+        "category": "structural",
+        "pattern": "proxy",
+        "path_refactored": "pattern_examples/structural/proxy/refactored/deliveryvehicles.py",
+        "path_baseline": "pattern_examples/structural/proxy/baseline/deliveryvehicles.py",
+        "description": ""
+    },
+    {
+        "id": 20,
+        "category": "structural",
+        "pattern": "proxy",
+        "path_refactored": "pattern_examples/structural/proxy/refactored/tenantproxy.py",
+        "path_baseline": "pattern_examples/structural/proxy/baseline/tenantproxy.py",
+        "description": ""
+    },
+    {
+        "id": 21,
+        "category": "structural",
+        "pattern": "proxy",
+        "path_refactored": "pattern_examples/structural/proxy/refactored/blockchain.py",
+        "path_baseline": "pattern_examples/structural/proxy/baseline/blockchain.py",
+        "description": ""
+    },
+    {
+        "id": 22,
+        "category": "structural",
+        "pattern": "decorator",
+        "path_refactored": "pattern_examples/structural/decorator/refactored/sword.py",
+        "path_baseline": "pattern_examples/structural/decorator/baseline/sword.py",
+        "description": ""
+    },
+    {
+        "id": 23,
+        "category": "structural",
+        "pattern": "decorator",
+        "path_refactored": "pattern_examples/structural/decorator/refactored/cafecito.py",
+        "path_baseline": "pattern_examples/structural/decorator/baseline/cafecito.py",
+        "description": ""
+    },
+    {
+        "id": 24,
+        "category": "structural",
+        "pattern": "decorator",
+        "path_refactored": "pattern_examples/structural/decorator/refactored/icecream.py",
+        "path_baseline": "pattern_examples/structural/decorator/baseline/icecream.py",
+        "description": ""
+    },
+    {
+        "id": 25,
+        "category": "structural",
+        "pattern": "adapter",
+        "path_refactored": "pattern_examples/structural/adapter/refactored/calculator.py",
+        "path_baseline": "pattern_examples/structural/adapter/baseline/calculator.py",
+        "description": ""
+    },
+    {
+        "id": 26,
+        "category": "structural",
+        "pattern": "adapter",
+        "path_refactored": "pattern_examples/structural/adapter/refactored/roundhole.py",
+        "path_baseline": "pattern_examples/structural/adapter/baseline/roundhole.py",
+        "description": ""
+    },
+    {
+        "id": 27,
+        "category": "structural",
+        "pattern": "adapter",
+        "path_refactored": "pattern_examples/structural/adapter/refactored/gridmovement.py",
+        "path_baseline": "pattern_examples/structural/adapter/baseline/gridmovement.py",
+        "description": ""
+    }
+]
