@@ -9,8 +9,8 @@ dei seguenti design patterns:
 - **Proxy pattern**
 - **Template method pattern**
 
-Gli esempi sono implementati in python e sono commentati per facilitare la comprensione e cercano di esibire al meglio
-le caratteristiche principali di ogni pattern, cercando di interpretarne l'applicazione in un contesto reale.
+Gli esempi sono implementati in Python, sono commentati per facilitare la comprensione e cercano di esibire al meglio
+le caratteristiche principali di ogni pattern.
 
 Il dataset è stato organizzato nel seguente modo:
 
@@ -84,8 +84,10 @@ Il dataset è stato organizzato nel seguente modo:
 I pattern sono stati organizzati in cartelle per tipologia; inoltre per ciascun pattern è presente una divisione
 nelle sottocartelle "refactored", che contiene i tre esempi che implementano correttamente il pattern, e "baseline",
 che contiene i tre rispettivi esempi equivalenti che non implementano il pattern o lo fanno parzialmente.
+Si è cercato di espandere il dataset coinvolgendo esempi non facilmente riconducibili alla letteratura, al fine di 
+facilitare la reale capacità di generalizzazione dei modelli a domini nuovi.
 
-È stato infine creato un file JSON per organizzare i file, utilizzando un script python. L'obiettivo è strutturare
+È stato creato un file JSON per organizzare i file, utilizzando un script python. L'obiettivo è strutturare
 un dataset "accoppiato", in modo che per ogni esempio refactored sia presente anche l'esempio baseline. Per ogni esempio 
 sono stati memorizzati diversi attributi, quali l'identificatore univoco della coppia, il nome del pattern, la categoria 
 del pattern, percorso relativo del file refactored, il percorso relativo del file baseline e una descrizione di cosa 
@@ -93,3 +95,4 @@ tratta l'esempio.
 
 Attualmente sono presenti quasi tutti gli esempi refactored per tutti i pattern, mentre le versioni baseline e le
 descrizioni nel JSON sono ancora da implementare.
+
