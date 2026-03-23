@@ -10,13 +10,29 @@
     {
         "id": 1,
         "category": "behavioural",
+        "pattern": "template_method",
+        "path_refactored": "pattern_examples/behavioural/template_method/refactored/formfilling.py",
+        "path_baseline": "pattern_examples/behavioural/template_method/baseline/formfilling.py",
+        "description": ""
+    },
+    {
+        "id": 2,
+        "category": "behavioural",
+        "pattern": "template_method",
+        "path_refactored": "pattern_examples/behavioural/template_method/refactored/departure.py",
+        "path_baseline": "pattern_examples/behavioural/template_method/baseline/departure.py",
+        "description": ""
+    },
+    {
+        "id": 3,
+        "category": "behavioural",
         "pattern": "state",
         "path_refactored": "pattern_examples/behavioural/state/refactored/traffic_light.py",
         "path_baseline": "pattern_examples/behavioural/state/baseline/traffic_light.py",
         "description": ""
     },
     {
-        "id": 2,
+        "id": 4,
         "category": "behavioural",
         "pattern": "state",
         "path_refactored": "pattern_examples/behavioural/state/refactored/Stall.py",
@@ -24,7 +40,7 @@
         "description": ""
     },
     {
-        "id": 3,
+        "id": 5,
         "category": "behavioural",
         "pattern": "state",
         "path_refactored": "pattern_examples/behavioural/state/refactored/elevator.py",
@@ -32,7 +48,7 @@
         "description": ""
     },
     {
-        "id": 4,
+        "id": 6,
         "category": "behavioural",
         "pattern": "command",
         "path_refactored": "pattern_examples/behavioural/command/refactored/bankaccount.py",
@@ -40,7 +56,7 @@
         "description": ""
     },
     {
-        "id": 5,
+        "id": 7,
         "category": "behavioural",
         "pattern": "command",
         "path_refactored": "pattern_examples/behavioural/command/refactored/restaurant.py",
@@ -48,7 +64,7 @@
         "description": ""
     },
     {
-        "id": 6,
+        "id": 8,
         "category": "behavioural",
         "pattern": "command",
         "path_refactored": "pattern_examples/behavioural/command/refactored/rover.py",
@@ -56,7 +72,7 @@
         "description": ""
     },
     {
-        "id": 7,
+        "id": 9,
         "category": "behavioural",
         "pattern": "strategy",
         "path_refactored": "pattern_examples/behavioural/strategy/refactored/validator.py",
@@ -64,7 +80,7 @@
         "description": ""
     },
     {
-        "id": 8,
+        "id": 10,
         "category": "behavioural",
         "pattern": "strategy",
         "path_refactored": "pattern_examples/behavioural/strategy/refactored/Vector.py",
@@ -72,7 +88,7 @@
         "description": ""
     },
     {
-        "id": 9,
+        "id": 11,
         "category": "behavioural",
         "pattern": "strategy",
         "path_refactored": "pattern_examples/behavioural/strategy/refactored/graphtraversal.py",
@@ -80,7 +96,7 @@
         "description": ""
     },
     {
-        "id": 10,
+        "id": 12,
         "category": "creational",
         "pattern": "factory_method",
         "path_refactored": "pattern_examples/creational/factory_method/refactored/car.py",
@@ -88,7 +104,7 @@
         "description": ""
     },
     {
-        "id": 11,
+        "id": 13,
         "category": "creational",
         "pattern": "factory_method",
         "path_refactored": "pattern_examples/creational/factory_method/refactored/monster.py",
@@ -96,7 +112,7 @@
         "description": ""
     },
     {
-        "id": 12,
+        "id": 14,
         "category": "creational",
         "pattern": "factory_method",
         "path_refactored": "pattern_examples/creational/factory_method/refactored/wand.py",
@@ -104,7 +120,7 @@
         "description": ""
     },
     {
-        "id": 13,
+        "id": 15,
         "category": "creational",
         "pattern": "abstract_factory",
         "path_refactored": "pattern_examples/creational/abstract_factory/refactored/house.py",
@@ -112,7 +128,7 @@
         "description": ""
     },
     {
-        "id": 14,
+        "id": 16,
         "category": "creational",
         "pattern": "abstract_factory",
         "path_refactored": "pattern_examples/creational/abstract_factory/refactored/tv.py",
@@ -120,7 +136,7 @@
         "description": ""
     },
     {
-        "id": 15,
+        "id": 17,
         "category": "creational",
         "pattern": "abstract_factory",
         "path_refactored": "pattern_examples/creational/abstract_factory/refactored/battle.py",
@@ -128,7 +144,7 @@
         "description": ""
     },
     {
-        "id": 16,
+        "id": 18,
         "category": "creational",
         "pattern": "builder",
         "path_refactored": "pattern_examples/creational/builder/refactored/gamengine.py",
@@ -136,7 +152,7 @@
         "description": ""
     },
     {
-        "id": 17,
+        "id": 19,
         "category": "creational",
         "pattern": "builder",
         "path_refactored": "pattern_examples/creational/builder/refactored/computer.py",
@@ -144,7 +160,7 @@
         "description": ""
     },
     {
-        "id": 18,
+        "id": 20,
         "category": "creational",
         "pattern": "builder",
         "path_refactored": "pattern_examples/creational/builder/refactored/datastructurebuilder.py",
@@ -152,7 +168,7 @@
         "description": ""
     },
     {
-        "id": 19,
+        "id": 21,
         "category": "structural",
         "pattern": "proxy",
         "path_refactored": "pattern_examples/structural/proxy/refactored/deliveryvehicles.py",
@@ -160,7 +176,7 @@
         "description": ""
     },
     {
-        "id": 20,
+        "id": 22,
         "category": "structural",
         "pattern": "proxy",
         "path_refactored": "pattern_examples/structural/proxy/refactored/tenantproxy.py",
@@ -168,7 +184,7 @@
         "description": ""
     },
     {
-        "id": 21,
+        "id": 23,
         "category": "structural",
         "pattern": "proxy",
         "path_refactored": "pattern_examples/structural/proxy/refactored/blockchain.py",
@@ -176,7 +192,7 @@
         "description": ""
     },
     {
-        "id": 22,
+        "id": 24,
         "category": "structural",
         "pattern": "decorator",
         "path_refactored": "pattern_examples/structural/decorator/refactored/sword.py",
@@ -184,7 +200,7 @@
         "description": ""
     },
     {
-        "id": 23,
+        "id": 25,
         "category": "structural",
         "pattern": "decorator",
         "path_refactored": "pattern_examples/structural/decorator/refactored/cafecito.py",
@@ -192,7 +208,7 @@
         "description": ""
     },
     {
-        "id": 24,
+        "id": 26,
         "category": "structural",
         "pattern": "decorator",
         "path_refactored": "pattern_examples/structural/decorator/refactored/icecream.py",
@@ -200,7 +216,7 @@
         "description": ""
     },
     {
-        "id": 25,
+        "id": 27,
         "category": "structural",
         "pattern": "adapter",
         "path_refactored": "pattern_examples/structural/adapter/refactored/calculator.py",
@@ -208,7 +224,7 @@
         "description": ""
     },
     {
-        "id": 26,
+        "id": 28,
         "category": "structural",
         "pattern": "adapter",
         "path_refactored": "pattern_examples/structural/adapter/refactored/roundhole.py",
@@ -216,7 +232,7 @@
         "description": ""
     },
     {
-        "id": 27,
+        "id": 29,
         "category": "structural",
         "pattern": "adapter",
         "path_refactored": "pattern_examples/structural/adapter/refactored/gridmovement.py",
