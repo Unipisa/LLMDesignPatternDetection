@@ -98,5 +98,4 @@ sono stati memorizzati diversi attributi, quali l'identificatore univoco della c
 del pattern, percorso relativo del file refactored, il percorso relativo del file baseline e una descrizione di cosa 
 tratta l'esempio.
 
-Attualmente sono presenti quasi tutti gli esempi refactored per tutti i pattern, mentre le versioni baseline e le
-descrizioni nel JSON sono ancora da implementare.
+Le versioni baseline degli esempi e le descrizioni nel JSON sono ancora da implementare.
