@@ -99,3 +99,17 @@ del pattern, percorso relativo del file refactored, il percorso relativo del fil
 tratta l'esempio.
 
 Le versioni baseline degli esempi e le descrizioni nel JSON sono ancora da implementare.
+
+# WEEKS 3-4-5 (25-03-2026 - 11-04-2026)
+
+Riorganizzazione del file json come segue:
+- Rappresentazione del campo “pattern” come una lista di possibili pattern applicabili (se singolo pattern, una sola 
+  etichetta nella lista, se più pattern tutte le etichette possibili nella lista);
+- Rappresentazione del campo “path_refactored” come una lista di path alle versioni refactored (una sola se singolo 
+  pattern, più versioni se più pattern applicabili) 
+- Aggiunta di un campo “tests” che contenga una lista di path agli script di test per le diverse versioni refactored 
+
+Riorganizzato il dataset come segue:
+- Creazione di un'unica cartella “original” (o “baseline”) contenente tutti i file Python non rifattorizzati 
+- Creazione di un'unica artella “refactored” contenente tutte le versioni rifattorizzate (refactoring diversi di stessi 
+  file distinti per sottocartelle diverse o tramite naming convention) 
