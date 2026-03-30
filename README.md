@@ -113,3 +113,15 @@ Riorganizzato il dataset come segue:
 - Creazione di un'unica cartella “original” (o “baseline”) contenente tutti i file Python non rifattorizzati 
 - Creazione di un'unica artella “refactored” contenente tutte le versioni rifattorizzate (refactoring diversi di stessi 
   file distinti per sottocartelle diverse o tramite naming convention) 
+
+Modificato dataset.json aggiungendo un campo apposito per il path al test per la versione baseline.
+
+**Scelta di implementazione delle batterie di test:**
+
+L'obiettivo è sviluppare un sistema di classificazione per rilevare i Design Pattern mediante LLM. Manipolando frammenti
+per un dataset di ricerca mirato all'analisi architetturale e non codice destinato a un sistema in produzione, 
+implementare una gestione approfondita degli errori di input o dei casi limite sarebbe potutto risultare
+controproducente. Dato che i modelli linguistici e i sistemi di classificazione si basano sull'analisi della struttura, 
+delle interfacce e delle dipendenze, saturare il codice con validazioni difensive avrebbe aumentato il rischio di 
+mascherare la logica del pattern, aggiungendo "rumore" che peggiorerebbe le performance del classificatore 
+nell'individuare la struttura d'interesse. 

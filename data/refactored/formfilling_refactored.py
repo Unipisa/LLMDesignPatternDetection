@@ -15,7 +15,7 @@ class AdministrativeForm(ABC):
         self.send()
         return self.module
     def write_header(self):
-        self.module['header'] = [self.name, self.date, self.recipient]
+        self.module['header'] =  [self.name, self.date, self.recipient]
     @abstractmethod
     def write_body(self):
         pass
@@ -39,7 +39,7 @@ class VacationRequest(AdministrativeForm):
         end = datetime.strptime(self.end, "%Y-%m-%d")
         self.module['body'] = f"Vacation lasts {(end - start).days} days for {self.motivation}"
     def send(self):
-        print(f"Sending email to {self.manager}")
+        return f"Sending email to {self.manager}"
 
 class ExpenseReport(AdministrativeForm):
     def __init__(self, name, date, recipient, items, portal_url, receipts):
@@ -53,7 +53,7 @@ class ExpenseReport(AdministrativeForm):
     def add_attachment(self):
         self.module['attachment'] = self.receipts
     def send(self):
-        print(f"Uploading expense report on {self.portal_url}")
+        return f"Uploading expense report on {self.portal_url}"
 
 class ResidenceDeclaration(AdministrativeForm):
     def __init__(self, name, date, recipient, address, tax_code, town_hall_office):
@@ -64,19 +64,5 @@ class ResidenceDeclaration(AdministrativeForm):
     def write_body(self):
         self.module['body'] = f"Address: {self.address}, Tax code: {self.tax_code}"
     def send(self):
-        print(f"Sending declaration to {self.town_hall_office}")
+        return f"Sending declaration to {self.town_hall_office}"
 
-def client():
-    vacation_request = VacationRequest("John", "2023-01-01", "Human Resources Office",
-                                       "2023-01-01", "2023-01-15", "family vacation",
-                                       "mariorossi@azienda.it")
-    print(vacation_request.compile())
-    expense_report = ExpenseReport("Mario", "2023-01-01", "Accounting Office",
-                                   [("food", 100), ("rent", 1000)],
-                                   "https://www.azienda.it/expense-report",
-                                   ["receipt1.pdf", "receipt2.pdf"])
-    print(expense_report.compile())
-    residence_declaration = ResidenceDeclaration("Mario", "2020-1-2", "Registry Office",
-                                                 "123 Main Street", "12345",
-                                                 "SpringField Town Hall")
-    print(residence_declaration.compile())
