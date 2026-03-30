@@ -9,9 +9,10 @@
             "refactored/departure_refactored.py"
         ],
         "path_baseline": "baseline/departure_baseline.py",
-        "tests": [
-            "tests/departure_test.py"
+        "tests_refactored": [
+            "tests_refactored/departure_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/departure_baseline_test.py",
         "description": ""
     },
     {
@@ -24,9 +25,10 @@
             "refactored/formfilling_refactored.py"
         ],
         "path_baseline": "baseline/formfilling_baseline.py",
-        "tests": [
-            "tests/formfilling_test.py"
+        "tests_refactored": [
+            "tests_refactored/formfilling_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/formfilling_baseline_test.py",
         "description": ""
     },
     {
@@ -39,9 +41,10 @@
             "refactored/rescuelogic_refactored.py"
         ],
         "path_baseline": "baseline/rescuelogic_baseline.py",
-        "tests": [
-            "tests/rescuelogic_test.py"
+        "tests_refactored": [
+            "tests_refactored/rescuelogic_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/rescuelogic_baseline_test.py",
         "description": ""
     },
     {
@@ -54,9 +57,10 @@
             "refactored/traffic_light_refactored.py"
         ],
         "path_baseline": "baseline/traffic_light_baseline.py",
-        "tests": [
-            "tests/traffic_light_test.py"
+        "tests_refactored": [
+            "tests_refactored/traffic_light_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/traffic_light_baseline_test.py",
         "description": ""
     },
     {
@@ -69,9 +73,10 @@
             "refactored/elevator_refactored.py"
         ],
         "path_baseline": "baseline/elevator_baseline.py",
-        "tests": [
-            "tests/elevator_test.py"
+        "tests_refactored": [
+            "tests_refactored/elevator_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/elevator_baseline_test.py",
         "description": ""
     },
     {
@@ -84,9 +89,10 @@
             "refactored/Stall_refactored.py"
         ],
         "path_baseline": "baseline/Stall_baseline.py",
-        "tests": [
-            "tests/Stall_test.py"
+        "tests_refactored": [
+            "tests_refactored/Stall_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/Stall_baseline_test.py",
         "description": ""
     },
     {
@@ -99,9 +105,10 @@
             "refactored/rover_refactored.py"
         ],
         "path_baseline": "baseline/rover_baseline.py",
-        "tests": [
-            "tests/rover_test.py"
+        "tests_refactored": [
+            "tests_refactored/rover_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/rover_baseline_test.py",
         "description": ""
     },
     {
@@ -114,9 +121,10 @@
             "refactored/restaurant_refactored.py"
         ],
         "path_baseline": "baseline/restaurant_baseline.py",
-        "tests": [
-            "tests/restaurant_test.py"
+        "tests_refactored": [
+            "tests_refactored/restaurant_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/restaurant_baseline_test.py",
         "description": ""
     },
     {
@@ -129,9 +137,10 @@
             "refactored/bankaccount_refactored.py"
         ],
         "path_baseline": "baseline/bankaccount_baseline.py",
-        "tests": [
-            "tests/bankaccount_test.py"
+        "tests_refactored": [
+            "tests_refactored/bankaccount_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/bankaccount_baseline_test.py",
         "description": ""
     },
     {
@@ -144,9 +153,10 @@
             "refactored/Vector_refactored.py"
         ],
         "path_baseline": "baseline/Vector_baseline.py",
-        "tests": [
-            "tests/Vector_test.py"
+        "tests_refactored": [
+            "tests_refactored/Vector_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/Vector_baseline_test.py",
         "description": ""
     },
     {
@@ -159,9 +169,10 @@
             "refactored/validator_refactored.py"
         ],
         "path_baseline": "baseline/validator_baseline.py",
-        "tests": [
-            "tests/validator_test.py"
+        "tests_refactored": [
+            "tests_refactored/validator_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/validator_baseline_test.py",
         "description": ""
     },
     {
@@ -174,9 +185,10 @@
             "refactored/graphtraversal_refactored.py"
         ],
         "path_baseline": "baseline/graphtraversal_baseline.py",
-        "tests": [
-            "tests/graphtraversal_test.py"
+        "tests_refactored": [
+            "tests_refactored/graphtraversal_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/graphtraversal_baseline_test.py",
         "description": ""
     },
     {
@@ -189,9 +201,10 @@
             "refactored/car_refactored.py"
         ],
         "path_baseline": "baseline/car_baseline.py",
-        "tests": [
-            "tests/car_test.py"
+        "tests_refactored": [
+            "tests_refactored/car_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/car_baseline_test.py",
         "description": ""
     },
     {
@@ -204,9 +217,10 @@
             "refactored/monster_refactored.py"
         ],
         "path_baseline": "baseline/monster_baseline.py",
-        "tests": [
-            "tests/monster_test.py"
+        "tests_refactored": [
+            "tests_refactored/monster_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/monster_baseline_test.py",
         "description": ""
     },
     {
@@ -219,9 +233,10 @@
             "refactored/wand_refactored.py"
         ],
         "path_baseline": "baseline/wand_baseline.py",
-        "tests": [
-            "tests/wand_test.py"
+        "tests_refactored": [
+            "tests_refactored/wand_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/wand_baseline_test.py",
         "description": ""
     },
     {
@@ -234,9 +249,10 @@
             "refactored/tv_refactored.py"
         ],
         "path_baseline": "baseline/tv_baseline.py",
-        "tests": [
-            "tests/tv_test.py"
+        "tests_refactored": [
+            "tests_refactored/tv_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/tv_baseline_test.py",
         "description": ""
     },
     {
@@ -249,9 +265,10 @@
             "refactored/battle_refactored.py"
         ],
         "path_baseline": "baseline/battle_baseline.py",
-        "tests": [
-            "tests/battle_test.py"
+        "tests_refactored": [
+            "tests_refactored/battle_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/battle_baseline_test.py",
         "description": ""
     },
     {
@@ -264,9 +281,10 @@
             "refactored/house_refactored.py"
         ],
         "path_baseline": "baseline/house_baseline.py",
-        "tests": [
-            "tests/house_test.py"
+        "tests_refactored": [
+            "tests_refactored/house_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/house_baseline_test.py",
         "description": ""
     },
     {
@@ -279,9 +297,10 @@
             "refactored/gamengine_refactored.py"
         ],
         "path_baseline": "baseline/gamengine_baseline.py",
-        "tests": [
-            "tests/gamengine_test.py"
+        "tests_refactored": [
+            "tests_refactored/gamengine_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/gamengine_baseline_test.py",
         "description": ""
     },
     {
@@ -294,9 +313,10 @@
             "refactored/computer_refactored.py"
         ],
         "path_baseline": "baseline/computer_baseline.py",
-        "tests": [
-            "tests/computer_test.py"
+        "tests_refactored": [
+            "tests_refactored/computer_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/computer_baseline_test.py",
         "description": ""
     },
     {
@@ -309,9 +329,10 @@
             "refactored/datastructurebuilder_refactored.py"
         ],
         "path_baseline": "baseline/datastructurebuilder_baseline.py",
-        "tests": [
-            "tests/datastructurebuilder_test.py"
+        "tests_refactored": [
+            "tests_refactored/datastructurebuilder_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/datastructurebuilder_baseline_test.py",
         "description": ""
     },
     {
@@ -324,9 +345,10 @@
             "refactored/deliveryvehicles_refactored.py"
         ],
         "path_baseline": "baseline/deliveryvehicles_baseline.py",
-        "tests": [
-            "tests/deliveryvehicles_test.py"
+        "tests_refactored": [
+            "tests_refactored/deliveryvehicles_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/deliveryvehicles_baseline_test.py",
         "description": ""
     },
     {
@@ -339,9 +361,10 @@
             "refactored/tenantproxy_refactored.py"
         ],
         "path_baseline": "baseline/tenantproxy_baseline.py",
-        "tests": [
-            "tests/tenantproxy_test.py"
+        "tests_refactored": [
+            "tests_refactored/tenantproxy_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/tenantproxy_baseline_test.py",
         "description": ""
     },
     {
@@ -354,9 +377,10 @@
             "refactored/blockchain_refactored.py"
         ],
         "path_baseline": "baseline/blockchain_baseline.py",
-        "tests": [
-            "tests/blockchain_test.py"
+        "tests_refactored": [
+            "tests_refactored/blockchain_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/blockchain_baseline_test.py",
         "description": ""
     },
     {
@@ -369,9 +393,10 @@
             "refactored/sword_refactored.py"
         ],
         "path_baseline": "baseline/sword_baseline.py",
-        "tests": [
-            "tests/sword_test.py"
+        "tests_refactored": [
+            "tests_refactored/sword_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/sword_baseline_test.py",
         "description": ""
     },
     {
@@ -384,9 +409,10 @@
             "refactored/icecream_refactored.py"
         ],
         "path_baseline": "baseline/icecream_baseline.py",
-        "tests": [
-            "tests/icecream_test.py"
+        "tests_refactored": [
+            "tests_refactored/icecream_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/icecream_baseline_test.py",
         "description": ""
     },
     {
@@ -399,9 +425,10 @@
             "refactored/cafecito_refactored.py"
         ],
         "path_baseline": "baseline/cafecito_baseline.py",
-        "tests": [
-            "tests/cafecito_test.py"
+        "tests_refactored": [
+            "tests_refactored/cafecito_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/cafecito_baseline_test.py",
         "description": ""
     },
     {
@@ -414,9 +441,10 @@
             "refactored/roundhole_refactored.py"
         ],
         "path_baseline": "baseline/roundhole_baseline.py",
-        "tests": [
-            "tests/roundhole_test.py"
+        "tests_refactored": [
+            "tests_refactored/roundhole_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/roundhole_baseline_test.py",
         "description": ""
     },
     {
@@ -429,9 +457,10 @@
             "refactored/calculator_refactored.py"
         ],
         "path_baseline": "baseline/calculator_baseline.py",
-        "tests": [
-            "tests/calculator_test.py"
+        "tests_refactored": [
+            "tests_refactored/calculator_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/calculator_baseline_test.py",
         "description": ""
     },
     {
@@ -444,9 +473,10 @@
             "refactored/gridmovement_refactored.py"
         ],
         "path_baseline": "baseline/gridmovement_baseline.py",
-        "tests": [
-            "tests/gridmovement_test.py"
+        "tests_refactored": [
+            "tests_refactored/gridmovement_refactored_test.py"
         ],
+        "test_baseline": "tests_baseline/gridmovement_baseline_test.py",
         "description": ""
     }
 ]

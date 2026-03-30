@@ -59,7 +59,7 @@ class CarDeparture(Departure):
         return sum([self.tire1, self.tire2, self.tire3, self.tire4]) /4 > 2
 
 
-class FlightsDeparture(Departure):
+class FlightDeparture(Departure):
     def __init__(self, id_document, landing_gear_condition: LandingGearConditions, weather: Weather, fuel_level):
         super().__init__(id_document)
         self.landing_gear_condition = landing_gear_condition
@@ -76,23 +76,11 @@ class FlightsDeparture(Departure):
         print(f"Checking weather")
         return self.weather != Weather.WINDY
 
-class Bike(Departure):
+class BikeDeparture(Departure):
     def __init__(self, tire1, tire2, id_document = None):
         super().__init__(id_document)
         self.tire1 = tire1
         self.tire2 = tire2
     def check_tires(self):
-        print(f"Checking tires")
+        print("Checking tires")
         return self.tire1 >= 1.5 and self.tire2 >= 1.5
-
-def client():
-    departure = FlightsDeparture(id_document="ABCDE1", landing_gear_condition=LandingGearConditions.GOOD,
-                                 weather=Weather.SUNNY, fuel_level=10000)
-    print(departure.depart())
-    print("-----------------------------------")
-    departure = Bike(tire1=1.5, tire2=1.5)
-    print(departure.depart())
-    print("-----------------------------------")
-    departure = CarDeparture(id_document="ABCDE1", tire1=0, tire2=1.5, tire3=1.5, tire4=1.5, fuel_level=50)
-    print(departure.depart())
-

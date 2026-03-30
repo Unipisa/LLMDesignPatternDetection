@@ -84,32 +84,3 @@ class TransactionManager:
                 raise Exception("Undo failed, inconsistent state")
         self.completed_transactions.clear()
 
-def client():
-    manager = TransactionManager()
-    account = BankAccount(1000)
-    account2 = BankAccount(2000)
-    manager.add_transaction(Transfer(800, account, account2))
-    manager.add_transaction(TaxPayment(100, account))
-    manager.add_transaction(SalaryDeposit(1000, account))
-    try:
-        manager.execute_transactions()
-    except Exception as e:
-        print(f"Error during transaction execution: {e}")
-        return
-    print(f"Bank account state after transactions: {account}")
-    try:
-        manager.undo_transactions()
-    except Exception as e:
-        print(f"Error during undo: {e}")
-    print(f"Ripristining bank account state: {account}")
-    print("----------------------------")
-    manager = TransactionManager()
-    account = BankAccount(50)
-    manager.add_transaction(TaxPayment(100, account))
-    manager.add_transaction(SalaryDeposit(200, account))
-    try:
-        manager.execute_transactions()
-    except Exception as e:
-        print(f"Error during transaction execution: {e}")
-        print(f"Bank account state: {account}")
-        return

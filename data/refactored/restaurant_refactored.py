@@ -52,25 +52,3 @@ class Waiter:
         self.command = command
     def serve(self):
         return self.command.execute()
-
-# client
-def ordering_tablet():
-    kitchen = Kitchen()
-
-    # serving a full dinner
-    order = TableMacroOrder(1,
-                            GrillCommand("Steak", kitchen),
-                            FryCommand("Chicken", kitchen),
-                            PourCommand("Cola", kitchen)
-                            )
-    waiter = Waiter(order)
-    print(waiter.serve())
-
-    print("-------------------------------")
-    # serving a single dish
-    order = TableMacroOrder(2, GrillCommand("Vegetables", kitchen))
-    waiter = Waiter(order)
-    print(waiter.serve())
-
-if __name__ == "__main__":
-    ordering_tablet()
