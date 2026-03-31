@@ -37,7 +37,7 @@ class RescueMission(ABC):
 
 class MountainRescue(RescueMission):
     def helicopter_takeoff(self):
-        if self.coordinates["z"] > 4000:
+        if self.coordinates["z"] > 3000:
             self.log.append("Taking off")
             return True
         else:
@@ -55,10 +55,3 @@ class MaritimeRescue(RescueMission):
     def send_ground_team(self):
         self.log.append("Sent maritime rescue team")
         return
-
-def client_code():
-    mission = MountainRescue(True, 100, 200, 3000)
-    print(mission.start_rescue())
-    print("-----------------------------------")
-    mission = MaritimeRescue(False, 100, 200, 1000)
-    print(mission.start_rescue())
