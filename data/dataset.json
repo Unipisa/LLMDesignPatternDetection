@@ -358,13 +358,13 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/tenantproxy_refactored.py"
+            "refactored/tenant_refactored.py"
         ],
-        "path_baseline": "baseline/tenantproxy_baseline.py",
+        "path_baseline": "baseline/tenant_baseline.py",
         "tests_refactored": [
-            "tests_refactored/tenantproxy_refactored_test.py"
+            "tests_refactored/tenant_refactored_test.py"
         ],
-        "test_baseline": "tests_baseline/tenantproxy_baseline_test.py",
+        "test_baseline": "tests_baseline/tenant_baseline_test.py",
         "description": ""
     },
     {

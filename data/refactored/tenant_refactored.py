@@ -20,8 +20,16 @@ class InterfaceDB(ABC):
     def get_tlist(self):
         pass
 
+
+class DBTenant(InterfaceDB):
+    def __init__(self):
+        self.tlist = Tlist(["milk", "bread", "cheese", "chicken", "rice", "pasta"])
+    def get_tlist(self):
+        return self.tlist
+
+
 class CacheProxy(InterfaceDB):
-    def __init__(self, db: InterfaceDB):
+    def __init__(self, db: DBTenant):
         self.tlist = None
         self.db = db
     def get_tlist(self):
@@ -30,18 +38,3 @@ class CacheProxy(InterfaceDB):
             self.tlist = self.db.get_tlist()
         print("Proxy post-processing")
         return self.tlist
-
-class DBTenant(InterfaceDB):
-    def __init__(self):
-        self.tlist = Tlist(["milk", "bread", "cheese", "chicken", "rice", "pasta"])
-    def get_tlist(self):
-        return self.tlist
-
-class Client:
-    def __init__(self):
-        self.db = None
-    def lookup(self):
-        ris = self.db.get_tlist()
-        print(f"Shopping list: {ris.get_tlist()}")  # processing ris
-    def set_db(self, db: InterfaceDB):
-        self.db = db
