@@ -75,11 +75,3 @@ class DeliveryProxy(DeliverySystem):
             return self.db.set_delivery_route(van_id, route)
         else:
             return "Access denied"
-
-def client (service: DeliverySystem):
-    print(service.get_delivery_route("AB123CD"))
-    print(service.get_traffic_status("IJ789KL"))
-    print(service.get_vehicle_status("MN012OP"))
-    print(service.set_driver(101, "IJ789KL"))
-    print(service.set_delivery_route("EF456GH", "Oak Lane → Industrial Park"))
-
