@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-import pprint
 
 # builder for 3 different computers: surface, macbook, desktop
 
@@ -88,7 +87,8 @@ class DesktopBuilder(ComputerBuilder):
     def build_graphics(self):
         self._product.add_part("graphics", "NVIDIA GeForce RTX 3080 (12GB GDDR6X)")
     def build_chassis(self):
-        self._product.add_part("chassis", "Mid-tower case with optimized airflow, RGB lighting, 1000W PSU, Liquid Cooling System")
+        self._product.add_part("chassis", "Mid-tower case with optimized airflow, RGB lighting, 1000W PSU, Liquid "
+                                          "Cooling System")
     def get_product(self):
         product = self._product
         self.reset()
@@ -127,19 +127,3 @@ class Director:
         self._builder.build_display()
         self._builder.build_graphics()
         self._builder.build_chassis()
-
-def client():
-    macbook_builder = MacbookBuilder()
-    director= Director(macbook_builder)
-    director.make()
-    print(macbook_builder.get_product())
-    print("--------------------")
-    desktop_builder = DesktopBuilder()
-    director.change_builder(desktop_builder)
-    director.make()
-    print(desktop_builder.get_product())
-    print("--------------------")
-    surface_builder = SurfaceBuilder()
-    director.change_builder(surface_builder)
-    director.make()
-    print(surface_builder.get_product())
