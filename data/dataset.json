@@ -374,13 +374,13 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/blockchain_refactored.py"
+            "refactored/ledger_refactored.py"
         ],
-        "path_baseline": "baseline/blockchain_baseline.py",
+        "path_baseline": "baseline/ledger_baseline.py",
         "tests_refactored": [
-            "tests_refactored/blockchain_refactored_test.py"
+            "tests_refactored/ledger_refactored_test.py"
         ],
-        "test_baseline": "tests_baseline/blockchain_baseline_test.py",
+        "test_baseline": "tests_baseline/ledger_baseline_test.py",
         "description": ""
     },
     {
