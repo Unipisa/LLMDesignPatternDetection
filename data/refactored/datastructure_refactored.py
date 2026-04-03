@@ -7,15 +7,25 @@ from collections import defaultdict
 
 # abstract builder interface
 class DataStructureBuilder(ABC):
-    @abstractmethod
+    def __init__(self):
+        self._product = None
+        self.reset()
+
     def reset(self):
         pass
+
     @abstractmethod
     def add_node(self, node):
         pass
+
     @abstractmethod
     def add_edge(self, node1, node2):
         pass
+
+    def get_product(self):
+        product = self._product
+        self.reset()
+        return product
 
 # concrete products
 class Graph:
@@ -43,16 +53,12 @@ class Tree:
             for child in self._structure[node]:
                 s += recurse(child, depth + 1)
             return s
-
         if self._root is None:
             return "empty tree"
         return recurse(self._root)
 
 # concrete builders
 class GraphBuilder(DataStructureBuilder):
-    def __init__(self):
-        self._product = None
-        self.reset()
     def reset(self):
         self._product = Graph()
     def add_node(self, node):
@@ -60,15 +66,9 @@ class GraphBuilder(DataStructureBuilder):
     def add_edge(self, node1, node2):
         if node2 not in self._product.get_structure()[node1]:
             self._product.get_structure()[node1].append(node2)
-    def get_product(self):
-        product = self._product
-        self.reset()
-        return product
+
 
 class TreeBuilder(DataStructureBuilder):
-    def __init__(self):
-        self._product = None
-        self.reset()
     def reset(self):
         self._product = Tree()
     def add_node(self, node):
@@ -76,12 +76,9 @@ class TreeBuilder(DataStructureBuilder):
             self._product._root = node
         _ = self._product.get_structure()[node]
     def add_edge(self, node1, node2):
-        if node2 not in [x for i in self._product.get_structure().values() for x in i] and not (node1 == node2) and node2 != self._product.get_root():
+        if (node2 not in [x for i in self._product.get_structure().values() for x in i] and not (node1 == node2) and
+                node2 != self._product.get_root()):
             self._product.get_structure()[node1].append(node2)
-    def get_product(self):
-        product = self._product
-        self.reset()
-        return product
 
 
 class Director:
@@ -100,14 +97,3 @@ class Director:
         self._builder.add_edge(2, 3)
         self._builder.add_edge(3, 4)
         self._builder.add_edge(1, 4)
-
-def client_code():
-    graph_builder = GraphBuilder()
-    tree_builder = TreeBuilder()
-    director = Director(graph_builder)
-    director.make()
-    print(graph_builder.get_product())
-    print("-------------------------")
-    director.change_builder(tree_builder)
-    director.make()
-    print(tree_builder.get_product())
