@@ -88,15 +88,3 @@ class Director:
         self._builder.build_structures()
         self._builder.build_interactive_entities()
         self._builder.build_light()
-
-# client
-def client_code():
-    wood_builder = DarkWoodsBuilder()
-    director = Director(wood_builder)
-    director.make()
-    print(wood_builder.get_product())
-    print("-------------------------")
-    dungeon_builder = DungeonBuilder()
-    director.change_builder(dungeon_builder)
-    director.make()
-    print(dungeon_builder.get_product())
