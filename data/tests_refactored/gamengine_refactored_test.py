@@ -2,7 +2,7 @@ import unittest
 from data.refactored.gamengine_refactored import *
 
 
-class MyTestCase(unittest.TestCase):
+class TestEnvironment(unittest.TestCase):
     def setUp(self):
         self.dungeon_builder = DungeonBuilder()
         self.darkwoods_builder = DarkWoodsBuilder()

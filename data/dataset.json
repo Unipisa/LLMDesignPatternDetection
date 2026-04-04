@@ -262,11 +262,11 @@
             "abstract_factory"
         ],
         "path_refactored": [
-            "refactored/battle_refactored.py"
+            "refactored/battle_refactored_af.py"
         ],
         "path_baseline": "baseline/battle_baseline.py",
         "tests_refactored": [
-            "tests_refactored/battle_refactored_test.py"
+            "tests_refactored/battle_refactored_af_test.py"
         ],
         "test_baseline": "tests_baseline/battle_baseline_test.py",
         "description": ""
@@ -278,11 +278,11 @@
             "abstract_factory"
         ],
         "path_refactored": [
-            "refactored/house_refactored.py"
+            "refactored/house_refactored_af.py"
         ],
         "path_baseline": "baseline/house_baseline.py",
         "tests_refactored": [
-            "tests_refactored/house_refactored_test.py"
+            "tests_refactored/house_refactored_af_test.py"
         ],
         "test_baseline": "tests_baseline/house_baseline_test.py",
         "description": ""

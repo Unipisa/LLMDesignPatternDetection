@@ -26,11 +26,11 @@ class Monster (ABC):
 # concrete products
 class Dragon (Monster):
     def fight(self):
-        print(f"Dragon attacks with {self.weapon.get_description()}")
+        return f"Dragon attacks using {self.weapon.get_description()}"
 
 class Goblin(Monster):
     def fight(self):
-        print(f"Goblin attacks using {self.weapon.get_description()}")
+        return f"Goblin attacks using {self.weapon.get_description()}"
 
 class Sword(Weapon):
     def get_description(self):
@@ -62,9 +62,3 @@ class GroundCombatFactory(CombactFactory):
         return Goblin()
     def create_weapon(self):
         return Sword()
-
-def client(factory: CombactFactory):
-    monster = factory.create_monster()
-    weapon = factory.create_weapon()
-    monster.equip(weapon)
-    monster.fight()
