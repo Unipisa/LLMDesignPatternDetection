@@ -1,5 +1,5 @@
 import pytest
-from base.cafecito import Espresso, HouseBlend, DarkRoast, Decaf
+from data.baseline.cafecito_baseline import Espresso, HouseBlend, DarkRoast, Decaf
 
 # --------------------------
 # 1. Base Beverages Only

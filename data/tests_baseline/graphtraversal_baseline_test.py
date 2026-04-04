@@ -1,5 +1,5 @@
 import pytest
-from base.graphtraversal import GraphVisitor
+from data.baseline.graphtraversal_baseline import GraphVisitor
 
 @pytest.fixture
 def graph():

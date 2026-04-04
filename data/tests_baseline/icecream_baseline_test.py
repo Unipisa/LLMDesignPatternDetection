@@ -1,5 +1,5 @@
 import pytest
-from base.icecream import IceCream
+from data.baseline.icecream_baseline import IceCream
 
 def test_cone():
     icecream = IceCream("cone", [])

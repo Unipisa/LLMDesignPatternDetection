@@ -1,5 +1,5 @@
 import pytest
-from base.roundhole import RoundHole, RoundPeg, SquarePeg
+from data.baseline.roundhole_baseline import *
 import math
 
 def test_round_peg_fits_hole_exact():

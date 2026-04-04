@@ -1,7 +1,7 @@
 # test_movement.py
 
 import pytest
-from refactored.gridmovement import GridMover, TouchAdapter
+from data.refactored.gridmovement_refactored import GridMover, TouchAdapter
 
 
 

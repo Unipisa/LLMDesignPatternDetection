@@ -1,7 +1,7 @@
 # test_movement.py
 
 import pytest
-from base.gridmovement import GridMover
+from data.baseline.gridmovement_baseline import GridMover
 
 def test_grid_mover_basic_movement():
     mover = GridMover()

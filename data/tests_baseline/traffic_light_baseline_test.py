@@ -1,5 +1,5 @@
 import pytest
-from base.traffic_light import *
+from data.baseline.traffic_light_baseline import *
 
 
 def test_initial_state_is_red():

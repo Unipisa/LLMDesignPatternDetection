@@ -1,5 +1,5 @@
 import pytest
-from refactored.validator import ValidationContext, NumericValidator, AlphanumericValidator, TelNumberValidator
+from data.refactored.validator_refactored import ValidationContext, NumericValidator, AlphanumericValidator, TelNumberValidator
 
 
 @pytest.fixture

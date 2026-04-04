@@ -1,6 +1,6 @@
 import pytest
 
-from base.calculator import OldCalculator
+from data.baseline.calculator_baseline import OldCalculator
 
 def test_add():
     calc = OldCalculator()

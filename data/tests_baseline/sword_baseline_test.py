@@ -1,5 +1,5 @@
 import pytest
-from base.sword import BasicSword
+from data.baseline.sword_baseline import BasicSword
 
 def test_basic_sword():
     sword = BasicSword()

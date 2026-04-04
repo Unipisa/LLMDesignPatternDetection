@@ -1,5 +1,5 @@
 import pytest
-from refactored.traffic_light import TrafficLight, RedState, GreenState, YellowState
+from data.refactored.traffic_light_refactored import TrafficLight, RedState, GreenState, YellowState
 
 
 def test_initial_state_is_red():

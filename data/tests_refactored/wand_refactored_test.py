@@ -1,5 +1,5 @@
 import pytest
-from refactored.wand import (
+from data.refactored.wand_refactored import (
     OakPhoenixRubyFactory,
     WillowPhoenixSapphireFactory,
     ElderPhoenixEmeraldFactory,

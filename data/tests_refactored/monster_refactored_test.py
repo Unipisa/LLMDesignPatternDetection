@@ -1,5 +1,5 @@
 import pytest
-from refactored.monster import (
+from data.refactored.monster_refactored import (
     ZombieFactory, SkeletonFactory, GhoulFactory,
     ZombieLeg, SkeletonLeg, ZombieArm, SkeletonArm
 )

@@ -1,5 +1,5 @@
 import pytest
-from refactored.graphtraversal import DFSStrategy, BFSStrategy, GraphVisitor
+from data.refactored.graphtraversal_refactored import DFSStrategy, BFSStrategy, GraphVisitor
 
 @pytest.fixture
 def graph():

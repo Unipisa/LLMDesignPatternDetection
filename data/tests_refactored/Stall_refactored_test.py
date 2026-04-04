@@ -1,5 +1,5 @@
 import pytest
-from refactored.Stall import *
+from data.refactored.Stall_refactored import *
 
 # Test case for the initial FreeState
 def test_initial_state():

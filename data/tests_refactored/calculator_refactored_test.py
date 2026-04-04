@@ -1,5 +1,5 @@
 import pytest
-from refactored.calculator import CalculatorAdapter, OldCalculator
+from data.refactored.calculator_refactored import CalculatorAdapter, OldCalculator
 
 # Creating a test instance of the adapter with the old calculator
 @pytest.fixture

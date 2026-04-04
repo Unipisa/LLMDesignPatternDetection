@@ -1,5 +1,5 @@
 import pytest
-from base.monster import Monster, ZombieLeg, SkeletonLeg, ZombieArm, SkeletonArm
+from data.baseline.monster_baseline import Monster, ZombieLeg, SkeletonLeg, ZombieArm, SkeletonArm
 
 def test_zombie_monster_creation():
     legs = [ZombieLeg(), ZombieLeg()]  # Each leg speed = 5 * 0.75 = 3.75

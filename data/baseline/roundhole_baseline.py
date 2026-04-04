@@ -14,7 +14,7 @@ class RoundHole:
     
     def fits_other(self, peg, type):
         if type == "square":
-            return self.get_radius() >= peg.get_radius() * math.sqrt(2) / 2
+            return self.get_radius() >= peg.get_width() * math.sqrt(2) / 2
         else:
             raise ValueError("Unsupported peg type.")
     

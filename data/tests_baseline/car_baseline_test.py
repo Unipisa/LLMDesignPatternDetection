@@ -1,9 +1,5 @@
 import pytest
-from base.car import (
-    CarFactory,
-    SportsEngine, EconomyEngine,
-    SportsTank, EconomyTank,
-)
+from data.baseline.car_baseline import *
 
 def test_sports_car_creation():
     factory = CarFactory()
