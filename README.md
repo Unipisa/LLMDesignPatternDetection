@@ -1,5 +1,4 @@
-# WEEKS 1-2 (11-03-2026 - 25-03-2026) 
-
+# WEEKS 1-2 (11-03-2026 - 25-03-2026)
 Espansione del dataset del repo "LLMDesignPatternRefactoring" con l'implementazione di tre esempi distinti per ognuno 
 dei seguenti design patterns:
 
@@ -101,23 +100,15 @@ tratta l'esempio.
 Le versioni baseline degli esempi e le descrizioni nel JSON sono ancora da implementare.
 
 # WEEKS 3-4-5 (25-03-2026 - 11-04-2026)
-
 Riorganizzazione del file json come segue:
 - Rappresentazione del campo “pattern” come una lista di possibili pattern applicabili (se singolo pattern, una sola 
   etichetta nella lista, se più pattern tutte le etichette possibili nella lista);
 - Rappresentazione del campo “path_refactored” come una lista di path alle versioni refactored (una sola se singolo 
   pattern, più versioni se più pattern applicabili) 
-- Aggiunta di un campo “tests” che contenga una lista di path agli script di test per le diverse versioni refactored 
-
-Riorganizzato il dataset come segue:
-- Creazione di un'unica cartella “original” (o “baseline”) contenente tutti i file Python non rifattorizzati 
-- Creazione di un'unica artella “refactored” contenente tutte le versioni rifattorizzate (refactoring diversi di stessi 
-  file distinti per sottocartelle diverse o tramite naming convention) 
-
-Modificato dataset.json aggiungendo un campo apposito per il path al test per la versione baseline.
+- Aggiunta di un campo “tests_refactored” contenente una lista di path dei test per le diverse versioni refactored 
+- Aggiunta di un campo “tests_baseline” che contiene il path del test per la versione baseline
 
 **Scelta di implementazione delle batterie di test:**
-
 L'obiettivo è sviluppare un sistema di classificazione per rilevare i Design Pattern mediante LLM. Manipolando frammenti
 per un dataset di ricerca mirato all'analisi architetturale e non codice destinato a un sistema in produzione, 
 implementare una gestione approfondita degli errori di input o dei casi limite sarebbe potutto risultare
@@ -125,3 +116,26 @@ controproducente. Dato che i modelli linguistici e i sistemi di classificazione 
 delle interfacce e delle dipendenze, saturare il codice con validazioni difensive avrebbe aumentato il rischio di 
 mascherare la logica del pattern, aggiungendo "rumore" che peggiorerebbe le performance del classificatore 
 nell'individuare la struttura d'interesse. 
+
+Riorganizzato il dataset come segue:
+- Creazione di un'unica cartella “baseline” contenente tutti i file Python non rifattorizzati 
+- Creazione di un'unica artella “refactored” contenente tutte le versioni rifattorizzate (refactoring diversi di stessi 
+  file distinti tramite naming convention) 
+
+```
+INSERISCI TREE QUI
+```
+
+## Introduzione naming convention per pattern rifattorizzati più volte
+L'introduzione di può versioni rifattorizzate (come per esempio il dualisimo abstract_factory - factory_method) porta
+alla necessità di introdurre una naming convention specializzata per gestire questi tipi di esempi refactored:
+- Abstract Factory → af
+- Factory Method → fm
+- Builder → bld
+- Command → cmd
+- Strategy → str
+- Template Method → tm
+- State → state
+- Proxy → proxy
+- Decorator → dec
+- Adapter → adp

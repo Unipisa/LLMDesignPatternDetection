@@ -246,11 +246,11 @@
             "abstract_factory"
         ],
         "path_refactored": [
-            "refactored/tv_refactored.py"
+            "refactored/tv_refactored_af.py"
         ],
         "path_baseline": "baseline/tv_baseline.py",
         "tests_refactored": [
-            "tests_refactored/tv_refactored_test.py"
+            "tests_refactored/tv_refactored_af_test.py"
         ],
         "test_baseline": "tests_baseline/tv_baseline_test.py",
         "description": ""

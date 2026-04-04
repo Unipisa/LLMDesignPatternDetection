@@ -58,10 +58,3 @@ class PhilipsBox(CreateBox):
         return PhilipsTV()
     def create_rc(self):
         return PhilipsRC()
-
-# client
-def client(factory: CreateBox):
-    tv = factory.create_tv()
-    rc = factory.create_rc()
-    print(f"TV: {tv.get_description()}")
-    print(f"RC: {rc.get_description()}")
