@@ -101,14 +101,3 @@ class Villa(House):
         return FlowerGarden()
     def create_alarm(self):
         return PrivateSecurityAlarm()
-
-def client(house: House):
-    furniture = house.create_furniture()
-    garden = house.create_garden()
-    alarm = house.create_alarm()
-    print(f"I finally finalized the purchase of my new house! Here it's a brief description:\n"
-          f"{furniture.get_style()} "
-          f"{garden.get_description()} "
-          f"{alarm.get_defense()}")
-
-
