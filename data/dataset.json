@@ -275,14 +275,17 @@
         "id": 17,
         "category": "creational",
         "pattern": [
-            "abstract_factory"
+            "abstract_factory",
+            "factory_method"
         ],
         "path_refactored": [
-            "refactored/house_refactored_af.py"
+            "refactored/house_refactored_af.py",
+            "refactored/house_refactored_fm.py"
         ],
         "path_baseline": "baseline/house_baseline.py",
         "tests_refactored": [
-            "tests_refactored/house_refactored_af_test.py"
+            "tests_refactored/house_refactored_af_test.py",
+            "tests_refactored/house_refactored_fm_test.py"
         ],
         "test_baseline": "tests_baseline/house_baseline_test.py",
         "description": ""
