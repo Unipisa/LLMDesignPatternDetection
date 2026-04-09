@@ -243,14 +243,17 @@
         "id": 15,
         "category": "creational",
         "pattern": [
-            "abstract_factory"
+            "abstract_factory",
+            "factory_method"
         ],
         "path_refactored": [
-            "refactored/tv_refactored_af.py"
+            "refactored/tv_refactored_af.py",
+            "refactored/tv_refactored_fm.py"
         ],
         "path_baseline": "baseline/tv_baseline.py",
         "tests_refactored": [
-            "tests_refactored/tv_refactored_af_test.py"
+            "tests_refactored/tv_refactored_af_test.py",
+            "tests_refactored/tv_refactored_fm_test.py"
         ],
         "test_baseline": "tests_baseline/tv_baseline_test.py",
         "description": ""
@@ -259,14 +262,17 @@
         "id": 16,
         "category": "creational",
         "pattern": [
-            "abstract_factory"
+            "abstract_factory",
+            "factory_method"
         ],
         "path_refactored": [
-            "refactored/battle_refactored_af.py"
+            "refactored/battle_refactored_af.py",
+            "refactored/battle_refactored_fm.py"
         ],
         "path_baseline": "baseline/battle_baseline.py",
         "tests_refactored": [
-            "tests_refactored/battle_refactored_af_test.py"
+            "tests_refactored/battle_refactored_af_test.py",
+            "tests_refactored/battle_refactored_fm_test.py"
         ],
         "test_baseline": "tests_baseline/battle_baseline_test.py",
         "description": ""

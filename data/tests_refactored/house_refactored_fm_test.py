@@ -7,31 +7,31 @@ class TestHouse(unittest.TestCase):
         self.town_house = TownHouseCreator().create_house()
         self.villa = VillaCreator().create_house()
     def test_apartment_alarm(self):
-        self.assertEqual(type(self.apartment.alarm), NoneAlarm)
+        self.assertIsInstance(self.apartment.alarm, NoneAlarm)
 
     def test_townhouse_alarm(self):
-        self.assertEqual(type(self.town_house.alarm), VideoMonitoredAlarm)
+        self.assertIsInstance(self.town_house.alarm, VideoMonitoredAlarm)
 
     def test_villa_alarm(self):
-        self.assertEqual(type(self.villa.alarm), PrivateSecurityAlarm)
+        self.assertIsInstance(self.villa.alarm, PrivateSecurityAlarm)
 
     def test_apartment_furniture(self):
-        self.assertEqual(type(self.apartment.furniture), ModernFurniture)
+        self.assertIsInstance(self.apartment.furniture, ModernFurniture)
 
     def test_townhouse_furniture(self):
-        self.assertEqual(type(self.town_house.furniture), ClassicFurniture)
+        self.assertIsInstance(self.town_house.furniture, ClassicFurniture)
 
     def test_villa_furniture(self):
-        self.assertEqual(type(self.villa.furniture), RusticFurniture)
+        self.assertIsInstance(self.villa.furniture, RusticFurniture)
 
     def test_apartment_garden(self):
-        self.assertEqual(type(self.apartment.garden), NoneGarden)
+        self.assertIsInstance(self.apartment.garden, NoneGarden)
 
     def test_townhouse_garden(self):
-        self.assertEqual(type(self.town_house.garden), NoneGarden)
+        self.assertIsInstance(self.town_house.garden, NoneGarden)
 
     def test_villa_garden(self):
-        self.assertEqual(type(self.villa.garden), FlowerGarden)
+        self.assertIsInstance(self.villa.garden, FlowerGarden)
 
     def test_apartment_description(self):
         self.assertEqual(self.apartment.describe(), (
