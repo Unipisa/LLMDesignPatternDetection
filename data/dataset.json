@@ -195,14 +195,17 @@
         "id": 12,
         "category": "creational",
         "pattern": [
-            "factory_method"
+            "factory_method",
+            "abstract_factory"
         ],
         "path_refactored": [
-            "refactored/car_refactored.py"
+            "refactored/car_refactored_fm.py",
+            "refactored/car_refactored_af.py"
         ],
         "path_baseline": "baseline/car_baseline.py",
         "tests_refactored": [
-            "tests_refactored/car_refactored_test.py"
+            "tests_refactored/car_refactored_fm_test.py"
+            "tests_refactored/car_refactored_af_test.py"
         ],
         "test_baseline": "tests_baseline/car_baseline_test.py",
         "description": ""
