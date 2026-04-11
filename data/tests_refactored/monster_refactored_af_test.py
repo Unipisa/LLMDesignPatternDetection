@@ -1,12 +1,10 @@
 import pytest
-from data.refactored.monster_refactored import (
-    ZombieFactory, SkeletonFactory, GhoulFactory,
-    ZombieLeg, SkeletonLeg, ZombieArm, SkeletonArm
-)
+from data.refactored.monster_refactored_af import *
 
 def test_zombie_factory_creates_correct_monster():
     factory = ZombieFactory()
-    monster = factory.create_monster("Zombie")
+    monster = Monster(name = factory.create_name(), legs = [factory.create_left_leg(), factory.create_right_leg()],
+                      arms = [factory.create_left_arm(), factory.create_right_arm()])
 
     # Assert all legs and arms are of Zombie types
     assert all(isinstance(leg, ZombieLeg) for leg in monster.legs)
@@ -19,7 +17,8 @@ def test_zombie_factory_creates_correct_monster():
 
 def test_skeleton_factory_creates_correct_monster():
     factory = SkeletonFactory()
-    monster = factory.create_monster("Skeleton")
+    monster = Monster(name=factory.create_name(), legs=[factory.create_left_leg(), factory.create_right_leg()],
+                      arms=[factory.create_left_arm(), factory.create_right_arm()])
 
     # Assert all legs and arms are of Skeleton types
     assert all(isinstance(leg, SkeletonLeg) for leg in monster.legs)
@@ -32,7 +31,8 @@ def test_skeleton_factory_creates_correct_monster():
 
 def test_ghoul_factory_creates_mixed_monster():
     factory = GhoulFactory()
-    monster = factory.create_monster("Ghoul")
+    monster = Monster(name=factory.create_name(), legs=[factory.create_left_leg(), factory.create_right_leg()],
+                      arms=[factory.create_left_arm(), factory.create_right_arm()])
 
     # Assert one leg is ZombieLeg and one is SkeletonLeg
     assert any(isinstance(leg, ZombieLeg) for leg in monster.legs)

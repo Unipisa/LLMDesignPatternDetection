@@ -54,9 +54,6 @@ class ZombieArm(Arm):
 
 class SkeletonArm(Arm):
     def __init__(self):
-        super().__init__(base_attack=12, attack_modifier=1.10)
-
-    def __init__(self):
         super().__init__(base_attack=15, attack_modifier=1.25)
 
 # ------------------------------
