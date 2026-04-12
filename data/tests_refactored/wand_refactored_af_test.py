@@ -1,5 +1,4 @@
-import pytest
-from data.refactored.wand_refactored import (
+from data.refactored.wand_refactored_af import (
     OakPhoenixRubyFactory,
     WillowPhoenixSapphireFactory,
     ElderPhoenixEmeraldFactory,
@@ -33,7 +32,7 @@ def test_willow_phoenix_sapphire_factory():
     assert isinstance(wand.gem, Sapphire)
 
     # mana=40, damage=100, power=1.25
-    expected_attack = 40 * (100 ** 1.25)  
+    expected_attack = 40 * (100 ** 1.25)
     # 100 ** 1.25 = 100 ** (5/4) = 100^(1) * 100^(0.25) = 100 * 3.16227766017 = 316.227766017
     # So 40 * 316.227766017 = 12649.11064068
     assert abs(wand.attack - 12649.11064068) < 1e-6

@@ -91,9 +91,22 @@ class WandFactory:
         else:
             raise ValueError(f"Unknown gem type: {gem_type}")
 
-    def create_wand(self, wood_type: str, core_type: str, gem_type: str) -> Wand:
-        wood = self.create_wood(wood_type)
-        core = self.create_core(core_type)
-        gem = self.create_gem(gem_type)
-        return Wand(wood, core, gem)
+    def create_wand(self, wand_type: str) -> Wand:
+        if not wand_type:
+            raise ValueError("Wand type is required")
+        if wand_type.lower() == "oak_phoenix_ruby":
+            wood = self.create_wood("oak")
+            core = self.create_core("phoenix")
+            gem = self.create_gem("ruby")
+        elif wand_type.lower() == "willow_phoenix_sapphire":
+            wood = self.create_wood("willow")
+            core = self.create_core("phoenix")
+            gem = self.create_gem("sapphire")
+        elif wand_type.lower() == "elder_phoenix_emerald":
+            wood = self.create_wood("elder")
+            core = self.create_core("phoenix")
+            gem = self.create_gem("emerald")
+        else:
+            raise ValueError(f"Unknown wand type: {wand_type}")
 
+        return Wand(wood, core, gem)

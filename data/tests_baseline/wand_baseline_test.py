@@ -13,7 +13,7 @@ from data.baseline.wand_baseline import (
 
 def test_oak_phoenix_ruby_wand():
     factory = WandFactory()
-    wand = factory.create_wand("oak", "phoenix", "ruby")
+    wand = factory.create_wand("oak_phoenix_ruby")
 
     assert isinstance(wand.wood, Oak)
     assert isinstance(wand.core, PhoenixFeather)
@@ -24,7 +24,7 @@ def test_oak_phoenix_ruby_wand():
 
 def test_willow_phoenix_sapphire_wand():
     factory = WandFactory()
-    wand = factory.create_wand("willow", "phoenix", "sapphire")
+    wand = factory.create_wand("willow_phoenix_sapphire")
 
     assert isinstance(wand.wood, Willow)
     assert isinstance(wand.core, PhoenixFeather)
@@ -35,7 +35,7 @@ def test_willow_phoenix_sapphire_wand():
 
 def test_elder_phoenix_emerald_wand():
     factory = WandFactory()
-    wand = factory.create_wand("elder", "phoenix", "emerald")
+    wand = factory.create_wand("elder_phoenix_emerald")
 
     assert isinstance(wand.wood, Elder)
     assert isinstance(wand.core, PhoenixFeather)
@@ -47,15 +47,15 @@ def test_elder_phoenix_emerald_wand():
 def test_invalid_wood():
     factory = WandFactory()
     with pytest.raises(ValueError):
-        factory.create_wand("pine", "phoenix", "ruby")
+        factory.create_wand("pine_phoenix_ruby")
 
 def test_invalid_core():
     factory = WandFactory()
     with pytest.raises(ValueError):
-        factory.create_wand("oak", "dragon", "ruby")
+        factory.create_wand("oak_dragon_ruby")
 
 def test_invalid_gem():
     factory = WandFactory()
     with pytest.raises(ValueError):
-        factory.create_wand("oak", "phoenix", "diamond")
+        factory.create_wand("oak_phoenix_diamond")
 

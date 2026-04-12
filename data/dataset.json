@@ -233,14 +233,17 @@
         "id": 14,
         "category": "creational",
         "pattern": [
-            "factory_method"
+            "factory_method",
+            "abstract_factory"
         ],
         "path_refactored": [
-            "refactored/wand_refactored.py"
+            "refactored/wand_refactored_fm.py",
+            "refactored/wand_refactored_af.py"
         ],
         "path_baseline": "baseline/wand_baseline.py",
         "tests_refactored": [
-            "tests_refactored/wand_refactored_test.py"
+            "tests_refactored/wand_refactored_fm_test.py",
+            "tests_refactored/wand_refactored_af_test.py"
         ],
         "test_baseline": "tests_baseline/wand_baseline_test.py",
         "description": ""

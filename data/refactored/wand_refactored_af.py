@@ -10,7 +10,7 @@ class Core(ABC):
         self.damage = damage
 
 class Gem(ABC):
-    def __init__(self, power: int):
+    def __init__(self, power: float):
         self.power = power
 
 
