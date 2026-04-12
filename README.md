@@ -125,150 +125,142 @@ Riorganizzato il dataset come segue:
 Nuova struttura del dataset:
 ```
 .
-├── README.md
-└── data
-    ├── __init__.py
-    ├── baseline
-    │   ├── Stall_baseline.py
-    │   ├── Vector_baseline.py
-    │   ├── __init__.py
-    │   ├── bankaccount_baseline.py
-    │   ├── battle_baseline.py
-    │   ├── cafecito_baseline.py
-    │   ├── calculator_baseline.py
-    │   ├── car_baseline.py
-    │   ├── computer_baseline.py
-    │   ├── datastructure_baseline.py
-    │   ├── deliveryvehicles_baseline.py
-    │   ├── departure_baseline.py
-    │   ├── elevator_baseline.py
-    │   ├── formfilling_baseline.py
-    │   ├── gamengine_baseline.py
-    │   ├── graphtraversal_baseline.py
-    │   ├── gridmovement_baseline.py
-    │   ├── house_baseline.py
-    │   ├── icecream_baseline.py
-    │   ├── ledger_baseline.py
-    │   ├── monster_baseline.py
-    │   ├── rescuelogic_baseline.py
-    │   ├── restaurant_baseline.py
-    │   ├── roundhole_baseline.py
-    │   ├── rover_baseline.py
-    │   ├── sword_baseline.py
-    │   ├── tenant_baseline.py
-    │   ├── traffic_light_baseline.py
-    │   ├── tv_baseline.py
-    │   ├── validator_baseline.py
-    │   └── wand_baseline.py
-    ├── dataset.json
-    ├── refactored
-    │   ├── Stall_refactored.py
-    │   ├── Vector_refactored.py
-    │   ├── __init__.py
-    │   ├── bankaccount_refactored.py
-    │   ├── battle_refactored_af.py
-    │   ├── battle_refactored_fm.py
-    │   ├── cafecito_refactored.py
-    │   ├── calculator_refactored.py
-    │   ├── car_refactored_af.py
-    │   ├── car_refactored_fm.py
-    │   ├── computer_refactored.py
-    │   ├── datastructure_refactored.py
-    │   ├── deliveryvehicles_refactored.py
-    │   ├── departure_refactored.py
-    │   ├── elevator_refactored.py
-    │   ├── formfilling_refactored.py
-    │   ├── gamengine_refactored.py
-    │   ├── graphtraversal_refactored.py
-    │   ├── gridmovement_refactored.py
-    │   ├── house_refactored_af.py
-    │   ├── house_refactored_fm.py
-    │   ├── icecream_refactored.py
-    │   ├── ledger_refactored.py
-    │   ├── monster_refactored_af.py
-    │   ├── monster_refactored_fm.py
-    │   ├── rescuelogic_refactored.py
-    │   ├── restaurant_refactored.py
-    │   ├── roundhole_refactored.py
-    │   ├── rover_refactored.py
-    │   ├── sword_refactored.py
-    │   ├── tenant_refactored.py
-    │   ├── traffic_light_refactored.py
-    │   ├── tv_refactored_af.py
-    │   ├── tv_refactored_fm.py
-    │   ├── validator_refactored.py
-    │   ├── wand_refactored_af.py
-    │   └── wand_refactored_fm.py
-    ├── tests_baseline
-    │   ├── Stall_baseline_test.py
-    │   ├── Vector_baseline_test.py
-    │   ├── __init__.py
-    │   ├── bankaccount_baseline_test.py
-    │   ├── battle_baseline_test.py
-    │   ├── cafecito_baseline_test.py
-    │   ├── calculator_baseline_test.py
-    │   ├── car_baseline_test.py
-    │   ├── computer_baseline_test.py
-    │   ├── datastructure_baseline_test.py
-    │   ├── deliveryvehicles_baseline_test.py
-    │   ├── departure_baseline_test.py
-    │   ├── elevator_baseline_test.py
-    │   ├── formfilling_baseline_test.py
-    │   ├── gamengine_baseline_test.py
-    │   ├── graphtraversal_baseline_test.py
-    │   ├── gridmovement_baseline_test.py
-    │   ├── house_baseline_test.py
-    │   ├── icecream_baseline_test.py
-    │   ├── ledger_baseline_test.py
-    │   ├── monster_baseline_test.py
-    │   ├── rescuelogic_baseline_test.py
-    │   ├── restaurant_baseline_test.py
-    │   ├── roundhole_baseline_test.py
-    │   ├── rover_baseline_test.py
-    │   ├── sword_baseline_test.py
-    │   ├── tenant_baseline_test.py
-    │   ├── traffic_light_baseline_test.py
-    │   ├── tv_baseline_test.py
-    │   ├── validator_baseline_test.py
-    │   └── wand_baseline_test.py
-    └── tests_refactored
-        ├── Stall_refactored_test.py
-        ├── Vector_refactored_test.py
-        ├── __init__.py
-        ├── bankaccount_refactored_test.py
-        ├── battle_refactored_af_test.py
-        ├── battle_refactored_fm_test.py
-        ├── cafecito_refactored_test.py
-        ├── calculator_refactored_test.py
-        ├── car_refactored_af_test.py
-        ├── car_refactored_fm_test.py
-        ├── computer_refactored_test.py
-        ├── datastructure_refactored_test.py
-        ├── deliveryvehicles_refactored_test.py
-        ├── departure_refactored_test.py
-        ├── elevator_refactored_test.py
-        ├── formfilling_refactored_test.py
-        ├── gamengine_refactored_test.py
-        ├── graphtraversal_refactored_test.py
-        ├── gridmovement_refactored_test.py
-        ├── house_refactored_af_test.py
-        ├── house_refactored_fm_test.py
-        ├── icecream_refactored_test.py
-        ├── ledger_refactored_test.py
-        ├── monster_refactored_af_test.py
-        ├── monster_refactored_fm_test.py
-        ├── rescuelogic_refactored_test.py
-        ├── restaurant_refactored_test.py
-        ├── roundhole_refactored_test.py
-        ├── rover_refactored_test.py
-        ├── sword_refactored_test.py
-        ├── tenant_refactored_test.py
-        ├── traffic_light_refactored_test.py
-        ├── tv_refactored_af_test.py
-        ├── tv_refactored_fm_test.py
-        ├── validator_refactored_test.py
-        ├── wand_refactored_af_test.py
-        └── wand_refactored_fm_test.py
+├── baseline
+│   ├── Stall_baseline.py
+│   ├── Vector_baseline.py
+│   ├── bankaccount_baseline.py
+│   ├── battle_baseline.py
+│   ├── cafecito_baseline.py
+│   ├── calculator_baseline.py
+│   ├── car_baseline.py
+│   ├── computer_baseline.py
+│   ├── datastructure_baseline.py
+│   ├── deliveryvehicles_baseline.py
+│   ├── departure_baseline.py
+│   ├── elevator_baseline.py
+│   ├── formfilling_baseline.py
+│   ├── gamengine_baseline.py
+│   ├── graphtraversal_baseline.py
+│   ├── gridmovement_baseline.py
+│   ├── house_baseline.py
+│   ├── icecream_baseline.py
+│   ├── ledger_baseline.py
+│   ├── monster_baseline.py
+│   ├── rescuelogic_baseline.py
+│   ├── restaurant_baseline.py
+│   ├── roundhole_baseline.py
+│   ├── rover_baseline.py
+│   ├── sword_baseline.py
+│   ├── tenant_baseline.py
+│   ├── traffic_light_baseline.py
+│   ├── tv_baseline.py
+│   ├── validator_baseline.py
+│   └── wand_baseline.py
+├── refactored
+│   ├── Stall_refactored.py
+│   ├── Vector_refactored.py
+│   ├── bankaccount_refactored.py
+│   ├── battle_refactored_af.py
+│   ├── battle_refactored_fm.py
+│   ├── cafecito_refactored.py
+│   ├── calculator_refactored.py
+│   ├── car_refactored_af.py
+│   ├── car_refactored_fm.py
+│   ├── computer_refactored.py
+│   ├── datastructure_refactored.py
+│   ├── deliveryvehicles_refactored.py
+│   ├── departure_refactored.py
+│   ├── elevator_refactored.py
+│   ├── formfilling_refactored.py
+│   ├── gamengine_refactored.py
+│   ├── graphtraversal_refactored.py
+│   ├── gridmovement_refactored.py
+│   ├── house_refactored_af.py
+│   ├── house_refactored_fm.py
+│   ├── icecream_refactored.py
+│   ├── ledger_refactored.py
+│   ├── monster_refactored_af.py
+│   ├── monster_refactored_fm.py
+│   ├── rescuelogic_refactored.py
+│   ├── restaurant_refactored.py
+│   ├── roundhole_refactored.py
+│   ├── rover_refactored.py
+│   ├── sword_refactored.py
+│   ├── tenant_refactored.py
+│   ├── traffic_light_refactored.py
+│   ├── tv_refactored_af.py
+│   ├── tv_refactored_fm.py
+│   ├── validator_refactored.py
+│   ├── wand_refactored_af.py
+│   └── wand_refactored_fm.py
+├── tests_baseline
+│   ├── Stall_baseline_test.py
+│   ├── Vector_baseline_test.py
+│   ├── bankaccount_baseline_test.py
+│   ├── battle_baseline_test.py
+│   ├── cafecito_baseline_test.py
+│   ├── calculator_baseline_test.py
+│   ├── car_baseline_test.py
+│   ├── computer_baseline_test.py
+│   ├── datastructure_baseline_test.py
+│   ├── deliveryvehicles_baseline_test.py
+│   ├── departure_baseline_test.py
+│   ├── elevator_baseline_test.py
+│   ├── formfilling_baseline_test.py
+│   ├── gamengine_baseline_test.py
+│   ├── graphtraversal_baseline_test.py
+│   ├── gridmovement_baseline_test.py
+│   ├── house_baseline_test.py
+│   ├── icecream_baseline_test.py
+│   ├── ledger_baseline_test.py
+│   ├── monster_baseline_test.py
+│   ├── rescuelogic_baseline_test.py
+│   ├── restaurant_baseline_test.py
+│   ├── roundhole_baseline_test.py
+│   ├── rover_baseline_test.py
+│   ├── sword_baseline_test.py
+│   ├── tenant_baseline_test.py
+│   ├── traffic_light_baseline_test.py
+│   ├── tv_baseline_test.py
+│   ├── validator_baseline_test.py
+│   └── wand_baseline_test.py
+└── tests_refactored
+    ├── Stall_refactored_test.py
+    ├── Vector_refactored_test.py
+    ├── bankaccount_refactored_test.py
+    ├── battle_refactored_af_test.py
+    ├── battle_refactored_fm_test.py
+    ├── cafecito_refactored_test.py
+    ├── calculator_refactored_test.py
+    ├── car_refactored_af_test.py
+    ├── car_refactored_fm_test.py
+    ├── computer_refactored_test.py
+    ├── datastructure_refactored_test.py
+    ├── deliveryvehicles_refactored_test.py
+    ├── departure_refactored_test.py
+    ├── elevator_refactored_test.py
+    ├── formfilling_refactored_test.py
+    ├── gamengine_refactored_test.py
+    ├── graphtraversal_refactored_test.py
+    ├── gridmovement_refactored_test.py
+    ├── house_refactored_af_test.py
+    ├── house_refactored_fm_test.py
+    ├── icecream_refactored_test.py
+    ├── ledger_refactored_test.py
+    ├── monster_refactored_af_test.py
+    ├── monster_refactored_fm_test.py
+    ├── rescuelogic_refactored_test.py
+    ├── restaurant_refactored_test.py
+    ├── roundhole_refactored_test.py
+    ├── rover_refactored_test.py
+    ├── sword_refactored_test.py
+    ├── tenant_refactored_test.py
+    ├── traffic_light_refactored_test.py
+    ├── tv_refactored_af_test.py
+    ├── tv_refactored_fm_test.py
+    ├── validator_refactored_test.py
+    ├── wand_refactored_af_test.py
+    └── wand_refactored_fm_test.py
 ```
 
 ## Introduzione naming convention per pattern rifattorizzati più volte
