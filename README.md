@@ -99,7 +99,7 @@ tratta l'esempio.
 
 Le versioni baseline degli esempi e le descrizioni nel JSON sono ancora da implementare.
 
-# WEEKS 3-4-5 (25-03-2026 - 11-04-2026)
+# WEEKS 3-4-5 (25-03-2026 - 14-04-2026)
 Riorganizzazione del file json come segue:
 - Rappresentazione del campo “pattern” come una lista di possibili pattern applicabili (se singolo pattern, una sola 
   etichetta nella lista, se più pattern tutte le etichette possibili nella lista);
