@@ -1,6 +1,6 @@
 import unittest
-from data.refactored.bankaccount_refactored import (BankAccount, Transaction, TransactionManager, Transfer, TaxPayment,
-                                                    SalaryDeposit)
+from data.refactored.bankaccount_refactored_cmd import (BankAccount, Transaction, TransactionManager, Transfer, TaxPayment,
+                                                        SalaryDeposit)
 
 class TestBankAccount(unittest.TestCase):
     def setUp(self):

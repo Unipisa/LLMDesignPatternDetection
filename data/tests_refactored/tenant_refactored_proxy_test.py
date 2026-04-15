@@ -1,4 +1,4 @@
-from data.refactored.tenant_refactored import *
+from data.refactored.tenant_refactored_proxy import *
 import unittest
 from unittest.mock import MagicMock
 

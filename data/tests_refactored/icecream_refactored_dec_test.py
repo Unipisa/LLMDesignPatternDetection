@@ -1,5 +1,5 @@
 import pytest
-from data.refactored.icecream_refactored import *
+from data.refactored.icecream_refactored_dec import *
 
 def test_cone():
     cone = Cone()

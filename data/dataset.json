@@ -102,11 +102,11 @@
             "command"
         ],
         "path_refactored": [
-            "refactored/rover_refactored.py"
+            "refactored/rover_refactored_cmd.py"
         ],
         "path_baseline": "baseline/rover_baseline.py",
         "tests_refactored": [
-            "tests_refactored/rover_refactored_test.py"
+            "tests_refactored/rover_refactored_cmd_test.py"
         ],
         "test_baseline": "tests_baseline/rover_baseline_test.py",
         "description": ""
@@ -118,11 +118,11 @@
             "command"
         ],
         "path_refactored": [
-            "refactored/restaurant_refactored.py"
+            "refactored/restaurant_refactored_cmd.py"
         ],
         "path_baseline": "baseline/restaurant_baseline.py",
         "tests_refactored": [
-            "tests_refactored/restaurant_refactored_test.py"
+            "tests_refactored/restaurant_refactored_cmd_test.py"
         ],
         "test_baseline": "tests_baseline/restaurant_baseline_test.py",
         "description": ""
@@ -134,11 +134,11 @@
             "command"
         ],
         "path_refactored": [
-            "refactored/bankaccount_refactored.py"
+            "refactored/bankaccount_refactored_cmd.py"
         ],
         "path_baseline": "baseline/bankaccount_baseline.py",
         "tests_refactored": [
-            "tests_refactored/bankaccount_refactored_test.py"
+            "tests_refactored/bankaccount_refactored_cmd_test.py"
         ],
         "test_baseline": "tests_baseline/bankaccount_baseline_test.py",
         "description": ""
@@ -150,11 +150,11 @@
             "strategy"
         ],
         "path_refactored": [
-            "refactored/Vector_refactored.py"
+            "refactored/Vector_refactored_str.py"
         ],
         "path_baseline": "baseline/Vector_baseline.py",
         "tests_refactored": [
-            "tests_refactored/Vector_refactored_test.py"
+            "tests_refactored/Vector_refactored_str_test.py"
         ],
         "test_baseline": "tests_baseline/Vector_baseline_test.py",
         "description": ""
@@ -166,11 +166,11 @@
             "strategy"
         ],
         "path_refactored": [
-            "refactored/validator_refactored.py"
+            "refactored/validator_refactored_str.py"
         ],
         "path_baseline": "baseline/validator_baseline.py",
         "tests_refactored": [
-            "tests_refactored/validator_refactored_test.py"
+            "tests_refactored/validator_refactored_str_test.py"
         ],
         "test_baseline": "tests_baseline/validator_baseline_test.py",
         "description": ""
@@ -182,11 +182,11 @@
             "strategy"
         ],
         "path_refactored": [
-            "refactored/graphtraversal_refactored.py"
+            "refactored/graphtraversal_refactored_str.py"
         ],
         "path_baseline": "baseline/graphtraversal_baseline.py",
         "tests_refactored": [
-            "tests_refactored/graphtraversal_refactored_test.py"
+            "tests_refactored/graphtraversal_refactored_str_test.py"
         ],
         "test_baseline": "tests_baseline/graphtraversal_baseline_test.py",
         "description": ""
@@ -312,11 +312,11 @@
             "builder"
         ],
         "path_refactored": [
-            "refactored/gamengine_refactored.py"
+            "refactored/gamengine_refactored_bld.py"
         ],
         "path_baseline": "baseline/gamengine_baseline.py",
         "tests_refactored": [
-            "tests_refactored/gamengine_refactored_test.py"
+            "tests_refactored/gamengine_refactored_bld_test.py"
         ],
         "test_baseline": "tests_baseline/gamengine_baseline_test.py",
         "description": ""
@@ -328,11 +328,11 @@
             "builder"
         ],
         "path_refactored": [
-            "refactored/computer_refactored.py"
+            "refactored/computer_refactored_bld.py"
         ],
         "path_baseline": "baseline/computer_baseline.py",
         "tests_refactored": [
-            "tests_refactored/computer_refactored_test.py"
+            "tests_refactored/computer_refactored_bld_test.py"
         ],
         "test_baseline": "tests_baseline/computer_baseline_test.py",
         "description": ""
@@ -344,11 +344,11 @@
             "builder"
         ],
         "path_refactored": [
-            "refactored/datastructure_refactored.py"
+            "refactored/datastructure_refactored_bld.py"
         ],
         "path_baseline": "baseline/datastructure_baseline.py",
         "tests_refactored": [
-            "tests_refactored/datastructure_refactored_test.py"
+            "tests_refactored/datastructure_refactored_bld_test.py"
         ],
         "test_baseline": "tests_baseline/datastructure_baseline_test.py",
         "description": ""
@@ -360,11 +360,11 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/deliveryvehicles_refactored.py"
+            "refactored/deliveryvehicles_refactored_proxy.py"
         ],
         "path_baseline": "baseline/deliveryvehicles_baseline.py",
         "tests_refactored": [
-            "tests_refactored/deliveryvehicles_refactored_test.py"
+            "tests_refactored/deliveryvehicles_refactored_proxy_test.py"
         ],
         "test_baseline": "tests_baseline/deliveryvehicles_baseline_test.py",
         "description": ""
@@ -376,11 +376,11 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/tenant_refactored.py"
+            "refactored/tenant_refactored_proxy.py"
         ],
         "path_baseline": "baseline/tenant_baseline.py",
         "tests_refactored": [
-            "tests_refactored/tenant_refactored_test.py"
+            "tests_refactored/tenant_refactored_proxy_test.py"
         ],
         "test_baseline": "tests_baseline/tenant_baseline_test.py",
         "description": ""
@@ -392,11 +392,11 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/ledger_refactored.py"
+            "refactored/ledger_refactored_proxy.py"
         ],
         "path_baseline": "baseline/ledger_baseline.py",
         "tests_refactored": [
-            "tests_refactored/ledger_refactored_test.py"
+            "tests_refactored/ledger_refactored_proxy_test.py"
         ],
         "test_baseline": "tests_baseline/ledger_baseline_test.py",
         "description": ""
@@ -408,11 +408,11 @@
             "decorator"
         ],
         "path_refactored": [
-            "refactored/sword_refactored.py"
+            "refactored/sword_refactored_dec.py"
         ],
         "path_baseline": "baseline/sword_baseline.py",
         "tests_refactored": [
-            "tests_refactored/sword_refactored_test.py"
+            "tests_refactored/sword_refactored_dec_test.py"
         ],
         "test_baseline": "tests_baseline/sword_baseline_test.py",
         "description": ""
@@ -424,11 +424,11 @@
             "decorator"
         ],
         "path_refactored": [
-            "refactored/icecream_refactored.py"
+            "refactored/icecream_refactored_dec.py"
         ],
         "path_baseline": "baseline/icecream_baseline.py",
         "tests_refactored": [
-            "tests_refactored/icecream_refactored_test.py"
+            "tests_refactored/icecream_refactored_dec_test.py"
         ],
         "test_baseline": "tests_baseline/icecream_baseline_test.py",
         "description": ""
@@ -440,11 +440,11 @@
             "decorator"
         ],
         "path_refactored": [
-            "refactored/cafecito_refactored.py"
+            "refactored/cafecito_refactored_dec.py"
         ],
         "path_baseline": "baseline/cafecito_baseline.py",
         "tests_refactored": [
-            "tests_refactored/cafecito_refactored_test.py"
+            "tests_refactored/cafecito_refactored_dec_test.py"
         ],
         "test_baseline": "tests_baseline/cafecito_baseline_test.py",
         "description": ""
@@ -456,11 +456,11 @@
             "adapter"
         ],
         "path_refactored": [
-            "refactored/roundhole_refactored.py"
+            "refactored/roundhole_refactored_adp.py"
         ],
         "path_baseline": "baseline/roundhole_baseline.py",
         "tests_refactored": [
-            "tests_refactored/roundhole_refactored_test.py"
+            "tests_refactored/roundhole_refactored_adp_test.py"
         ],
         "test_baseline": "tests_baseline/roundhole_baseline_test.py",
         "description": ""
@@ -472,11 +472,11 @@
             "adapter"
         ],
         "path_refactored": [
-            "refactored/calculator_refactored.py"
+            "refactored/calculator_refactored_adp.py"
         ],
         "path_baseline": "baseline/calculator_baseline.py",
         "tests_refactored": [
-            "tests_refactored/calculator_refactored_test.py"
+            "tests_refactored/calculator_refactored_adp_test.py"
         ],
         "test_baseline": "tests_baseline/calculator_baseline_test.py",
         "description": ""
@@ -488,11 +488,11 @@
             "adapter"
         ],
         "path_refactored": [
-            "refactored/gridmovement_refactored.py"
+            "refactored/gridmovement_refactored_adp.py"
         ],
         "path_baseline": "baseline/gridmovement_baseline.py",
         "tests_refactored": [
-            "tests_refactored/gridmovement_refactored_test.py"
+            "tests_refactored/gridmovement_refactored_adp_test.py"
         ],
         "test_baseline": "tests_baseline/gridmovement_baseline_test.py",
         "description": ""

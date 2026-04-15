@@ -1,5 +1,5 @@
 import unittest
-from data.refactored.computer_refactored import *
+from data.refactored.computer_refactored_bld import *
 
 class TestComputerBuilder (unittest.TestCase):
     def setUp(self):

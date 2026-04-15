@@ -1,4 +1,4 @@
-from data.refactored.deliveryvehicles_refactored import *
+from data.refactored.deliveryvehicles_refactored_proxy import *
 import unittest
 
 class TestDeliveryProxy(unittest.TestCase):

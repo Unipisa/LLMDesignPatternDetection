@@ -1,5 +1,5 @@
 import pytest
-from data.refactored.cafecito_refactored import (
+from data.refactored.cafecito_refactored_dec import (
     Espresso, HouseBlend, DarkRoast, Decaf,
     Milk, Mocha, Soy, Whip
 )

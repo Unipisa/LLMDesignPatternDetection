@@ -1,5 +1,5 @@
 import pytest
-from data.refactored.sword_refactored import BasicSword, FlamingDecorator, PoisonedDecorator, IceDecorator
+from data.refactored.sword_refactored_dec import BasicSword, FlamingDecorator, PoisonedDecorator, IceDecorator
 
 def test_basic_sword():
     sword = BasicSword()

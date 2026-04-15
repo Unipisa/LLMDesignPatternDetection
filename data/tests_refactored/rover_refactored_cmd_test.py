@@ -1,5 +1,5 @@
 import unittest
-from data.refactored.rover_refactored import MissionControl, Rover, MoveForwardCommand, MoveLeftCommand, MoveRightCommand, MoveBackCommand
+from data.refactored.rover_refactored_cmd import MissionControl, Rover, MoveForwardCommand, MoveLeftCommand, MoveRightCommand, MoveBackCommand
 
 class TestRover(unittest.TestCase):
     def setUp(self):

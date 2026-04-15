@@ -1,6 +1,6 @@
 import unittest
-from data.refactored.restaurant_refactored import (Waiter, GrillCommand, FryCommand, PourCommand, TableMacroOrder,
-                                                   Kitchen)
+from data.refactored.restaurant_refactored_cmd import (Waiter, GrillCommand, FryCommand, PourCommand, TableMacroOrder,
+                                                       Kitchen)
 
 class TestKitchen(unittest.TestCase):
     def setUp(self):

@@ -1,5 +1,5 @@
 import pytest
-from data.refactored.Vector_refactored import *
+from data.refactored.Vector_refactored_str import *
 
 def test_add():
     """Test adding elements increases size and stores values correctly."""

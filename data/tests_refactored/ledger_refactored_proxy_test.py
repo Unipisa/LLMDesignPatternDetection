@@ -1,4 +1,4 @@
-from data.refactored.ledger_refactored import *
+from data.refactored.ledger_refactored_proxy import *
 import unittest
 
 class TestLedgerProxy(unittest.TestCase):
