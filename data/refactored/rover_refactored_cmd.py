@@ -7,8 +7,8 @@ from typing import List # simplifies uml diagram generation
 # invoker
 class MissionControl:
     def __init__(self):
-        self.commands: List['MovementCommand'] = []
-    def add_command(self, command: 'MovementCommand')-> None:
+        self.commands: List[MovementCommand] = []
+    def add_command(self, command: MovementCommand)-> None:
         self.commands.append(command)
     def execute_mission(self)-> None:
         for command in self.commands:
@@ -36,7 +36,7 @@ class MovementCommand(ABC):
         pass
 
 class MoveForwardCommand(MovementCommand):
-    def __init__(self, metres: int, rover: 'Rover')-> None:
+    def __init__(self, metres: int, rover: Rover)-> None:
         self.metres = metres
         self.rover = rover
 
@@ -44,21 +44,21 @@ class MoveForwardCommand(MovementCommand):
         self.rover.move_forward(self.metres)
 
 class MoveLeftCommand(MovementCommand):
-    def __init__(self, metres: int, rover: 'Rover')-> None:
+    def __init__(self, metres: int, rover: Rover)-> None:
         self.rover = rover
         self.metres = metres
     def execute(self)-> None:
         self.rover.move_left(self.metres)
 
 class MoveRightCommand(MovementCommand):
-    def __init__(self, metres: int, rover: 'Rover')-> None:
+    def __init__(self, metres: int, rover: Rover)-> None:
         self.rover = rover
         self.metres = metres
     def execute(self)-> None:
         self.rover.move_right(self.metres)
 
 class MoveBackCommand(MovementCommand):
-    def __init__(self, metres: int, rover: 'Rover') -> None:
+    def __init__(self, metres: int, rover: Rover) -> None:
         self.rover = rover
         self.metres = metres
     def execute(self)-> None:
