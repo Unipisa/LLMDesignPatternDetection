@@ -1,5 +1,5 @@
 import unittest
-from data.refactored.formfilling_refactored import VacationRequest,ExpenseReport, ResidenceDeclaration
+from data.refactored.formfilling_refactored_tm import VacationRequest,ExpenseReport, ResidenceDeclaration
 
 
 class TestVacationRequest(unittest.TestCase):

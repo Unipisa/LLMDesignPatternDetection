@@ -6,11 +6,11 @@
             "template_method"
         ],
         "path_refactored": [
-            "refactored/departure_refactored.py"
+            "refactored/departure_refactored_tm.py"
         ],
         "path_baseline": "baseline/departure_baseline.py",
         "tests_refactored": [
-            "tests_refactored/departure_refactored_test.py"
+            "tests_refactored/departure_refactored_tm_test.py"
         ],
         "test_baseline": "tests_baseline/departure_baseline_test.py",
         "description": ""
@@ -22,11 +22,11 @@
             "template_method"
         ],
         "path_refactored": [
-            "refactored/formfilling_refactored.py"
+            "refactored/formfilling_refactored_tm.py"
         ],
         "path_baseline": "baseline/formfilling_baseline.py",
         "tests_refactored": [
-            "tests_refactored/formfilling_refactored_test.py"
+            "tests_refactored/formfilling_refactored_tm_test.py"
         ],
         "test_baseline": "tests_baseline/formfilling_baseline_test.py",
         "description": ""
@@ -38,11 +38,11 @@
             "template_method"
         ],
         "path_refactored": [
-            "refactored/rescuelogic_refactored.py"
+            "refactored/rescuelogic_refactored_tm.py"
         ],
         "path_baseline": "baseline/rescuelogic_baseline.py",
         "tests_refactored": [
-            "tests_refactored/rescuelogic_refactored_test.py"
+            "tests_refactored/rescuelogic_refactored_tm_test.py"
         ],
         "test_baseline": "tests_baseline/rescuelogic_baseline_test.py",
         "description": ""
@@ -54,11 +54,11 @@
             "state"
         ],
         "path_refactored": [
-            "refactored/traffic_light_refactored.py"
+            "refactored/traffic_light_refactored_state.py"
         ],
         "path_baseline": "baseline/traffic_light_baseline.py",
         "tests_refactored": [
-            "tests_refactored/traffic_light_refactored_test.py"
+            "tests_refactored/traffic_light_refactored_state_test.py"
         ],
         "test_baseline": "tests_baseline/traffic_light_baseline_test.py",
         "description": ""
@@ -70,11 +70,11 @@
             "state"
         ],
         "path_refactored": [
-            "refactored/elevator_refactored.py"
+            "refactored/elevator_refactored_state.py"
         ],
         "path_baseline": "baseline/elevator_baseline.py",
         "tests_refactored": [
-            "tests_refactored/elevator_refactored_test.py"
+            "tests_refactored/elevator_refactored_state_test.py"
         ],
         "test_baseline": "tests_baseline/elevator_baseline_test.py",
         "description": ""
@@ -86,11 +86,11 @@
             "state"
         ],
         "path_refactored": [
-            "refactored/Stall_refactored.py"
+            "refactored/Stall_refactored_state.py"
         ],
         "path_baseline": "baseline/Stall_baseline.py",
         "tests_refactored": [
-            "tests_refactored/Stall_refactored_test.py"
+            "tests_refactored/Stall_refactored_state_test.py"
         ],
         "test_baseline": "tests_baseline/Stall_baseline_test.py",
         "description": ""

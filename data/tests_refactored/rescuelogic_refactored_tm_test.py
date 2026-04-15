@@ -1,4 +1,4 @@
-from data.refactored.rescuelogic_refactored import MountainRescue, MaritimeRescue
+from data.refactored.rescuelogic_refactored_tm import MountainRescue, MaritimeRescue
 import unittest
 
 class TestRescueLogic(unittest.TestCase):

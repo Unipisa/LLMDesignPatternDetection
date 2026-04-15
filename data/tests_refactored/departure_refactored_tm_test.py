@@ -1,6 +1,6 @@
 import unittest
-from data.refactored.departure_refactored import (Weather, LandingGearConditions, CarDeparture, BikeDeparture,
-                                                  FlightDeparture)
+from data.refactored.departure_refactored_tm import (Weather, LandingGearConditions, CarDeparture, BikeDeparture,
+                                                     FlightDeparture)
 
 class TestDepartures(unittest.TestCase):
     def test_bike_departure_ok(self):

@@ -276,3 +276,42 @@ alla necessità di introdurre una naming convention specializzata per gestire qu
 - Proxy → proxy
 - Decorator → dec
 - Adapter → adp
+
+
+# WEEKS 6-7 (17-04-2026 - 27-04-2026)
+
+Aggiunto il suffisso con il nome del pattern nei refactored.
+
+Dato che il pattern Proxy potrebbe creare problemi, specie se il proxy inserito “altera” il funzionamento (presente 
+anche nella baseline, ma forse difficilmente riconoscibile). Come conseguenza di ciò è stato aggiunto un esempio di 
+proxy logger, che fa solo task secondari.
+
+Necessario anche tener conto della sperimentazione del lavoro, in particolare del fatto che per un dato codice sorgente 
+potrebbero esserci più pattern “corretti” che potrebbero essere applicati (ad esempio, “strategy” al posto di “command”,
+“abstract factory” invece di “factory method”, “proxy” sempre applicabile, ecc.).
+Si suggerisce di:
+- Annotare il dataset con tutti i pattern applicabili a un dato esempio (oltre a quello già previsto; senza 
+  necessariamente andare a crearne la versione rifattorizzata); essere “aperti” a “active learning”, aka. successive 
+  integrazioni valutando risposte dei modelli.
+- Prevedere una sperimentazione che misuri “accuracy” come “mi suggerisce uno dei pattern applicabili”, oltre a 
+  prevedere la possibilità di “privilegiare” (lista in ordine di priorità, accuracy@top-k) i pattern che sarebbe 
+  meglio applicare.
+
+Prossimi passi: Prompt engineering della richiesta da fare agli LLM, partendo da linee guida di OpenAI e 1-2 LLM 
+(versione chat) di riferimento. 
+
+Suggerimenti seguiti:
+- tenere traccia di ogni prompt valutato;
+- considerare alternative tramite ablation;
+- valutare prompt “migliori” in termini di accuracy e accuracy@top-1 (su una porzione del dataset da usare come training
+  set; il resto del dataset sarà usato come test set in fase di validazione).
+
+Riferimento a un corso di HuggingFace: https://huggingface.co/learn/llm-course/chapter1/1
+
+Creare infine:
+delle descrizioni meccaniche, in inglese, nel campo description di ogni singola classe e dei metodi che contiene dei 
+codici refactored aggiunti per espandere il dataset di partenza.
+Creta infine una tabella con tutti i prompt fatti e i risultati ottenuti. Seguito foglio di carta come riferimento
+
+Durante la fase di prompt engeneering evitare assolutamente di usare tutti i codici, tenere sempre un codice per pattern
+per la fase di test finale. (?????)
