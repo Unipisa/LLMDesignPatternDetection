@@ -405,6 +405,22 @@
         "id": 24,
         "category": "structural",
         "pattern": [
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/water_flow_refactored_proxy.py"
+        ],
+        "path_baseline": "baseline/water_flow_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/water_flow_refactored_proxy_test.py"
+        ],
+        "test_baseline": "tests_baseline/water_flow_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 25,
+        "category": "structural",
+        "pattern": [
             "decorator"
         ],
         "path_refactored": [
@@ -415,10 +431,10 @@
             "tests_refactored/sword_refactored_dec_test.py"
         ],
         "test_baseline": "tests_baseline/sword_baseline_test.py",
-        "description": ""
+        "description": "FluidOutletInterface is an abstract interface that models a generic fluid dispensing outlet and defines the contract for dispensing liquid; it exposes the method dispense(volume: float), which represents requesting a certain amount of fluid in liters. PhisicalValve models a real physical valve capable of releasing water; its dispense method performs the action of dispensing the requested volume and returns a confirmation message. WaterFlowController models a proxy/controller for a physical valve, adding monitoring behavior on top of it; its dispense method logs each dispensing request with a timestamp before delegating the operation to the underlying valve (or returning an error if no valve is available), and get_recorded_usage returns the history of all recorded dispensing events."
     },
     {
-        "id": 25,
+        "id": 26,
         "category": "structural",
         "pattern": [
             "decorator"
@@ -434,7 +450,7 @@
         "description": ""
     },
     {
-        "id": 26,
+        "id": 27,
         "category": "structural",
         "pattern": [
             "decorator"
@@ -450,7 +466,7 @@
         "description": ""
     },
     {
-        "id": 27,
+        "id": 28,
         "category": "structural",
         "pattern": [
             "adapter"
@@ -466,7 +482,7 @@
         "description": ""
     },
     {
-        "id": 28,
+        "id": 29,
         "category": "structural",
         "pattern": [
             "adapter"
@@ -482,7 +498,7 @@
         "description": ""
     },
     {
-        "id": 29,
+        "id": 30,
         "category": "structural",
         "pattern": [
             "adapter"
