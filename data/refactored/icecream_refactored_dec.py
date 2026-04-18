@@ -19,7 +19,7 @@ class Icecream:
         pass
 
 #concrete component
-class Cone:
+class Cone(Icecream):
     def __init__(self):
         self.description = "Icecream Cone"
 
@@ -29,7 +29,7 @@ class Cone:
     def cost(self):
         return 1.00
 
-class Cup:
+class Cup(Icecream):
     def __init__(self):
         self.description = "Icecream Cup"
 

@@ -3,7 +3,10 @@
         "id": 0,
         "category": "behavioural",
         "pattern": [
-            "template_method"
+            "template_method",
+            "strategy",
+            "builder",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/departure_refactored_tm.py"
@@ -19,7 +22,10 @@
         "id": 1,
         "category": "behavioural",
         "pattern": [
-            "template_method"
+            "template_method",
+            "strategy",
+            "builder",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/formfilling_refactored_tm.py"
@@ -35,7 +41,9 @@
         "id": 2,
         "category": "behavioural",
         "pattern": [
-            "template_method"
+            "template_method",
+            "strategy",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/rescuelogic_refactored_tm.py"
@@ -51,7 +59,9 @@
         "id": 3,
         "category": "behavioural",
         "pattern": [
-            "state"
+            "state",
+            "proxy",
+            "strategy"
         ],
         "path_refactored": [
             "refactored/traffic_light_refactored_state.py"
@@ -67,7 +77,9 @@
         "id": 4,
         "category": "behavioural",
         "pattern": [
-            "state"
+            "state",
+            "strategy",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/elevator_refactored_state.py"
@@ -83,7 +95,10 @@
         "id": 5,
         "category": "behavioural",
         "pattern": [
-            "state"
+            "state",
+            "command",
+            "strategy",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/Stall_refactored_state.py"
@@ -99,7 +114,9 @@
         "id": 6,
         "category": "behavioural",
         "pattern": [
-            "command"
+            "command",
+            "proxy",
+            "strategy"
         ],
         "path_refactored": [
             "refactored/rover_refactored_cmd.py"
@@ -115,7 +132,9 @@
         "id": 7,
         "category": "behavioural",
         "pattern": [
-            "command"
+            "command",
+            "strategy",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/restaurant_refactored_cmd.py"
@@ -131,7 +150,10 @@
         "id": 8,
         "category": "behavioural",
         "pattern": [
-            "command"
+            "command",
+            "strategy",
+            "proxy",
+            "decorator"
         ],
         "path_refactored": [
             "refactored/bankaccount_refactored_cmd.py"
@@ -147,7 +169,11 @@
         "id": 9,
         "category": "behavioural",
         "pattern": [
-            "strategy"
+            "strategy",
+            "template method",
+            "adapter",
+            "command",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/Vector_refactored_str.py"
@@ -163,7 +189,10 @@
         "id": 10,
         "category": "behavioural",
         "pattern": [
-            "strategy"
+            "strategy",
+            "state",
+            "template method",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/validator_refactored_str.py"
@@ -179,7 +208,9 @@
         "id": 11,
         "category": "behavioural",
         "pattern": [
-            "strategy"
+            "strategy",
+            "template_method",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/graphtraversal_refactored_str.py"
@@ -196,7 +227,9 @@
         "category": "creational",
         "pattern": [
             "factory_method",
-            "abstract_factory"
+            "abstract_factory",
+            "strategy",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/car_refactored_fm.py",
@@ -215,7 +248,10 @@
         "category": "creational",
         "pattern": [
             "factory_method",
-            "abstract_factory"
+            "abstract_factory",
+            "builder",
+            "strategy",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/monster_refactored_fm.py",
@@ -234,7 +270,10 @@
         "category": "creational",
         "pattern": [
             "factory_method",
-            "abstract_factory"
+            "abstract_factory",
+            "builder",
+            "strategy",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/wand_refactored_fm.py",
@@ -253,7 +292,8 @@
         "category": "creational",
         "pattern": [
             "abstract_factory",
-            "factory_method"
+            "factory_method",
+            "strategy"
         ],
         "path_refactored": [
             "refactored/tv_refactored_af.py",
@@ -272,7 +312,9 @@
         "category": "creational",
         "pattern": [
             "abstract_factory",
-            "factory_method"
+            "factory_method",
+            "strategy",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/battle_refactored_af.py",
@@ -291,7 +333,9 @@
         "category": "creational",
         "pattern": [
             "abstract_factory",
-            "factory_method"
+            "factory_method",
+            "startegy",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/house_refactored_af.py",
@@ -309,7 +353,12 @@
         "id": 18,
         "category": "creational",
         "pattern": [
-            "builder"
+            "builder",
+            "abstract_factory",
+            "factory_method",
+            "strategy",
+            "proxy",
+            "template_method"
         ],
         "path_refactored": [
             "refactored/gamengine_refactored_bld.py"
@@ -325,7 +374,12 @@
         "id": 19,
         "category": "creational",
         "pattern": [
-            "builder"
+            "builder",
+            "abstract_factory",
+            "factory_method",
+            "strategy",
+            "proxy",
+            "template_method"
         ],
         "path_refactored": [
             "refactored/computer_refactored_bld.py"
@@ -341,7 +395,10 @@
         "id": 20,
         "category": "creational",
         "pattern": [
-            "builder"
+            "builder",
+            "strategy",
+            "proxy",
+            "adapter"
         ],
         "path_refactored": [
             "refactored/datastructure_refactored_bld.py"
@@ -357,7 +414,9 @@
         "id": 21,
         "category": "structural",
         "pattern": [
-            "proxy"
+            "proxy",
+            "command",
+            "strategy"
         ],
         "path_refactored": [
             "refactored/deliveryvehicles_refactored_proxy.py"
@@ -373,7 +432,8 @@
         "id": 22,
         "category": "structural",
         "pattern": [
-            "proxy"
+            "proxy",
+            "factory_method"
         ],
         "path_refactored": [
             "refactored/tenant_refactored_proxy.py"
@@ -405,7 +465,9 @@
         "id": 24,
         "category": "structural",
         "pattern": [
-            "proxy"
+            "proxy",
+            "decorator",
+            "command"
         ],
         "path_refactored": [
             "refactored/water_flow_refactored_proxy.py"
@@ -421,7 +483,10 @@
         "id": 25,
         "category": "structural",
         "pattern": [
-            "decorator"
+            "decorator",
+            "factory_method",
+            "strategy",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/sword_refactored_dec.py"
@@ -437,7 +502,11 @@
         "id": 26,
         "category": "structural",
         "pattern": [
-            "decorator"
+            "decorator",
+            "builder",
+            "strategy",
+            "factory_method",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/icecream_refactored_dec.py"
@@ -453,7 +522,11 @@
         "id": 27,
         "category": "structural",
         "pattern": [
-            "decorator"
+            "decorator",
+            "builder",
+            "strategy",
+            "factory_method",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/cafecito_refactored_dec.py"
@@ -469,7 +542,8 @@
         "id": 28,
         "category": "structural",
         "pattern": [
-            "adapter"
+            "adapter",
+            "strategy"
         ],
         "path_refactored": [
             "refactored/roundhole_refactored_adp.py"
@@ -485,7 +559,10 @@
         "id": 29,
         "category": "structural",
         "pattern": [
-            "adapter"
+            "adapter",
+            "command",
+            "strategy",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/calculator_refactored_adp.py"
@@ -501,7 +578,10 @@
         "id": 30,
         "category": "structural",
         "pattern": [
-            "adapter"
+            "adapter",
+            "command",
+            "strategy",
+            "proxy"
         ],
         "path_refactored": [
             "refactored/gridmovement_refactored_adp.py"

@@ -47,7 +47,7 @@ class DeliveryDB(DeliverySystem):
 
 
 class DeliveryProxy(DeliverySystem):
-    def __init__(self, db, id_client):
+    def __init__(self, db: DeliveryDB, id_client):
         self.db = db
         self.id_client = id_client    # id client
     def get_delivery_route(self, van_id):

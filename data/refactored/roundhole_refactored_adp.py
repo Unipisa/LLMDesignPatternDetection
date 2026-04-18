@@ -1,5 +1,14 @@
 import math
 
+class RoundPeg:
+    def __init__(self, radius):
+        if radius <= 0:
+            raise ValueError("Peg radius must be positive.")
+        self._radius = radius
+
+    def get_radius(self):
+        return self._radius
+
 class RoundHole:
     def __init__(self, radius):
         if radius <= 0:
@@ -9,18 +18,8 @@ class RoundHole:
     def get_radius(self):
         return self._radius
 
-    def fits(self, peg):
+    def fits(self, peg: RoundPeg):
         return self.get_radius() >= peg.get_radius()
-
-
-class RoundPeg:
-    def __init__(self, radius):
-        if radius <= 0:
-            raise ValueError("Peg radius must be positive.")
-        self._radius = radius
-
-    def get_radius(self):
-        return self._radius
 
 
 class SquarePeg:

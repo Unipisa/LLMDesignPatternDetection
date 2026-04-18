@@ -2,6 +2,10 @@ from abc import ABC, abstractmethod
 
 # A vector, add adds to the end, pop takes from the end, sort sorts the vector.
 # Refactored sort with strategy
+class SortStrategy:
+    @abstractmethod
+    def sort(self, vector):
+        pass
 
 class Vector:
 
@@ -9,7 +13,7 @@ class Vector:
         self.__elements = []
         self.size = 0
         self.set_sort_strategy(SelectionSort())
-    
+
     def add(self, element):
         self.__elements.append(element)
         self.size += 1
@@ -18,26 +22,22 @@ class Vector:
             raise IndexError("pop from empty vector")
         self.size -= 1
         return self.__elements.pop()
-    
-    def set_sort_strategy(self, strategy):
+
+    def set_sort_strategy(self, strategy: SortStrategy):
         self.sort_strategy = strategy
-    
+
     def sort(self):
         self.sort_strategy.sort(self.__elements)
-    
+
     def get(self, index):
         if index < 0 or index >= self.size:
             raise IndexError("Index out of bounds")
         return self.__elements[index]
-    
+
     def to_string(self):
         return str(self.__elements)
 
 
-class SortStrategy:
-    @abstractmethod
-    def sort(self, vector):
-        pass
 
 class SelectionSort(SortStrategy):
 

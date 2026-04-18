@@ -38,7 +38,7 @@ class OldCalculator:
 
 # The Adapter that implements the ICalculator interface
 class CalculatorAdapter(ICalculator):
-    def __init__(self, old_calculator):
+    def __init__(self, old_calculator: OldCalculator):
         self.old_calculator = old_calculator
 
     def add(self, a, b):

@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import List
 
 # management of bankaccount implemented with command pattern.
 # These commands represent various types of transactions: bank transfer, tax payment, salary deposit
@@ -63,7 +64,7 @@ class SalaryDeposit(Transaction):
 # invoker
 class TransactionManager:
     def __init__(self):
-        self.transactions = []
+        self.transactions : List[Transaction]= []
         self.completed_transactions = []
     def add_transaction(self, transaction: Transaction):
         self.transactions.append(transaction)
