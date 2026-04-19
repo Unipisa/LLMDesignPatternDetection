@@ -1,0 +1,403 @@
+[
+    {
+        "id": 0,
+        "category": "behavioural",
+        "pattern": [
+            "template_method",
+            "strategy",
+            "builder",
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/departure_refactored_tm.py"
+        ],
+        "path_baseline": "baseline/departure_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/departure_refactored_tm_test.py"
+        ],
+        "test_baseline": "tests_baseline/departure_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 2,
+        "category": "behavioural",
+        "pattern": [
+            "template_method",
+            "strategy",
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/rescuelogic_refactored_tm.py"
+        ],
+        "path_baseline": "baseline/rescuelogic_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/rescuelogic_refactored_tm_test.py"
+        ],
+        "test_baseline": "tests_baseline/rescuelogic_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 3,
+        "category": "behavioural",
+        "pattern": [
+            "state",
+            "proxy",
+            "strategy"
+        ],
+        "path_refactored": [
+            "refactored/traffic_light_refactored_state.py"
+        ],
+        "path_baseline": "baseline/traffic_light_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/traffic_light_refactored_state_test.py"
+        ],
+        "test_baseline": "tests_baseline/traffic_light_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 5,
+        "category": "behavioural",
+        "pattern": [
+            "state",
+            "command",
+            "strategy",
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/Stall_refactored_state.py"
+        ],
+        "path_baseline": "baseline/Stall_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/Stall_refactored_state_test.py"
+        ],
+        "test_baseline": "tests_baseline/Stall_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 6,
+        "category": "behavioural",
+        "pattern": [
+            "command",
+            "proxy",
+            "strategy"
+        ],
+        "path_refactored": [
+            "refactored/rover_refactored_cmd.py"
+        ],
+        "path_baseline": "baseline/rover_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/rover_refactored_cmd_test.py"
+        ],
+        "test_baseline": "tests_baseline/rover_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 8,
+        "category": "behavioural",
+        "pattern": [
+            "command",
+            "strategy",
+            "proxy",
+            "decorator"
+        ],
+        "path_refactored": [
+            "refactored/bankaccount_refactored_cmd.py"
+        ],
+        "path_baseline": "baseline/bankaccount_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/bankaccount_refactored_cmd_test.py"
+        ],
+        "test_baseline": "tests_baseline/bankaccount_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 9,
+        "category": "behavioural",
+        "pattern": [
+            "strategy",
+            "template_method",
+            "adapter",
+            "command",
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/Vector_refactored_str.py"
+        ],
+        "path_baseline": "baseline/Vector_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/Vector_refactored_str_test.py"
+        ],
+        "test_baseline": "tests_baseline/Vector_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 10,
+        "category": "behavioural",
+        "pattern": [
+            "strategy",
+            "state",
+            "template_method",
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/validator_refactored_str.py"
+        ],
+        "path_baseline": "baseline/validator_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/validator_refactored_str_test.py"
+        ],
+        "test_baseline": "tests_baseline/validator_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 13,
+        "category": "creational",
+        "pattern": [
+            "factory_method",
+            "abstract_factory",
+            "builder",
+            "strategy",
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/monster_refactored_fm.py",
+            "refactored/monster_refactored_af.py"
+        ],
+        "path_baseline": "baseline/monster_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/monster_refactored_fm_test.py",
+            "tests_refactored/monster_refactored_af_test.py"
+        ],
+        "test_baseline": "tests_baseline/monster_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 14,
+        "category": "creational",
+        "pattern": [
+            "factory_method",
+            "abstract_factory",
+            "builder",
+            "strategy",
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/wand_refactored_fm.py",
+            "refactored/wand_refactored_af.py"
+        ],
+        "path_baseline": "baseline/wand_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/wand_refactored_fm_test.py",
+            "tests_refactored/wand_refactored_af_test.py"
+        ],
+        "test_baseline": "tests_baseline/wand_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 15,
+        "category": "creational",
+        "pattern": [
+            "abstract_factory",
+            "factory_method",
+            "strategy"
+        ],
+        "path_refactored": [
+            "refactored/tv_refactored_af.py",
+            "refactored/tv_refactored_fm.py"
+        ],
+        "path_baseline": "baseline/tv_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/tv_refactored_af_test.py",
+            "tests_refactored/tv_refactored_fm_test.py"
+        ],
+        "test_baseline": "tests_baseline/tv_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 17,
+        "category": "creational",
+        "pattern": [
+            "abstract_factory",
+            "factory_method",
+            "strategy",
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/house_refactored_af.py",
+            "refactored/house_refactored_fm.py"
+        ],
+        "path_baseline": "baseline/house_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/house_refactored_af_test.py",
+            "tests_refactored/house_refactored_fm_test.py"
+        ],
+        "test_baseline": "tests_baseline/house_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 18,
+        "category": "creational",
+        "pattern": [
+            "builder",
+            "abstract_factory",
+            "factory_method",
+            "strategy",
+            "proxy",
+            "template_method"
+        ],
+        "path_refactored": [
+            "refactored/gamengine_refactored_bld.py"
+        ],
+        "path_baseline": "baseline/gamengine_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/gamengine_refactored_bld_test.py"
+        ],
+        "test_baseline": "tests_baseline/gamengine_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 19,
+        "category": "creational",
+        "pattern": [
+            "builder",
+            "abstract_factory",
+            "factory_method",
+            "strategy",
+            "proxy",
+            "template_method"
+        ],
+        "path_refactored": [
+            "refactored/computer_refactored_bld.py"
+        ],
+        "path_baseline": "baseline/computer_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/computer_refactored_bld_test.py"
+        ],
+        "test_baseline": "tests_baseline/computer_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 22,
+        "category": "structural",
+        "pattern": [
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/tenant_refactored_proxy.py"
+        ],
+        "path_baseline": "baseline/tenant_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/tenant_refactored_proxy_test.py"
+        ],
+        "test_baseline": "tests_baseline/tenant_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 23,
+        "category": "structural",
+        "pattern": [
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/ledger_refactored_proxy.py"
+        ],
+        "path_baseline": "baseline/ledger_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/ledger_refactored_proxy_test.py"
+        ],
+        "test_baseline": "tests_baseline/ledger_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 24,
+        "category": "structural",
+        "pattern": [
+            "proxy",
+            "decorator",
+            "command"
+        ],
+        "path_refactored": [
+            "refactored/water_flow_refactored_proxy.py"
+        ],
+        "path_baseline": "baseline/water_flow_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/water_flow_refactored_proxy_test.py"
+        ],
+        "test_baseline": "tests_baseline/water_flow_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 25,
+        "category": "structural",
+        "pattern": [
+            "decorator",
+            "factory_method",
+            "strategy",
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/sword_refactored_dec.py"
+        ],
+        "path_baseline": "baseline/sword_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/sword_refactored_dec_test.py"
+        ],
+        "test_baseline": "tests_baseline/sword_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 27,
+        "category": "structural",
+        "pattern": [
+            "decorator",
+            "builder",
+            "strategy",
+            "factory_method",
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/cafecito_refactored_dec.py"
+        ],
+        "path_baseline": "baseline/cafecito_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/cafecito_refactored_dec_test.py"
+        ],
+        "test_baseline": "tests_baseline/cafecito_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 28,
+        "category": "structural",
+        "pattern": [
+            "adapter"
+        ],
+        "path_refactored": [
+            "refactored/roundhole_refactored_adp.py"
+        ],
+        "path_baseline": "baseline/roundhole_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/roundhole_refactored_adp_test.py"
+        ],
+        "test_baseline": "tests_baseline/roundhole_baseline_test.py",
+        "description": ""
+    },
+    {
+        "id": 29,
+        "category": "structural",
+        "pattern": [
+            "adapter",
+            "command",
+            "strategy",
+            "proxy"
+        ],
+        "path_refactored": [
+            "refactored/calculator_refactored_adp.py"
+        ],
+        "path_baseline": "baseline/calculator_baseline.py",
+        "tests_refactored": [
+            "tests_refactored/calculator_refactored_adp_test.py"
+        ],
+        "test_baseline": "tests_baseline/calculator_baseline_test.py",
+        "description": ""
+    }
+]

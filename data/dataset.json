@@ -170,7 +170,7 @@
         "category": "behavioural",
         "pattern": [
             "strategy",
-            "template method",
+            "template_method",
             "adapter",
             "command",
             "proxy"
@@ -191,7 +191,7 @@
         "pattern": [
             "strategy",
             "state",
-            "template method",
+            "template_method",
             "proxy"
         ],
         "path_refactored": [
@@ -334,7 +334,7 @@
         "pattern": [
             "abstract_factory",
             "factory_method",
-            "startegy",
+            "strategy",
             "proxy"
         ],
         "path_refactored": [
@@ -432,8 +432,7 @@
         "id": 22,
         "category": "structural",
         "pattern": [
-            "proxy",
-            "factory_method"
+            "proxy"
         ],
         "path_refactored": [
             "refactored/tenant_refactored_proxy.py"
@@ -496,7 +495,7 @@
             "tests_refactored/sword_refactored_dec_test.py"
         ],
         "test_baseline": "tests_baseline/sword_baseline_test.py",
-        "description": "FluidOutletInterface is an abstract interface that models a generic fluid dispensing outlet and defines the contract for dispensing liquid; it exposes the method dispense(volume: float), which represents requesting a certain amount of fluid in liters. PhisicalValve models a real physical valve capable of releasing water; its dispense method performs the action of dispensing the requested volume and returns a confirmation message. WaterFlowController models a proxy/controller for a physical valve, adding monitoring behavior on top of it; its dispense method logs each dispensing request with a timestamp before delegating the operation to the underlying valve (or returning an error if no valve is available), and get_recorded_usage returns the history of all recorded dispensing events."
+        "description": ""
     },
     {
         "id": 26,
@@ -542,8 +541,7 @@
         "id": 28,
         "category": "structural",
         "pattern": [
-            "adapter",
-            "strategy"
+            "adapter"
         ],
         "path_refactored": [
             "refactored/roundhole_refactored_adp.py"
