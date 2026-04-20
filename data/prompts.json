@@ -1,0 +1,8 @@
+[
+    {
+        "id" : 0,
+        "prompt": "Suggest the best design patterns appliable to refactor this code between abstract_factory, factory_method, builder, command, strategy, template_method, state, proxy, decorator, adapter.Answer in JSON format, create a field 'prediction' with value the list of appliable design  patterns.",
+        "model": "openai/gpt-oss-20b",
+        "csv_path": "prompt_1.csv"
+    }
+]

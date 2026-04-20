@@ -289,16 +289,38 @@ proxy logger, che fa solo task secondari.
 Necessario anche tener conto della sperimentazione del lavoro, in particolare del fatto che per un dato codice sorgente 
 potrebbero esserci più pattern “corretti” che potrebbero essere applicati (ad esempio, “strategy” al posto di “command”,
 “abstract factory” invece di “factory method”, “proxy” sempre applicabile, ecc.).
-Si suggerisce di:
-- Annotare il dataset con tutti i pattern applicabili a un dato esempio (oltre a quello già previsto; senza 
+- Annotato il dataset con tutti i pattern applicabili a un dato esempio (oltre a quello già previsto; senza 
   necessariamente andare a crearne la versione rifattorizzata); essere “aperti” a “active learning”, aka. successive 
   integrazioni valutando risposte dei modelli.
-- Prevedere una sperimentazione che misuri “accuracy” come “mi suggerisce uno dei pattern applicabili”, oltre a 
-  prevedere la possibilità di “privilegiare” (lista in ordine di priorità, accuracy@top-k) i pattern che sarebbe 
+- Aggiunto supporto a una sperimentazione che misuri “accuracy” come “mi suggerisce uno dei pattern applicabili”, oltre 
+  a prevedere la possibilità di “privilegiare” (lista in ordine di priorità, accuracy@top-k) i pattern che sarebbe 
   meglio applicare.
+
+## Fase 1: partizionare il dataset in training set e test set 
+Creati due nuovi file JSON, training_set.json e test_set.json, rispettivamente contenenti i dati di training e di 
+test. Le partizioni sono state strutturate selezionando un esempio per pattern da inserire nel test set, lasciando al
+training set i restanti esempi.
+
+- Training set: [0,2,3,5,6,8,9,10,13,14,15,17,18,19,22,23,24,25,27,28,29]
+- Test set: [1,4,7,11,12,16,20,21,26,30]
+
+Gli esempi scelti sono tra i baseline più “challenging” e meno banali per il pattern di riferimento (responsabilità 
+mescolate, alternative plausibili nella lista di priorità dei pattern applicabli). L'obiettivo non è penalizzare in fase 
+di valutazione o semplificare il training del modello (che ha già a disposizione pattern interessanti), ma avere la  
+sicurezza nella fase di test di sottoporlo a situazioni più "realistiche" evitando query composte da esempi "didattici"
+o "troppo semplici".
+
+## Fase 2: creazione del system prompt per l'LLM
+
+## Fase 3: sviluppo del custom grader (ranking top-k) per la valutazione dell'output del modello
+
+## Fase 4: automazione e logginng delle iterazioni (Promptfoo)
+
 
 Prossimi passi: Prompt engineering della richiesta da fare agli LLM, partendo da linee guida di OpenAI e 1-2 LLM 
 (versione chat) di riferimento. 
+Per tener traccia di ogni prompt valutato ho creato un file prompts.json che mappa, per ogni prompt valutato, il
+percorso nel relativo file di output e l'accuracy totale ottenuta con quel prompt.
 
 Suggerimenti seguiti:
 - tenere traccia di ogni prompt valutato;
