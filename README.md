@@ -311,16 +311,30 @@ sicurezza nella fase di test di sottoporlo a situazioni più "realistiche" evita
 o "troppo semplici".
 
 ## Fase 2: creazione del system prompt per l'LLM
+Richiedere un insieme di predizioni su un dataset talmente strutturato, con 31 codici baseline, rende meno invitante
+gestire "manualmente" il prompting ai modelli e il salvataggio dei risultati. Per questo motivo ho creato una procedura
+automatizzata, nello script prompts_engineering.py, che, leggendo da un file json dove sono memorizzati le 
+configurazioni prompt-modello ("prompts.json"), itera richiedendo predizioni sull'intero training set. Per implementarlo
+ho consultato alcune sezioni della libreria offerta da OpenAI (in particolare
+https://platform.openai.com/docs/api-reference/chat/create), che offre la possiiblità di interagire senza problemi con
+modelli locali caricati sul programma "LM studio". Lo script, dopo aver interrogato il modello, salva la predizione 
+calcolata e aggiunge una riga riassuntiva dell'esempio all'interno di un oggetto pandas.Dataframe, caratterizzato dagli 
+attributi (id, name baseline, prompt, gold_truth, prediction, model, accuracy@top-1). 
+Appena terminate le predizioni e creato il dataframe completo, il programma salva il dataframe in un file csv, il cui 
+path è tracciato rigorosamente nel file "prompts.json".
+CHIARISCI SEED E TEMPERATURA
 
-## Fase 3: sviluppo del custom grader (ranking top-k) per la valutazione dell'output del modello
-
-## Fase 4: automazione e logginng delle iterazioni (Promptfoo)
+## Fase 3: prompt engineering effettivo e considerazioni
+Dalle varie esecuzioni è evidente come il modello, con alcuni prompt, non suggerisca mai alcuni dei 10 design pattern 
+applicabili. È il caso del template method: essendo un path meno "popolare", viene spesso surclassato da strategy, più
+flessibile al contesto e comune. Ad aggravare ulteriormente il problema è la natura stessa del pattern: mentre strategy
+alterna algoritmi per composizione, template_method è penalizzato in quanto usa l'ereditarietà a tale scopo, ritenuta
+meno flessibile.
 
 
 Prossimi passi: Prompt engineering della richiesta da fare agli LLM, partendo da linee guida di OpenAI e 1-2 LLM 
 (versione chat) di riferimento. 
-Per tener traccia di ogni prompt valutato ho creato un file prompts.json che mappa, per ogni prompt valutato, il
-percorso nel relativo file di output e l'accuracy totale ottenuta con quel prompt.
+
 
 Suggerimenti seguiti:
 - tenere traccia di ogni prompt valutato;
