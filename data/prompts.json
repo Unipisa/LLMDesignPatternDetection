@@ -1,23 +1,35 @@
 [
     {
-        "id" : 0,
+        "id": 0,
         "prompt": "Suggest the best design patterns appliable to refactor this code between abstract_factory, factory_method, builder, command, strategy, template_method, state, proxy, decorator, adapter.Answer in JSON format, create a field 'prediction' with value the list of appliable design  patterns.",
         "model": "openai/gpt-oss-20b",
-        "csv_path": "prompt_results/prompt_0.csv"
+        "csv_path": "prompt_results/prompt_0.csv",
+        "acc_top1": 0.619,
+        "jaccard": 0.375,
+        "precision": 0.702,
+        "recall": 0.462,
+        "f1": 0.506
     },
     {
-        "id" : 1,
+        "id": 1,
         "prompt": "You are an expert software engineer specialized in design patterns.You will be given a poorly written Python code. Your task is to identify which design patterns from the following list should be applied to refactor and improve it: [abstract_factory, factory_method, builder, command, strategy, template_method, state, proxy, decorator, adapter]. Rules:1) Output ONLY the patterns that would concretely improve this code. 2) A pattern is applicable if the code structure suggests it, even in a partial or non-canonical form. 3) If k <= 10 patterns are applicable, output ALL of them.4) Names must be exactly as in the list above (case sensitive).",
         "model": "openai/gpt-oss-20b",
-        "csv_path": "prompt_results/prompt_1.csv"
+        "csv_path": "prompt_results/prompt_1.csv",
+        "acc_top1": 0.238,
+        "jaccard": 0.126,
+        "precision": 0.524,
+        "recall": 0.126,
+        "f1": 0.202
     },
     {
-         "id" : 2,
+        "id": 2,
         "prompt": "You are an expert software engineer specialized in design patterns.You will be given a poorly written Python code. Your task is to identify which design patterns from the following list should be applied to refactor and improve it: [abstract_factory, factory_method, builder, command, strategy, template_method, state, proxy, decorator, adapter]. On average, there are 4 applicable design patterns for each baseline. Rules:1) Output the patterns that would concretely improve this code. 2) A pattern is applicable if the code structure suggests it, even in a partial or non-canonical form. 3) If k <= 10 patterns are applicable, output ALL of them. 4) Names must be exactly as in the list above (case sensitive). 5) There is at least one appliable pattern, so you must output at least one design pattern.",
         "model": "openai/gpt-oss-20b",
-        "csv_path": "prompt_results/prompt_2.csv"
+        "csv_path": "prompt_results/prompt_2.csv",
+        "acc_top1": 0.333,
+        "jaccard": 0.171,
+        "precision": 0.619,
+        "recall": 0.175,
+        "f1": 0.264
     }
-
-
-
 ]

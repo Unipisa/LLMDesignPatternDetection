@@ -311,26 +311,37 @@ sicurezza nella fase di test di sottoporlo a situazioni più "realistiche" evita
 o "troppo semplici".
 
 ## Fase 2: creazione del system prompt per l'LLM
-Richiedere un insieme di predizioni su un dataset talmente strutturato, con 31 codici baseline, rende meno invitante
+Richiedere un insieme di predizioni su un dataset talmente strutturato, con 21 codici baseline, rende meno invitante
 gestire "manualmente" il prompting ai modelli e il salvataggio dei risultati. Per questo motivo ho creato una procedura
 automatizzata, nello script prompts_engineering.py, che, leggendo da un file json dove sono memorizzati le 
 configurazioni prompt-modello ("prompts.json"), itera richiedendo predizioni sull'intero training set. Per implementarlo
 ho consultato alcune sezioni della libreria offerta da OpenAI (in particolare
-https://platform.openai.com/docs/api-reference/chat/create), che offre la possiiblità di interagire senza problemi con
+https://platform.openai.com/docs/api-reference/chat/create), che offre la possibilità di interagire senza problemi con
 modelli locali caricati sul programma "LM studio". Lo script, dopo aver interrogato il modello, salva la predizione 
 calcolata e aggiunge una riga riassuntiva dell'esempio all'interno di un oggetto pandas.Dataframe, caratterizzato dagli 
 attributi (id, name baseline, prompt, gold_truth, prediction, model, accuracy@top-1). 
-Appena terminate le predizioni e creato il dataframe completo, il programma salva il dataframe in un file csv, il cui 
-path è tracciato rigorosamente nel file "prompts.json".
-CHIARISCI SEED E TEMPERATURA
+Appena terminate le predizioni e creato il dataframe completo, il programma lo salva in un file csv, il cui 
+path è memorizzato rigorosamente nel file "prompts.json". Al fine di permettere al modello di esplorare soluzioni più
+"creative" il parametro "temperature" è stato impostato a 0.3, con l'obiettivo di permettere una migliore
+generalizzazione. Il seed è stato impostato a un valore fisso per aumentare le probabilità di ottenere output simili in 
+Epoch differenti.
 
 ## Fase 3: prompt engineering effettivo e considerazioni
-Dalle varie esecuzioni è evidente come il modello, con alcuni prompt, non suggerisca mai alcuni dei 10 design pattern 
-applicabili. È il caso del template method: essendo un path meno "popolare", viene spesso surclassato da strategy, più
-flessibile al contesto e comune. Ad aggravare ulteriormente il problema è la natura stessa del pattern: mentre strategy
-alterna algoritmi per composizione, template_method è penalizzato in quanto usa l'ereditarietà a tale scopo, ritenuta
-meno flessibile.
-
+Dalle varie esecuzioni è evidente alcuni modelli (come gpt-oss 20B), con alcuni prompt, non suggeriscano mai alcuni dei 
+design pattern applicabili. È il caso del template method: essendo un path meno "popolare", viene spesso "eclissato" da 
+strategy, più comune e flessibile al contesto. Ad aggravare ulteriormente il problema è la natura stessa del pattern: 
+mentre strategy alterna algoritmi per composizione, template_method è penalizzato in quanto usa l'ereditarietà a tale 
+scopo, ritenuta meno pratica. In nessun prompt è stato richiesto di restituire una lista di proprità dei pattern 
+ritenuti applicabili, in quanto, oltre a rendere ancora più evidente la necessità di una ground truth oggettiva per 
+un task soggettivo, aggiunge ulteriore complessità alla richiesta rishciandop di peggiorare l'accuracy. 
+Il vantaggio principale di aver adottato una strategia automatizzata è quello di poter ottener facilmente l'accuracy
+per ogni predizione, oltre all'accuracy totale dell'intera Epoch. Per "farsi un'idea" di come ha performato LLM sul 
+training set, ho definito più metriche di valutazione:
+- accuracy@top-1: controllo se, tra i pattern restituiti dal modello, è presente il primo della ground truth relativa.
+- Jaccard-Similarity: misura la similitudine tra la ground truth e la predizione, trattandole come insiemi.
+- precision: rapporto tra il numero di pattern corretti nella predizione e il numero totale di pattern nella predizione.
+- recall: rapporto tra il numero di pattern corretti nella predizione e il numero totale di pattern nella ground truth.
+- f1-score: media armonica 2 * precision * recall / (precision + recall), penalizza se sono sbilanciati.
 
 Prossimi passi: Prompt engineering della richiesta da fare agli LLM, partendo da linee guida di OpenAI e 1-2 LLM 
 (versione chat) di riferimento. 
