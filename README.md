@@ -317,16 +317,37 @@ automatizzata, nello script prompts_engineering.py, che, leggendo da un file jso
 configurazioni prompt-modello ("prompts.json"), itera richiedendo predizioni sull'intero training set. Per implementarlo
 ho consultato alcune sezioni della libreria offerta da OpenAI (in particolare
 https://platform.openai.com/docs/api-reference/chat/create), che offre la possibilità di interagire senza problemi con
-modelli locali caricati sul programma "LM studio". Lo script, dopo aver interrogato il modello, salva la predizione 
-calcolata e aggiunge una riga riassuntiva dell'esempio all'interno di un oggetto pandas.Dataframe, caratterizzato dagli 
-attributi (id, name baseline, prompt, gold_truth, prediction, model, accuracy@top-1). 
+modelli locali caricati sul programma "LM studio".Lo script, dopo aver interrogato LLM, salva la predizione calcolata e 
+aggiunge una riga riassuntiva dell'esempio all'interno di un oggetto pandas.Dataframe, caratterizzato dagli attributi 
+["id", "prompt", "model", "name_baseline", "gold_truth", "prediction"]. 
 Appena terminate le predizioni e creato il dataframe completo, il programma lo salva in un file csv, il cui 
 path è memorizzato rigorosamente nel file "prompts.json". Al fine di permettere al modello di esplorare soluzioni più
 "creative" il parametro "temperature" è stato impostato a 0.3, con l'obiettivo di permettere una migliore
 generalizzazione. Il seed è stato impostato a un valore fisso per aumentare le probabilità di ottenere output simili in 
-Epoch differenti.
+Epoch differenti, inoltre dopo aver ottenuto la predizione lo script salva alcune metriche di accuracy "totali", 
+relative ai risultati ottenuti, in corrispondenza del prompt usato dentro promots.json.
+In caso di interazione di lm studio, viene usata un'interazione cli (usando Python subprocess): permettono 
+di avviare il server locale e stopparlo con conseguente unload di tutti i modelli attivi.
+L'intero processo, con i log inclusi, è monitorabile dalla GUI di lm studio.
 
-## Fase 3: prompt engineering effettivo e considerazioni
+## Fase 3: scelta dei modelli
+Al fine di obbligare il modello a fornire risposte secondo un preciso formato ho sfruttato l'API "structured outputs",
+nativamente supportata da LM-studio(https://lmstudio.ai/docs/developer/openai-compat/structured-output). L'idea è
+obbligare il modello a rispondere con un array di elementi scelti dai 10 possibili design patterns, rispettando un
+formato definito con json schema. Ciò semplifica notevolmente la fase di parsing e analisi delle predizioni, in quanto 
+la generazione di token è vincolata matematicamente a produrre token validi per lo schema scelto. Purtroppo però il
+supporto a "structured outputs"non è garantito da tutti i modelli locali(in particolare quelli con meno di 7B di 
+parametri) presenti sul programma LM studio, è possibile comunque verificarne la compatibilità leggendo le varie model
+cards. Senza il supporto a tale API, il modello probabilmente ignorerebbe il json schema e la risposta divenderebbe 
+imprevedibile: per supportare tale categoria di modelli sarebbe opportuno "appesantire" i prompt anche con delle 
+istruzioni di formattazione della risposta in JSON, con il rischio di degradare l'accuracy e comunque l'incertezza che
+il modello rispetti davvero la convenzione proposta.
+Al netto di queste considerazioni ho iniziato la sperimentazione con 2 modelli che supportano "structured outputs":
+- gpt-oss-20b: gold standard di riferimento tra i modelli locali adatti a 16 GB di RAM.
+- qwen2.5-coder-14b: è attualmente il modello di riferimento in questa fascia di peso per i task di programmazione e ha
+  una profonda comprensione delle architetture software (inclusi i design pattern).  
+
+## Fase 4: prompt engineering effettivo e considerazioni
 Dalle varie esecuzioni è evidente alcuni modelli (come gpt-oss 20B), con alcuni prompt, non suggeriscano mai alcuni dei 
 design pattern applicabili. È il caso del template method: essendo un path meno "popolare", viene spesso "eclissato" da 
 strategy, più comune e flessibile al contesto. Ad aggravare ulteriormente il problema è la natura stessa del pattern: 
