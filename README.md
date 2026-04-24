@@ -343,7 +343,7 @@ imprevedibile: per supportare tale categoria di modelli sarebbe opportuno "appes
 istruzioni di formattazione della risposta in JSON, con il rischio di degradare l'accuracy e comunque l'incertezza che
 il modello rispetti davvero la convenzione proposta.
 Al netto di queste considerazioni ho iniziato la sperimentazione con 2 modelli che supportano "structured outputs":
-- gpt-oss-20b: gold standard di riferimento tra i modelli locali adatti a 16 GB di RAM.
+- gpt-oss-20b (KV cache quantization: 8 bits)
 - qwen2.5-coder-14b: è attualmente il modello di riferimento in questa fascia di peso per i task di programmazione e ha
   una profonda comprensione delle architetture software (inclusi i design pattern).  
 
@@ -359,10 +359,12 @@ Il vantaggio principale di aver adottato una strategia automatizzata è quello d
 per ogni predizione, oltre all'accuracy totale dell'intera Epoch. Per "farsi un'idea" di come ha performato LLM sul 
 training set, ho definito più metriche di valutazione:
 - accuracy@top-1: controllo se, tra i pattern restituiti dal modello, è presente il primo della ground truth relativa.
-- Jaccard-Similarity: misura la similitudine tra la ground truth e la predizione, trattandole come insiemi.
-- precision: rapporto tra il numero di pattern corretti nella predizione e il numero totale di pattern nella predizione.
-- recall: rapporto tra il numero di pattern corretti nella predizione e il numero totale di pattern nella ground truth.
-- f1-score: media armonica 2 * precision * recall / (precision + recall), penalizza se sono sbilanciati.
+- NDCG: Normalized Discounted Cumulative Gain, tiene in considerazione l'intera predizione del modello
+- NDGC@3: tiene in considerazione solo i 3 primi elementi della predizione del modello.
+
+Le ultime due metriche proposte (https://it.wikipedia.org/wiki/Apprendimento_di_ranking) sono adibite esattamente 
+alla misurazione della qualità del ranking del modello, misurando quindi la similarità tra la lista ground_truth e
+la prediction.
 
 Prossimi passi: Prompt engineering della richiesta da fare agli LLM, partendo da linee guida di OpenAI e 1-2 LLM 
 (versione chat) di riferimento. 

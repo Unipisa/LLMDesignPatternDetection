@@ -1,0 +1,17 @@
+[
+    {
+        "id": 0,
+        "prompt": "Suggest the best design patterns appliable to refactor this code between abstract_factory, factory_method, builder, command, strategy, template_method, state, proxy, decorator, adapter. Order the list from most to least recommended.",
+        "label": "base"
+    },
+    {
+        "id": 1,
+        "prompt": "You are an expert software engineer specialized in design patterns. You will be given a poorly written Python code. Your task is to identify which design patterns from the following list should be applied to refactor and improve it: [abstract_factory, factory_method, builder, command, strategy, template_method, state, proxy, decorator, adapter]. Order the list from most to least recommended.",
+        "label": "base + role"
+    },
+    {
+        "id": 2,
+        "prompt": "You are an expert software engineer specialized in design patterns. You will be given a poorly written Python code.\nYour task is to identify which design patterns from the following list should be applied to refactor and improve it: [abstract_factory, factory_method, builder, command, strategy, template_method, state, proxy, decorator, adapter]\n\nRules: (1) Output ALL patterns that would concretely improve this code, without artificial limits. (2) A pattern is applicable if the code structure suggests it, even in a partial or non-canonical form. (3) Names must be exactly as in the list above (case-sensitive). (4) There is at least one applicable pattern: always output at least one. (5) Order the list from most to least recommended.",
+        "label": "base + role + rules"
+    }
+]

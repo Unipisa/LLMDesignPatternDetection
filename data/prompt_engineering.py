@@ -8,13 +8,63 @@ import time
 import requests
 
 
+EXAMPLE = """
+class DocDataMiner:
+    def mine(self, path):
+        file = open(path, "rb")
+        raw = file.read()
+        data = raw.decode().split("\n")          # parse DOC
+        analysis = {"righe": len(data), "parole": sum(len(r.split()) for r in data)}
+        print(analysis)
+        file.close()
+
+class CSVDataMiner:
+    def mine(self, path):
+        file = open(path, "rb")
+        raw = file.read()
+        lines = raw.decode().split("\n")
+        h = lines[0].split(",")
+        data = [dict(zip(h, r.split(","))) for r in lines[1:] if r]  # parse CSV
+        analysis = {"righe": len(data), "parole": sum(len(str(r).split()) for r in data)}
+        print(analysis)
+        file.close()
+
+class PDFDataMiner:
+    def mine(self, path):
+        file = open(path, "rb")
+        raw = file.read()
+        data = [r for r in raw.decode("latin-1").split("\n") if r.strip()]  # parse PDF
+        analysis = {"righe": len(data), "parole": sum(len(r.split()) for r in data)}
+        print(analysis)
+        file.close()
+"""
+
+ANSWER = '{"prediction": ["template_method", "strategy", "proxy"]}'
+
+def ndcg(prediction: list, ground_truth: list, k: int = None) -> float:
+    if k:
+        prediction = prediction[:k]
+
+    # relevance: 1 se il pattern è nel ground truth, 0 altrimenti
+    gains = [1 if p in set(ground_truth) else 0 for p in prediction]
+
+    # DCG: somma pesata per posizione
+    dcg = sum(g / (i + 1) for i, g in enumerate(gains))  # log2(i+2) in versione standard
+
+    # IDCG: caso ideale (tutti i rilevanti nelle prime posizioni)
+    ideal = sorted(gains, reverse=True)
+    idcg = sum(g / (i + 1) for i, g in enumerate(ideal))
+
+    return dcg / idcg if idcg > 0 else 0.0
+
+
 # noinspection PyTypeChecker
-def start(prompt_used: str, model_used: str, url: str, key : str):
+def start(prompt_used: str, model_used: str, url: str, key : str, label_used: str, one_shot: bool = False):
     client = OpenAI(base_url = url, api_key = key)
 
     df = pd.DataFrame(columns=["id", "prompt_used", "model", "name_baseline", "ground_truth", "prediction"])
 
-    with open("training_set.json", "r") as f:
+    with open("config/training_set.json", "r") as f:
         training_set = json.load(f)
         for example in training_set:
             path_baseline = example["path_baseline"]
@@ -26,12 +76,16 @@ def start(prompt_used: str, model_used: str, url: str, key : str):
 
             with open(path_baseline, "r") as g:
                 code = g.read()
+
+                msg = [{"role": "system", "content": prompt_used}]
+                if one_shot:
+                    msg.append({"role": "user", "content": EXAMPLE})
+                    msg.append({"role": "assistant", "content": ANSWER})
+                msg.append({"role": "user", "content": code})
+
                 response = client.chat.completions.create(
                     model=model_used,
-                    messages=[
-                        {"role": "system", "content": prompt_used},
-                        {"role": "user", "content": code}
-                    ],
+                    messages=msg,
                     temperature=0.3,
                     seed=42,  # trying to get equal responses from different executionts
 
@@ -79,7 +133,7 @@ def start(prompt_used: str, model_used: str, url: str, key : str):
                     print(f"Errore nel parsing del file {name}: {e}")
                     ris = ["ERRORE_PARSING"]
 
-                df.loc[len(df)] = [id_example, prompt_used, model_used, name, ground_truth, ris]
+                df.loc[len(df)] = [id_example, label_used, model_used, name, ground_truth, ris]
 
         return df
 
@@ -92,22 +146,12 @@ def evaluate(df: pd.DataFrame):
         if isinstance(prediction, str):
             prediction = eval(prediction)
 
-        truth_set = set(ground_truth)
-        pred_set = set(prediction)
-        tp = len(truth_set.intersection(pred_set))
-
-        acc_top1 = 1 if ground_truth[0] in pred_set else 0
-        jaccard = tp / len(truth_set | pred_set) if (truth_set | pred_set) else 0
-        precision = tp / len(pred_set) if pred_set else 0
-        recall = tp / len(truth_set) if truth_set else 0
-        f1 = 2 * precision * recall / (precision + recall) if (precision + recall) else 0
+        acc_top1 = 1 if prediction[0] in ground_truth else 0
 
         df.loc[idx, "acc_top1"] = round(acc_top1, 3)
-        df.loc[idx, "jaccard"] = round(jaccard, 3)
-        df.loc[idx, "precision"] = round(precision, 3)
-        df.loc[idx, "recall"] = round(recall, 3)
-        df.loc[idx, "f1"] = round(f1, 3)
-    return
+        df.loc[idx, "ndcg"] = round(ndcg(prediction, ground_truth), 3)
+        df.loc[idx, "ndcg@3"] = round(ndcg(prediction, ground_truth, k=3), 3)
+
 
 
 def unload_model(model_name: str):
@@ -126,12 +170,15 @@ def unload_model(model_name: str):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--id", type=int, required=True, help="ID of the prompt_used to use")
+    parser.add_argument("--model", type=str, required=True, help="Model to use")
     parser.add_argument("--base_url", type=str, default="http://127.0.0.1:1234/v1", help="Base URL per OpenAI API")
     parser.add_argument("--api_key", type=str, default="lm-studio", help="API key per OpenAI API")
+    parser.add_argument("--one_shot", action= "store_true", help= "Model will receive a pair of example-answer to help solving the"
+                                                                      " task")
     args = parser.parse_args()
-    prompts = json.load(open("prompts.json", "r"))
+    prompts = json.load(open("config/prompts.json", "r"))
     prompt = prompts[args.id]["prompt"]
-    model = prompts[args.id]["model"]
+    label = prompts[args.id]["label"]
 
     local = (args.base_url == "http://127.0.0.1:1234/v1") and (args.api_key == "lm-studio")
     output = None
@@ -141,11 +188,13 @@ if __name__ == "__main__":
             subprocess.run("lms server start", shell=True)  # launches <lms server start> command on shell
             time.sleep(5)  # Wait 5 seconds to make sure server is runnig
 
-        output = start(prompt, model, args.base_url, args.api_key)  # this is a pandas.Dataframe object
+        print(f"Starting shot: {args.model}")
+        output = start(prompt, args.model, args.base_url, args.api_key, label, args.one_shot)  # this is a pandas.Dataframe object
+        print("Shot completed: ", args.model)
     finally:
         if local:
             # unloads all uploaded models and stops server
-            unload_model(model)
+            unload_model(args.model)
             print("Stopping lm studio server...")
             subprocess.run("lms server stop", shell=True)
 
@@ -156,16 +205,29 @@ if __name__ == "__main__":
 
     evaluate(output)
 
-    metrics = ["acc_top1", "jaccard", "precision", "recall", "f1"]
+    metrics = ["acc_top1", "ndcg", "ndcg@3"]
     summary = output[metrics].mean().to_dict()      # mean of all valuation metrics
-    prompts[args.id]["acc_top1"] = round (summary["acc_top1"], 3) # round to 3 decimal places
-    prompts[args.id]["jaccard"] = round(summary["jaccard"], 3)
-    prompts[args.id]["precision"] = round(summary["precision"], 3)
-    prompts[args.id]["recall"] = round(summary["recall"], 3)
-    prompts[args.id]["f1"] = round(summary["f1"], 3)
+    summary["acc_top1"] = round(summary["acc_top1"], 3) # round to 3 decimal places
+    summary["ndcg"] = round(summary["ndcg"], 3)
+    summary["ndcg@3"] = round(summary["ndcg@3"], 3)
 
-    output.to_csv(prompts[args.id]["csv_path"], index=False)
+    if args.one_shot:
+        shot = "one_shot"
+    else:
+        shot = "zero_shot"
 
-    # save updated prompts.json with metrics
-    with open("prompts.json", "w") as f:
-        json.dump(prompts, f, indent=4)
+    model_safe = args.model.split("/")[-1]
+    output.to_csv(f"prompt_results/{shot}/prompt_{model_safe}_{args.id}.csv", index=False)
+
+    # saving "summary" of this execution
+    with open(f"config/results.json", "r") as f:
+        data = json.load(f)
+
+    data.setdefault(model_safe, {}).setdefault(shot, {})[label] = {       # creates keys if they don't exist', updates otherwise
+        "acc_top1": summary["acc_top1"],
+        "ndcg": summary["ndcg"],
+        "ndcg@3": summary["ndcg@3"]
+    }
+
+    with open(f"config/results.json", "w") as f:
+        json.dump(data, f, indent=4)
