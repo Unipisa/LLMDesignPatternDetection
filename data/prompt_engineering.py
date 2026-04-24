@@ -45,18 +45,31 @@ def ndcg(prediction: list, ground_truth: list, k: int = None) -> float:
     if k:
         prediction = prediction[:k]
 
-    # relevance: 1 se il pattern è nel ground truth, 0 altrimenti
+    # 1 if predicted design pattern in ground_truth, 0 otherwise
     gains = [1 if p in set(ground_truth) else 0 for p in prediction]
 
-    # DCG: somma pesata per posizione
-    dcg = sum(g / (i + 1) for i, g in enumerate(gains))  # log2(i+2) in versione standard
+    # DCG: weighted sum by position
+    dcg = sum(g / (i + 1) for i, g in enumerate(gains))
 
-    # IDCG: caso ideale (tutti i rilevanti nelle prime posizioni)
+    # IDCG: ideal case (all relevant design patterns in top positions)
     ideal = sorted(gains, reverse=True)
     idcg = sum(g / (i + 1) for i, g in enumerate(ideal))
 
     return dcg / idcg if idcg > 0 else 0.0
 
+
+# Metrics to penalize pattern "spamming" (model returns all patterns)
+def precision(prediction: list, ground_truth: list) -> float:
+    relevant_retrieved = len(set(prediction) & set(ground_truth))
+    return relevant_retrieved / len(set(prediction)) if prediction else 0.0
+
+def jaccard_similarity(prediction: list, ground_truth: list) -> float:
+    # len(intersection) / len(union)
+    set_pred = set(prediction)
+    set_gt = set(ground_truth)
+    intersection = len(set_pred & set_gt)
+    union = len(set_pred | set_gt)
+    return intersection / union if union else 0.0
 
 # noinspection PyTypeChecker
 def start(prompt_used: str, model_used: str, url: str, key : str, label_used: str, one_shot: bool = False):
@@ -116,6 +129,7 @@ def start(prompt_used: str, model_used: str, url: str, key : str, label_used: st
                                             ]
                                         },
                                         "minItems": 1,
+                                        "uniqueItems": True,
                                     "description": "List of design patterns detected in the code."
                                     }
                                 },
@@ -127,6 +141,8 @@ def start(prompt_used: str, model_used: str, url: str, key : str, label_used: st
                 )
                 try:
                     ris = response.choices[0].message.content  # this is a string, not a dict ==> parsing with json
+                    if not ris:  # fallback per thinking models (es. Qwen)
+                        ris = response.choices[0].message.model_extra.get("reasoning_content", "")
                     ris = json.loads(ris)
                     ris = ris["prediction"]
                 except Exception as e:
@@ -151,6 +167,8 @@ def evaluate(df: pd.DataFrame):
         df.loc[idx, "acc_top1"] = round(acc_top1, 3)
         df.loc[idx, "ndcg"] = round(ndcg(prediction, ground_truth), 3)
         df.loc[idx, "ndcg@3"] = round(ndcg(prediction, ground_truth, k=3), 3)
+        df.loc[idx, "precision"] = round(precision(prediction, ground_truth), 3)
+        df.loc[idx, "jaccard"] = round(jaccard_similarity(prediction, ground_truth), 3)
 
 
 
@@ -205,11 +223,13 @@ if __name__ == "__main__":
 
     evaluate(output)
 
-    metrics = ["acc_top1", "ndcg", "ndcg@3"]
+    metrics = ["acc_top1", "ndcg", "ndcg@3", "precision", "jaccard"]
     summary = output[metrics].mean().to_dict()      # mean of all valuation metrics
     summary["acc_top1"] = round(summary["acc_top1"], 3) # round to 3 decimal places
     summary["ndcg"] = round(summary["ndcg"], 3)
     summary["ndcg@3"] = round(summary["ndcg@3"], 3)
+    summary["precision"] = round(summary["precision"], 3)
+    summary["jaccard"] = round(summary["jaccard"], 3)
 
     if args.one_shot:
         shot = "one_shot"
@@ -226,7 +246,9 @@ if __name__ == "__main__":
     data.setdefault(model_safe, {}).setdefault(shot, {})[label] = {       # creates keys if they don't exist', updates otherwise
         "acc_top1": summary["acc_top1"],
         "ndcg": summary["ndcg"],
-        "ndcg@3": summary["ndcg@3"]
+        "ndcg@3": summary["ndcg@3"],
+        "precision": summary["precision"],
+        "jaccard": summary["jaccard"]
     }
 
     with open(f"config/results.json", "w") as f:
