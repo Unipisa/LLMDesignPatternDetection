@@ -1,22 +1,22 @@
-id,prompt_used,model,name_baseline,ground_truth,prediction,acc_top1,ndcg,ndcg@3,precision,jaccard
-0,base,openai/gpt-oss-20b,departure,"['template_method', 'strategy', 'builder', 'proxy']","['abstract_factory', 'factory_method', 'strategy']",0.0,0.333,0.333,0.333,0.167
-2,base,openai/gpt-oss-20b,rescuelogic,"['template_method', 'strategy', 'proxy']","['abstract_factory', 'factory_method', 'strategy']",0.0,0.333,0.333,0.333,0.2
-3,base,openai/gpt-oss-20b,traffic_light,"['state', 'proxy', 'strategy']","['abstract_factory', 'abstract_factory']",0.0,0.0,0.0,0.0,0.0
-5,base,openai/gpt-oss-20b,Stall,"['state', 'command', 'strategy', 'proxy']","['abstract_factory', 'factory_method', 'builder', 'command', 'strategy', 'template_method', 'state', 'proxy', 'decorator', 'adapter']",0.0,0.345,0.0,0.4,0.4
-6,base,openai/gpt-oss-20b,rover,"['command', 'proxy', 'strategy']","['abstract_factory', 'factory_method', 'builder', 'command', 'strategy']",0.0,0.3,0.0,0.4,0.333
-8,base,openai/gpt-oss-20b,bankaccount,"['command', 'strategy', 'proxy', 'decorator']","['abstract_factory', 'builder', 'strategy']",0.0,0.333,0.333,0.333,0.167
-9,base,openai/gpt-oss-20b,Vector,"['strategy', 'template_method', 'adapter', 'command', 'proxy']","['abstract_factory', 'factory_method', 'builder']",0.0,0.0,0.0,0.0,0.0
-10,base,openai/gpt-oss-20b,validator,"['strategy', 'state', 'template_method', 'proxy']",['strategy'],1.0,1.0,1.0,1.0,0.25
-13,base,openai/gpt-oss-20b,monster,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['abstract_factory', 'factory_method', 'builder']",1.0,1.0,1.0,1.0,0.6
-14,base,openai/gpt-oss-20b,wand,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['abstract_factory', 'factory_method', 'builder']",1.0,1.0,1.0,1.0,0.6
-15,base,openai/gpt-oss-20b,tv,"['abstract_factory', 'factory_method', 'strategy']","['abstract_factory', 'factory_method']",1.0,1.0,1.0,1.0,0.667
-17,base,openai/gpt-oss-20b,house,"['abstract_factory', 'factory_method', 'strategy', 'proxy']","['abstract_factory', 'factory_method']",1.0,1.0,1.0,1.0,0.5
-18,base,openai/gpt-oss-20b,gamengine,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']","['factory_method', 'abstract_factory', 'builder']",1.0,1.0,1.0,1.0,0.5
-19,base,openai/gpt-oss-20b,computer,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']","['abstract_factory', 'factory_method']",1.0,1.0,1.0,1.0,0.333
-22,base,openai/gpt-oss-20b,tenant,['proxy'],"['abstract_factory', 'factory_method']",0.0,0.0,0.0,0.0,0.0
-23,base,openai/gpt-oss-20b,ledger,['proxy'],"['abstract_factory', 'factory_method', 'builder', 'command']",0.0,0.0,0.0,0.0,0.0
-24,base,openai/gpt-oss-20b,water_flow,"['proxy', 'decorator', 'command']","['abstract_factory', 'factory_method']",0.0,0.0,0.0,0.0,0.0
-25,base,openai/gpt-oss-20b,sword,"['decorator', 'factory_method', 'strategy', 'proxy']","['abstract_factory', 'factory_method', 'builder', 'decorator']",0.0,0.5,0.5,0.5,0.333
-27,base,openai/gpt-oss-20b,cafecito,"['decorator', 'builder', 'strategy', 'factory_method', 'proxy']","['abstract_factory', 'builder']",0.0,0.5,0.5,0.5,0.167
-28,base,openai/gpt-oss-20b,roundhole,['adapter'],"['abstract_factory', 'strategy']",0.0,0.0,0.0,0.0,0.0
-29,base,openai/gpt-oss-20b,calculator,"['adapter', 'command', 'strategy', 'proxy']","['abstract_factory', 'factory_method']",0.0,0.0,0.0,0.0,0.0
+id,prompt_used,model,name_baseline,ground_truth,prediction,acc_top1,ndcg,false_positive_rate
+0,base,openai/gpt-oss-20b,departure,"['template_method', 'strategy', 'builder', 'proxy']","['abstract_factory', 'factory_method', 'builder']",0.0,0.333,0.333
+2,base,openai/gpt-oss-20b,rescuelogic,"['template_method', 'strategy', 'proxy']","['abstract_factory', 'factory_method']",0.0,0.0,0.286
+3,base,openai/gpt-oss-20b,traffic_light,"['state', 'proxy', 'strategy']","['abstract_factory', 'factory_method']",0.0,0.0,0.286
+5,base,openai/gpt-oss-20b,Stall,"['state', 'command', 'strategy', 'proxy']",['state'],1.0,1.0,0.0
+6,base,openai/gpt-oss-20b,rover,"['command', 'proxy', 'strategy']","['abstract_factory', 'factory_method', 'builder', 'command', 'strategy']",0.0,0.3,0.429
+8,base,openai/gpt-oss-20b,bankaccount,"['command', 'strategy', 'proxy', 'decorator']","['abstract_factory', 'factory_method', 'builder']",0.0,0.0,0.5
+9,base,openai/gpt-oss-20b,Vector,"['strategy', 'template_method', 'adapter', 'command', 'proxy']","['abstract_factory', 'factory_method']",0.0,0.0,0.4
+10,base,openai/gpt-oss-20b,validator,"['strategy', 'state', 'template_method', 'proxy']",['strategy'],1.0,1.0,0.0
+13,base,openai/gpt-oss-20b,monster,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['abstract_factory', 'factory_method']",1.0,1.0,0.0
+14,base,openai/gpt-oss-20b,wand,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['abstract_factory', 'factory_method']",1.0,1.0,0.0
+15,base,openai/gpt-oss-20b,tv,"['abstract_factory', 'factory_method', 'strategy']","['abstract_factory', 'factory_method']",1.0,1.0,0.0
+17,base,openai/gpt-oss-20b,house,"['abstract_factory', 'factory_method', 'strategy', 'proxy']","['abstract_factory', 'factory_method', 'strategy']",1.0,1.0,0.0
+18,base,openai/gpt-oss-20b,gamengine,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']","['abstract_factory', 'factory_method']",1.0,1.0,0.0
+19,base,openai/gpt-oss-20b,computer,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']","['abstract_factory', 'factory_method']",1.0,1.0,0.0
+22,base,openai/gpt-oss-20b,tenant,['proxy'],"['strategy', 'decorator', 'proxy']",0.0,0.333,0.222
+23,base,openai/gpt-oss-20b,ledger,['proxy'],"['abstract_factory', 'factory_method', 'builder']",0.0,0.0,0.333
+24,base,openai/gpt-oss-20b,water_flow,"['proxy', 'decorator', 'command']","['abstract_factory', 'factory_method']",0.0,0.0,0.286
+25,base,openai/gpt-oss-20b,sword,"['decorator', 'factory_method', 'strategy', 'proxy']",['decorator'],1.0,1.0,0.0
+27,base,openai/gpt-oss-20b,cafecito,"['decorator', 'builder', 'strategy', 'factory_method', 'proxy']",['abstract_factory'],0.0,0.0,0.2
+28,base,openai/gpt-oss-20b,roundhole,['adapter'],"['abstract_factory', 'factory_method']",0.0,0.0,0.222
+29,base,openai/gpt-oss-20b,calculator,"['adapter', 'command', 'strategy', 'proxy']","['abstract_factory', 'factory_method']",0.0,0.0,0.333

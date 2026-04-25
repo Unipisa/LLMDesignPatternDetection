@@ -58,18 +58,13 @@ def ndcg(prediction: list, ground_truth: list, k: int = None) -> float:
     return dcg / idcg if idcg > 0 else 0.0
 
 
-# Metrics to penalize pattern "spamming" (model returns all patterns)
-def precision(prediction: list, ground_truth: list) -> float:
-    relevant_retrieved = len(set(prediction) & set(ground_truth))
-    return relevant_retrieved / len(set(prediction)) if prediction else 0.0
-
-def jaccard_similarity(prediction: list, ground_truth: list) -> float:
-    # len(intersection) / len(union)
-    set_pred = set(prediction)
-    set_gt = set(ground_truth)
-    intersection = len(set_pred & set_gt)
-    union = len(set_pred | set_gt)
-    return intersection / union if union else 0.0
+# Metric to penalize pattern "spamming" (model returns all patterns): 1.0 if model spams
+def false_positive_rate(prediction: list, ground_truth: list) -> float:
+    all_patterns = ["abstract_factory", "factory_method", "builder", "command", "strategy", "template_method", "state",
+                    "proxy", "decorator", "adapter"]
+    possible_wrong_patterns = set(all_patterns) - set(ground_truth)
+    wrong_patterns = set(prediction) - set(ground_truth)    # false positives: patterns predicted as relevant but not in ground_truth
+    return len(wrong_patterns) / len(possible_wrong_patterns) if possible_wrong_patterns else 0.0
 
 # noinspection PyTypeChecker
 def start(prompt_used: str, model_used: str, url: str, key : str, label_used: str, one_shot: bool = False):
@@ -166,9 +161,7 @@ def evaluate(df: pd.DataFrame):
 
         df.loc[idx, "acc_top1"] = round(acc_top1, 3)
         df.loc[idx, "ndcg"] = round(ndcg(prediction, ground_truth), 3)
-        df.loc[idx, "ndcg@3"] = round(ndcg(prediction, ground_truth, k=3), 3)
-        df.loc[idx, "precision"] = round(precision(prediction, ground_truth), 3)
-        df.loc[idx, "jaccard"] = round(jaccard_similarity(prediction, ground_truth), 3)
+        df.loc[idx, "false_positive_rate"] = round(false_positive_rate(prediction, ground_truth), 3)
 
 
 
@@ -223,13 +216,11 @@ if __name__ == "__main__":
 
     evaluate(output)
 
-    metrics = ["acc_top1", "ndcg", "ndcg@3", "precision", "jaccard"]
+    metrics = ["acc_top1", "ndcg", "false_positive_rate"]
     summary = output[metrics].mean().to_dict()      # mean of all valuation metrics
     summary["acc_top1"] = round(summary["acc_top1"], 3) # round to 3 decimal places
     summary["ndcg"] = round(summary["ndcg"], 3)
-    summary["ndcg@3"] = round(summary["ndcg@3"], 3)
-    summary["precision"] = round(summary["precision"], 3)
-    summary["jaccard"] = round(summary["jaccard"], 3)
+    summary["false_positive_rate"] = round(summary["false_positive_rate"], 3)
 
     if args.one_shot:
         shot = "one_shot"
@@ -246,9 +237,7 @@ if __name__ == "__main__":
     data.setdefault(model_safe, {}).setdefault(shot, {})[label] = {       # creates keys if they don't exist', updates otherwise
         "acc_top1": summary["acc_top1"],
         "ndcg": summary["ndcg"],
-        "ndcg@3": summary["ndcg@3"],
-        "precision": summary["precision"],
-        "jaccard": summary["jaccard"]
+        "false_positive_rate": summary["false_positive_rate"],
     }
 
     with open(f"config/results.json", "w") as f:

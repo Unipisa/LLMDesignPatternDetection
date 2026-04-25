@@ -319,7 +319,7 @@ ho consultato alcune sezioni della libreria offerta da OpenAI (in particolare
 https://platform.openai.com/docs/api-reference/chat/create), che offre la possibilità di interagire senza problemi con
 modelli locali caricati sul programma "LM studio".Lo script, dopo aver interrogato LLM, salva la predizione calcolata e 
 aggiunge una riga riassuntiva dell'esempio all'interno di un oggetto pandas.Dataframe, caratterizzato dagli attributi 
-["id", "prompt", "model", "name_baseline", "gold_truth", "prediction"]. 
+["id", "prompt_label", "model", "name_baseline", "gold_truth", "prediction"]. 
 Appena terminate le predizioni e creato il dataframe completo, il programma lo salva in un file csv, il cui 
 path è memorizzato rigorosamente nel file "prompts.json". Al fine di permettere al modello di esplorare soluzioni più
 "creative" il parametro "temperature" è stato impostato a 0.3, con l'obiettivo di permettere una migliore
@@ -342,10 +342,11 @@ cards. Senza il supporto a tale API, il modello probabilmente ignorerebbe il jso
 imprevedibile: per supportare tale categoria di modelli sarebbe opportuno "appesantire" i prompt anche con delle 
 istruzioni di formattazione della risposta in JSON, con il rischio di degradare l'accuracy e comunque l'incertezza che
 il modello rispetti davvero la convenzione proposta.
-Al netto di queste considerazioni ho iniziato la sperimentazione con 2 modelli che supportano "structured outputs":
+Al netto di queste considerazionila fase di sperimentazione ha coinvolto i seguenti modelli: 
 - gpt-oss-20b (KV cache quantization: 8 bits)
-- qwen2.5-coder-14b: è attualmente il modello di riferimento in questa fascia di peso per i task di programmazione e ha
-  una profonda comprensione delle architetture software (inclusi i design pattern).  
+- qwen3.5-9b
+- gemma-4-e4b
+
 
 ## Fase 4: prompt engineering effettivo e considerazioni
 Dalle varie esecuzioni è evidente alcuni modelli (come gpt-oss 20B), con alcuni prompt, non suggeriscano mai alcuni dei 
@@ -358,13 +359,19 @@ un task soggettivo, aggiunge ulteriore complessità alla richiesta rishciandop d
 Il vantaggio principale di aver adottato una strategia automatizzata è quello di poter ottener facilmente l'accuracy
 per ogni predizione, oltre all'accuracy totale dell'intera Epoch. Per "farsi un'idea" di come ha performato LLM sul 
 training set, ho definito più metriche di valutazione:
-- accuracy@top-1: controllo se, tra i pattern restituiti dal modello, è presente il primo della ground truth relativa.
-- NDCG: Normalized Discounted Cumulative Gain, tiene in considerazione l'intera predizione del modello
-- NDGC@3: tiene in considerazione solo i 3 primi elementi della predizione del modello.
+- accuracy@top-1: il primo suggerito è giusto? Ideale: 1.0
+- NDCG (Normalized Discounted Cumulative Gain): i pattern corretti sono in cima? Ideale: 1.0
+- false_positive_rate: quanti pattern sbagliati sono stati suggeriti? Ideale: 0.0 (1.0 se il mdoello ha "spammato")
 
-Le ultime due metriche proposte (https://it.wikipedia.org/wiki/Apprendimento_di_ranking) sono adibite esattamente 
+Accuracy@1 svolge il ruolo di capire se il design pattern indicato come "più applicabile" del modello è effettivamente
+presente tra quelli considerati corretti. 
+NDGC è stata proposta (https://it.wikipedia.org/wiki/Apprendimento_di_ranking) in quanto adibita esattamente 
 alla misurazione della qualità del ranking del modello, misurando quindi la similarità tra la lista ground_truth e
-la prediction.
+la prediction. 
+False_positive_rate è una metrica il cui obiettivo è suggerire possibili situazioni dove il modello, sebbene possa aver
+azzeccato l'ordine corretto di applicabilità dei pattern producendo score elevati nei casi precedenti, abbia 
+semplicemente inserito tutti i 10 design pattern nella lista, suggerendone di cosneguenza molti sbagliati.
+
 
 Prossimi passi: Prompt engineering della richiesta da fare agli LLM, partendo da linee guida di OpenAI e 1-2 LLM 
 (versione chat) di riferimento. 
