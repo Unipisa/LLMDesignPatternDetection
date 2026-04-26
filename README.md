@@ -282,16 +282,18 @@ alla necessità di introdurre una naming convention specializzata per gestire qu
 
 Aggiunto il suffisso con il nome del pattern nei refactored.
 
-Dato che il pattern Proxy potrebbe creare problemi, specie se il proxy inserito “altera” il funzionamento (presente 
+Il pattern Proxy potrebbe creare problemi, specie se il proxy inserito “altera” il funzionamento (feature presente 
 anche nella baseline, ma forse difficilmente riconoscibile). Come conseguenza di ciò è stato aggiunto un esempio di 
-proxy logger, che fa solo task secondari.
+proxy logger, che fa solo task secondari in modo trasparente.
 
 Necessario anche tener conto della sperimentazione del lavoro, in particolare del fatto che per un dato codice sorgente 
 potrebbero esserci più pattern “corretti” che potrebbero essere applicati (ad esempio, “strategy” al posto di “command”,
 “abstract factory” invece di “factory method”, “proxy” sempre applicabile, ecc.).
+
+Modifiche rilevanti effettuate:
 - Annotato il dataset con tutti i pattern applicabili a un dato esempio (oltre a quello già previsto; senza 
-  necessariamente andare a crearne la versione rifattorizzata); essere “aperti” a “active learning”, aka. successive 
-  integrazioni valutando risposte dei modelli.
+  necessariamente andare a crearne la versione rifattorizzata). L'idea è essere “aperti” a “active learning”, aka. 
+  successive integrazioni valutando risposte dei modelli.
 - Aggiunto supporto a una sperimentazione che misuri “accuracy” come “mi suggerisce uno dei pattern applicabili”, oltre 
   a prevedere la possibilità di “privilegiare” (lista in ordine di priorità, accuracy@top-k) i pattern che sarebbe 
   meglio applicare.
@@ -304,11 +306,11 @@ training set i restanti esempi.
 - Training set: [0,2,3,5,6,8,9,10,13,14,15,17,18,19,22,23,24,25,27,28,29]
 - Test set: [1,4,7,11,12,16,20,21,26,30]
 
-Gli esempi scelti sono tra i baseline più “challenging” e meno banali per il pattern di riferimento (responsabilità 
-mescolate, alternative plausibili nella lista di priorità dei pattern applicabli). L'obiettivo non è penalizzare in fase 
-di valutazione o semplificare il training del modello (che ha già a disposizione pattern interessanti), ma avere la  
-sicurezza nella fase di test di sottoporlo a situazioni più "realistiche" evitando query composte da esempi "didattici"
-o "troppo semplici".
+Gli esempi scelti per il test sono, a mio avviso, tra i baseline più “challenging” e meno banali per il pattern di 
+riferimento(responsabilità mescolate, alternative plausibili nella lista di priorità dei pattern applicabli). 
+L'obiettivo non è penalizzare in fase di valutazione o semplificare il training del modello (che ha già a disposizione 
+esempi interessanti), ma avere la sicurezza nella fase di test di sottoporlo a situazioni più "realistiche" evitando 
+query composte da esempi "didattici" o "troppo semplici".
 
 ## Fase 2: creazione del system prompt per l'LLM
 Richiedere un insieme di predizioni su un dataset talmente strutturato, con 21 codici baseline, rende meno invitante
@@ -317,32 +319,35 @@ automatizzata, nello script prompts_engineering.py, che, leggendo da un file jso
 configurazioni prompt-modello ("prompts.json"), itera richiedendo predizioni sull'intero training set. Per implementarlo
 ho consultato alcune sezioni della libreria offerta da OpenAI (in particolare
 https://platform.openai.com/docs/api-reference/chat/create), che offre la possibilità di interagire senza problemi con
-modelli locali caricati sul programma "LM studio".Lo script, dopo aver interrogato LLM, salva la predizione calcolata e 
+modelli locali caricati sul programma "LM studio". Lo script, dopo aver interrogato LLM, salva la predizione calcolata e 
 aggiunge una riga riassuntiva dell'esempio all'interno di un oggetto pandas.Dataframe, caratterizzato dagli attributi 
-["id", "prompt_label", "model", "name_baseline", "gold_truth", "prediction"]. 
-Appena terminate le predizioni e creato il dataframe completo, il programma lo salva in un file csv, il cui 
-path è memorizzato rigorosamente nel file "prompts.json". Al fine di permettere al modello di esplorare soluzioni più
-"creative" il parametro "temperature" è stato impostato a 0.3, con l'obiettivo di permettere una migliore
-generalizzazione. Il seed è stato impostato a un valore fisso per aumentare le probabilità di ottenere output simili in 
-Epoch differenti, inoltre dopo aver ottenuto la predizione lo script salva alcune metriche di accuracy "totali", 
-relative ai risultati ottenuti, in corrispondenza del prompt usato dentro promots.json.
-In caso di interazione di lm studio, viene usata un'interazione cli (usando Python subprocess): permettono 
-di avviare il server locale e stopparlo con conseguente unload di tutti i modelli attivi.
-L'intero processo, con i log inclusi, è monitorabile dalla GUI di lm studio.
+["id", "prompt_label", "model", "name_baseline", "gold_truth", "prediction", "acc-top1", "ndcg", "false-positive-rate"]. 
+Appena terminate le predizioni e creato il dataframe completo, il programma lo salva in un file csv con nome 
+prompt_model_promptID, all'interno di una cartella one_shot/zero_shot. La cartella di destinazione del salvataggio è 
+scelta in base al fatto che il modello sia stato interrogando fornendo insieme al prompt, nel json schema, un esempio di
+coppia baseline-risposta attesa(tratto da un esempio su refactoring.guru che verrà rifattorizzat con un template method). 
+Al fine di permettere al modello di esplorare soluzioni più "creative", il parametro "temperature" è stato impostato a 
+0.3, con l'obiettivo di permettere una migliore generalizzazione. Il seed è stato impostato a un valore fisso per 
+aumentare le probabilità di ottenere output simili in Epoch differenti. Dopo aver ottenuto la predizione lo script salva 
+alcune metriche di accuracy "totali", relative ai risultati ottenuti, in corrispondenza del prompt usato dentro 
+promots.json. In caso di interazione di lm studio, viene sfruttata un'interazione via cli (usando Python subprocess): 
+sfruttando le permette API rest di Lm studio si riesce ad avviare il server locale e stopparlo invocando l'unload dei 
+modelli attivi. Le risposte effettivamente restituite dal modello e le azioni del server, con i log inclusi, è 
+monitorabile dalla UI di LM Studio.
 
 ## Fase 3: scelta dei modelli
 Al fine di obbligare il modello a fornire risposte secondo un preciso formato ho sfruttato l'API "structured outputs",
-nativamente supportata da LM-studio(https://lmstudio.ai/docs/developer/openai-compat/structured-output). L'idea è
-obbligare il modello a rispondere con un array di elementi scelti dai 10 possibili design patterns, rispettando un
+nativamente supportata da LM-studio (https://lmstudio.ai/docs/developer/openai-compat/structured-output). L'idea è
+obbligare il modello a rispondere con un array di elementi scelti tra i 10 possibili design patterns, rispettando un
 formato definito con json schema. Ciò semplifica notevolmente la fase di parsing e analisi delle predizioni, in quanto 
 la generazione di token è vincolata matematicamente a produrre token validi per lo schema scelto. Purtroppo però il
-supporto a "structured outputs"non è garantito da tutti i modelli locali(in particolare quelli con meno di 7B di 
+supporto a "structured outputs" non è garantito da tutti i modelli locali (in particolare quelli con meno di 7B di 
 parametri) presenti sul programma LM studio, è possibile comunque verificarne la compatibilità leggendo le varie model
 cards. Senza il supporto a tale API, il modello probabilmente ignorerebbe il json schema e la risposta divenderebbe 
 imprevedibile: per supportare tale categoria di modelli sarebbe opportuno "appesantire" i prompt anche con delle 
-istruzioni di formattazione della risposta in JSON, con il rischio di degradare l'accuracy e comunque l'incertezza che
+istruzioni di formattazione della risposta in JSON, con il rischio di degradare l'accuracy e aumentare l'incertezza che
 il modello rispetti davvero la convenzione proposta.
-Al netto di queste considerazionila fase di sperimentazione ha coinvolto i seguenti modelli: 
+Al netto di queste considerazioni, la fase di sperimentazione ha coinvolto i seguenti modelli: 
 - gpt-oss-20b (KV cache quantization: 8 bits)
 - qwen3.5-9b
 - gemma-4-e4b
@@ -353,14 +358,12 @@ Dalle varie esecuzioni è evidente alcuni modelli (come gpt-oss 20B), con alcuni
 design pattern applicabili. È il caso del template method: essendo un path meno "popolare", viene spesso "eclissato" da 
 strategy, più comune e flessibile al contesto. Ad aggravare ulteriormente il problema è la natura stessa del pattern: 
 mentre strategy alterna algoritmi per composizione, template_method è penalizzato in quanto usa l'ereditarietà a tale 
-scopo, ritenuta meno pratica. In nessun prompt è stato richiesto di restituire una lista di proprità dei pattern 
-ritenuti applicabili, in quanto, oltre a rendere ancora più evidente la necessità di una ground truth oggettiva per 
-un task soggettivo, aggiunge ulteriore complessità alla richiesta rishciandop di peggiorare l'accuracy. 
-Il vantaggio principale di aver adottato una strategia automatizzata è quello di poter ottener facilmente l'accuracy
-per ogni predizione, oltre all'accuracy totale dell'intera Epoch. Per "farsi un'idea" di come ha performato LLM sul 
-training set, ho definito più metriche di valutazione:
-- accuracy@top-1: il primo suggerito è giusto? Ideale: 1.0
-- NDCG (Normalized Discounted Cumulative Gain): i pattern corretti sono in cima? Ideale: 1.0
+scopo, ritenuta meno pratica.
+Il vantaggio principale di aver adottato una strategia automatizzata è quello di poter valutare facilmente ogni 
+predizione, oltre alle peformance totali dell'intera epoch. Per "farsi un'idea" di come ha performato LLM sul training 
+set, ho definito più metriche di valutazione:
+- accuracy@top-1: il primo design pattern suggerito è nella ground truth? Ideale: 1.0
+- NDCG (Normalized Discounted Cumulative Gain): i design pattern corretti sono in cima alla predizione? Ideale: 1.0
 - false_positive_rate: quanti pattern sbagliati sono stati suggeriti? Ideale: 0.0 (1.0 se il mdoello ha "spammato")
 
 Accuracy@1 svolge il ruolo di capire se il design pattern indicato come "più applicabile" del modello è effettivamente
@@ -371,24 +374,11 @@ la prediction.
 False_positive_rate è una metrica il cui obiettivo è suggerire possibili situazioni dove il modello, sebbene possa aver
 azzeccato l'ordine corretto di applicabilità dei pattern producendo score elevati nei casi precedenti, abbia 
 semplicemente inserito tutti i 10 design pattern nella lista, suggerendone di cosneguenza molti sbagliati.
+Per ciascuna coppia prompt-modello sono state calcolate anche le medie di queste 3 misure di performance, al fine di
+avere una stima più generale delle performance.
 
-
-Prossimi passi: Prompt engineering della richiesta da fare agli LLM, partendo da linee guida di OpenAI e 1-2 LLM 
-(versione chat) di riferimento. 
-
-
-Suggerimenti seguiti:
-- tenere traccia di ogni prompt valutato;
-- considerare alternative tramite ablation;
-- valutare prompt “migliori” in termini di accuracy e accuracy@top-1 (su una porzione del dataset da usare come training
-  set; il resto del dataset sarà usato come test set in fase di validazione).
 
 Riferimento a un corso di HuggingFace: https://huggingface.co/learn/llm-course/chapter1/1
 
-Creare infine:
-delle descrizioni meccaniche, in inglese, nel campo description di ogni singola classe e dei metodi che contiene dei 
-codici refactored aggiunti per espandere il dataset di partenza.
-Creta infine una tabella con tutti i prompt fatti e i risultati ottenuti. Seguito foglio di carta come riferimento
-
-Durante la fase di prompt engeneering evitare assolutamente di usare tutti i codici, tenere sempre un codice per pattern
-per la fase di test finale. (?????)
+Da creare infine delle descrizioni meccaniche, in inglese, nel campo description di ogni singola classe e dei metodi che 
+contiene dei codici refactored aggiunti per espandere il dataset di partenza.
