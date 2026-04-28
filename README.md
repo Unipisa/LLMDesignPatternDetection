@@ -382,3 +382,22 @@ Riferimento a un corso di HuggingFace: https://huggingface.co/learn/llm-course/c
 
 Da creare infine delle descrizioni meccaniche, in inglese, nel campo description di ogni singola classe e dei metodi che 
 contiene dei codici refactored aggiunti per espandere il dataset di partenza.
+
+# # WEEKS 8-9 (27-04-2026 - 13-05-2026)
+
+- sdoppiare accuracy top 1, introdurre ndcg a parametri invertiti, similarità posizionale e media di queste ultime 3 
+  (FPS)—> 7 metriche in totale
+- introdurre iperparametro della temperatura (valori: 0.0, 0.3, 0.5, 0.7)
+- correggere prompt (return lista ordinata deve essere sostituita con descrizione output atteso)
+- introdurre varianti di prompt dove scambio l’ordine dei moduli base, role e rules 
+- introdurre un prompt dove chiedo un miglioramento a chat gpt 
+- eseguire grid search, selezionare iperparametri migliori
+- fissati gli iperparametri (shot type incluso), tracciare grafici sulle tre categorie di design patterns considerando 
+  le metriche fake accuracy top 1 e FPS per esibire la performance sulle varie categorie
+- (opzionale) considerate di modificare l’esempio dato in input e ripetere passo precedente. Aggiungere descrizioni in 
+  inglese ai codici di tutto il dataset 
+
+Sono stati inseriti nuovi prompt riordianando "id 2" con due varianti significative: anticipare la descrizione 
+dell'output e invertendo l'assegnamento del task con le regole. "Role" non è stato cambiato di posizione in quanto 
+sempre in testa per convenzione, è stato ritenuto che permutare anche esso non avrebbe quindi prodotto alternative
+interessanti.
