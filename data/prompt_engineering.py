@@ -57,6 +57,10 @@ def ndcg(prediction: list, ground_truth: list, k: int = None) -> float:
 
     return dcg / idcg if idcg > 0 else 0.0
 
+def positional_similarity(list1, list2):
+    len_max = max(len(list1), len(list2))
+    return sum([1 if a == b else 0 for a, b in zip(list1, list2)])/ len_max if len_max > 0 else 0
+
 
 # Metric to penalize pattern "spamming" (model returns all patterns): 1.0 if model spams
 def false_positive_rate(prediction: list, ground_truth: list) -> float:
@@ -67,7 +71,7 @@ def false_positive_rate(prediction: list, ground_truth: list) -> float:
     return len(wrong_patterns) / len(possible_wrong_patterns) if possible_wrong_patterns else 0.0
 
 # noinspection PyTypeChecker
-def start(prompt_used: str, model_used: str, url: str, key : str, label_used: str, one_shot: bool = False):
+def start(prompt_used: str, model_used: str, url: str, key : str, label_used: str,  tem: float, one_shot: bool = False):
     client = OpenAI(base_url = url, api_key = key)
 
     df = pd.DataFrame(columns=["id", "prompt_used", "model", "name_baseline", "ground_truth", "prediction"])
@@ -94,7 +98,7 @@ def start(prompt_used: str, model_used: str, url: str, key : str, label_used: st
                 response = client.chat.completions.create(
                     model=model_used,
                     messages=msg,
-                    temperature=0.3,
+                    temperature=tem,
                     seed=42,  # trying to get equal responses from different executionts
 
                     # uses structyured output (subset of json schema language)
@@ -157,11 +161,20 @@ def evaluate(df: pd.DataFrame):
         if isinstance(prediction, str):
             prediction = eval(prediction)
 
-        acc_top1 = 1 if prediction[0] in ground_truth else 0
+        precision_1 = 1 if prediction[0] in ground_truth else 0
+        top_1 = 1 if prediction[0] == ground_truth[0] else 0
+        ndcg_standard = ndcg(prediction, ground_truth)
+        ndcg_inverted = ndcg(ground_truth, prediction)
+        pos_similarity = positional_similarity(ground_truth, prediction)
+        fps = (ndcg_standard + ndcg_inverted + pos_similarity) / 3
 
-        df.loc[idx, "acc_top1"] = round(acc_top1, 3)
-        df.loc[idx, "ndcg"] = round(ndcg(prediction, ground_truth), 3)
+        df.loc[idx, "precision@1"] = round(precision_1, 3)
+        df.loc[idx, "fps"] = round(fps, 3)
         df.loc[idx, "false_positive_rate"] = round(false_positive_rate(prediction, ground_truth), 3)
+        df.loc[idx, "acc_top1"] = round(top_1, 3)
+        df.loc[idx, "positional_similarity"] = round(pos_similarity, 3)
+        df.loc[idx, "ndcg_standard"] = round(ndcg_standard, 3)
+        df.loc[idx, "ndcg_inverted"] = round(ndcg_inverted, 3)
 
 
 
@@ -184,8 +197,8 @@ if __name__ == "__main__":
     parser.add_argument("--model", type=str, required=True, help="Model to use")
     parser.add_argument("--base_url", type=str, default="http://127.0.0.1:1234/v1", help="Base URL per OpenAI API")
     parser.add_argument("--api_key", type=str, default="lm-studio", help="API key per OpenAI API")
-    parser.add_argument("--one_shot", action= "store_true", help= "Model will receive a pair of example-answer to help solving the"
-                                                                      " task")
+    parser.add_argument("--one_shot", action= "store_true", help= "Model will receive a pair of example-answer to help solving the task")
+    parser.add_argument("--temperature", type=float, default=0.3, help= "Temperature to use for the model.")
     args = parser.parse_args()
     prompts = json.load(open("config/prompts.json", "r"))
     prompt = prompts[args.id]["prompt"]
@@ -200,7 +213,7 @@ if __name__ == "__main__":
             time.sleep(5)  # Wait 5 seconds to make sure server is runnig
 
         print(f"Starting shot: {args.model}")
-        output = start(prompt, args.model, args.base_url, args.api_key, label, args.one_shot)  # this is a pandas.Dataframe object
+        output = start(prompt, args.model, args.base_url, args.api_key, label, args.temperature, args.one_shot)  # this is a pandas.Dataframe object
         print("Shot completed: ", args.model)
     finally:
         if local:
@@ -216,11 +229,11 @@ if __name__ == "__main__":
 
     evaluate(output)
 
-    metrics = ["acc_top1", "ndcg", "false_positive_rate"]
+    metrics = ["precision@1", "fps", "false_positive_rate", "acc_top1", "positional_similarity", "ndcg_standard", "ndcg_inverted"]
     summary = output[metrics].mean().to_dict()      # mean of all valuation metrics
-    summary["acc_top1"] = round(summary["acc_top1"], 3) # round to 3 decimal places
-    summary["ndcg"] = round(summary["ndcg"], 3)
-    summary["false_positive_rate"] = round(summary["false_positive_rate"], 3)
+    for metric in metrics:
+        summary[metric] = round(summary[metric], 3)
+
 
     if args.one_shot:
         shot = "one_shot"
@@ -234,11 +247,8 @@ if __name__ == "__main__":
     with open(f"config/results.json", "r") as f:
         data = json.load(f)
 
-    data.setdefault(model_safe, {}).setdefault(shot, {})[label] = {       # creates keys if they don't exist', updates otherwise
-        "acc_top1": summary["acc_top1"],
-        "ndcg": summary["ndcg"],
-        "false_positive_rate": summary["false_positive_rate"],
-    }
+    # creates keys if they don't exist', updates otherwise
+    data.setdefault(model_safe, {}).setdefault(shot, {})[label] = {m: summary[m] for m in metrics}
 
     with open(f"config/results.json", "w") as f:
         json.dump(data, f, indent=4)
