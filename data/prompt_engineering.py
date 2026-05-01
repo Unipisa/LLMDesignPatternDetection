@@ -4,7 +4,6 @@ import json
 import os
 import argparse
 import subprocess
-import time
 import requests
 
 
@@ -198,7 +197,7 @@ if __name__ == "__main__":
     parser.add_argument("--base_url", type=str, default="http://127.0.0.1:1234/v1", help="Base URL per OpenAI API")
     parser.add_argument("--api_key", type=str, default="lm-studio", help="API key per OpenAI API")
     parser.add_argument("--one_shot", action= "store_true", help= "Model will receive a pair of example-answer to help solving the task")
-    parser.add_argument("--temperature", type=float, default=0.3, help= "Temperature to use for the model.")
+    parser.add_argument("--temperature", type=float, help= "Temperature to use for the model.")
     args = parser.parse_args()
     prompts = json.load(open("config/prompts.json", "r"))
     prompt = prompts[args.id]["prompt"]
@@ -210,7 +209,6 @@ if __name__ == "__main__":
         if local:
             print("Starting lm studio server...")
             subprocess.run("lms server start", shell=True)  # launches <lms server start> command on shell
-            time.sleep(5)  # Wait 5 seconds to make sure server is runnig
 
         print(f"Starting shot: {args.model}")
         output = start(prompt, args.model, args.base_url, args.api_key, label, args.temperature, args.one_shot)  # this is a pandas.Dataframe object
@@ -241,14 +239,14 @@ if __name__ == "__main__":
         shot = "zero_shot"
 
     model_safe = args.model.split("/")[-1]
-    output.to_csv(f"prompt_results/{shot}/prompt_{model_safe}_{args.id}.csv", index=False)
+    output.to_csv(f"prompt_results/{shot}/prompt_{model_safe}_{args.id}_temp{args.temperature}.csv", index=False)
 
     # saving "summary" of this execution
     with open(f"config/results.json", "r") as f:
         data = json.load(f)
 
     # creates keys if they don't exist', updates otherwise
-    data.setdefault(model_safe, {}).setdefault(shot, {})[label] = {m: summary[m] for m in metrics}
+    data.setdefault(model_safe, {}).setdefault(shot, {}).setdefault(f"temperature_{args.temperature}", {})[label] = {m: summary[m] for m in metrics}
 
     with open(f"config/results.json", "w") as f:
         json.dump(data, f, indent=4)
