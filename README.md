@@ -385,8 +385,8 @@ contiene dei codici refactored aggiunti per espandere il dataset di partenza.
 
 # # WEEKS 8-9 (27-04-2026 - 13-05-2026)
 
-- sdoppiare accuracy top 1, introdurre ndcg a parametri invertiti, similarità posizionale e media di queste ultime 3 
-  (FPS)—> 7 metriche in totale
+- aggiungere accuracy top 1 effettiva, introdurre ndcg a parametri invertiti, similarità posizionale e media di queste
+  ultime 3 (FPS)—> 7 metriche in totale.
 - introdurre iperparametro della temperatura (valori: 0.0, 0.3, 0.5, 0.7)
 - correggere prompt (return lista ordinata deve essere sostituita con descrizione output atteso)
 - introdurre varianti di prompt dove scambio l’ordine dei moduli base, role e rules 
@@ -401,3 +401,15 @@ Sono stati inseriti nuovi prompt riordianando "id 2" con due varianti significat
 dell'output e invertendo l'assegnamento del task con le regole. "Role" non è stato cambiato di posizione in quanto 
 sempre in testa per convenzione, è stato ritenuto che permutare anche esso non avrebbe quindi prodotto alternative
 interessanti.
+
+Le metriche utilizzate per valutare le performance in totale sono 7:
+[precision@1, fps, false_positive_rate, acc_top1, positional_similarity, ndcg_standard, ndcg_inverted].
+Le prime due della lista, di cui la seconda ottenuta come una media aritmetica delle ultime 3, sono state prese come
+riferimento nella scelta delle migliori configurazioni (a livello di shot type, temperatura e prompt sottomesso) per i
+tre modelli. Lo studio è stato condotto eseguendo iterativamente tutte 144 possiibli configurazioni sul training set
+(3 modelli * 2 shot_type * 4 temperature * 6 prompt_label) su una macchina Windows, considerando quindi per necessità
+architetturali solo le versioni GGUF. Gpt-oss-20b ha richiesto di essere eseguito in versione quantizzata (Q8) per 
+causa di limiti hardware.
+
+Sorprendentemente i risultati mostrano una chiara predominanza qualitativa di gemma in zero shot, contrariamente agli 
+altri due modelli che performano meglio in one_shot.
