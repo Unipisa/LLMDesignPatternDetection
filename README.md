@@ -411,5 +411,16 @@ tre modelli. Lo studio è stato condotto eseguendo iterativamente tutte 144 poss
 architetturali solo le versioni GGUF. Gpt-oss-20b ha richiesto di essere eseguito in versione quantizzata (Q8) per 
 causa di limiti hardware.
 
-Sorprendentemente i risultati mostrano una chiara predominanza qualitativa di gemma in zero shot, contrariamente agli 
-altri due modelli che performano meglio in one_shot.
+Al fine di contratstare l'aleatoreità dei risultati, l'esperimento è stato ripetuto in 5 run differenti. È emerso un 
+problema con gpt-oss 20b e qwen i quali, a causa di un probabile bug nel motore locale di LM studio, non rispettano 
+il vincolo di fornire in output items unici: ne consegue che in alcune predizioni il modello "spamma" più volte lo 
+stesso pattern (https://github.com/lmstudio-ai/lmstudio-bug-tracker/issues/1105).
+Ciò degrada probabilmente la qualità dell'intera predizione, il problema dovrebbe essere comunque limitato a pochi csv,
+Per risolvere è stato applicato del post processing sui file csv al fine di eliminare i duplicati dalle liste di
+predizione, eliminando i duplicati.
+È emersa inoltre una seconda caratteristica: su Windows, col seed fissato, l'esperimento è riproducibile in qualsiasi
+conigurazione, indipendentemente quindi dalla scelta del modello, della temperatura, dello shot type o del prompt. 
+Tale aspetto invece non emerge su macos, che per sua natura non garantisce riproducibilità col seed fissato
+(https://adityakarnam.com/mlx-non-determinism-apple-silicon/). 
+Per misurare più accuratamente le performance delle varie configurazioni, tutte le run sono state eseguite senza seed 
+fissato. 

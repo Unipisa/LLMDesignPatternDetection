@@ -70,7 +70,6 @@ def start(prompt_used: str, model_used: str, url: str, key : str, label_used: st
                     model=model_used,
                     messages=msg,
                     temperature=tem,
-                    seed=42,  # trying to get equal responses from different executionts
 
                     # uses structyured output (subset of json schema language)
                     response_format={
