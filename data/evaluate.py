@@ -48,10 +48,10 @@ def evaluate(df: pd.DataFrame):
         ndcg_standard = ndcg(prediction, ground_truth)
         ndcg_inverted = ndcg(ground_truth, prediction)
         pos_similarity = positional_similarity(ground_truth, prediction)
-        fps = (ndcg_standard + ndcg_inverted + pos_similarity) / 3
+        bnps = (ndcg_standard + ndcg_inverted + pos_similarity) / 3
 
         df.loc[idx, "precision@1"] = round(precision_1, 3)
-        df.loc[idx, "fps"] = round(fps, 3)
+        df.loc[idx, "BNPS"] = round(bnps, 3)
         df.loc[idx, "false_positive_rate"] = round(false_positive_rate(prediction, ground_truth), 3)
         df.loc[idx, "acc_top1"] = round(top_1, 3)
         df.loc[idx, "positional_similarity"] = round(pos_similarity, 3)
@@ -92,6 +92,9 @@ if __name__ == "__main__":
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
+    metrics = ["precision@1", "BNPS", "false_positive_rate", "acc_top1", "positional_similarity",
+               "ndcg_standard", "ndcg_inverted"]
+    results = []
     for directory in os.listdir(ris_path):
         rows = []
         if not os.path.isdir(os.path.join(ris_path, directory)):
@@ -108,8 +111,6 @@ if __name__ == "__main__":
                     # Sostituisci le righe 84-85 con:
                     os.makedirs(f"{output_path}/{directory}", exist_ok=True)
                 to_process.to_csv(f"{output_path}/{directory}/{file}", index=False)
-                metrics = ["precision@1", "fps", "false_positive_rate", "acc_top1", "positional_similarity",
-                           "ndcg_standard", "ndcg_inverted"]
                 summary = to_process[metrics].mean().to_dict()  # mean of all valuation metrics
                 for metric in metrics:
                     summary[metric] = round(summary[metric], 3)
@@ -128,14 +129,19 @@ if __name__ == "__main__":
             print(f"File {directory} is empty", file=sys.stderr)
             continue
 
-        df = pd.DataFrame(rows)[["model", "shot", "prompt_label", "temperature", "precision@1", "fps",
+        df = pd.DataFrame(rows)[["model", "shot", "prompt_label", "temperature", "precision@1", "BNPS",
                                  "false_positive_rate", "acc_top1", "positional_similarity", "ndcg_standard",
                                  "ndcg_inverted" ]]
 
         if not os.path.exists(f"{avg_path}"):
             os.makedirs(f"{avg_path}", exist_ok=True)
-        df.to_csv(f"{avg_path}/{directory}_avg_results.csv", index=False)
+        df.to_csv(f"{avg_path}/runs_avg_results/{directory}_avg_results.csv", index=False)
+        results.append(df)
 
+    combined = pd.concat(results, ignore_index=True)
+    total_summary = (combined.groupby(["model", "shot", "prompt_label", "temperature"])[metrics]
+                     .mean().round(3).reset_index())
 
+    total_summary.to_csv(f"{avg_path}/total_avg_results.csv", index=False)
 
 

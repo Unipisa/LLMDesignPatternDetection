@@ -1,0 +1,22 @@
+id,prompt_used,model,name_baseline,ground_truth,prediction,precision@1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
+0,base + output description,qwen/qwen3.5-9b,departure,"['template_method', 'strategy', 'builder', 'proxy']","['strategy', 'factory_method', 'template_method']",1.0,0.63,0.167,0.0,0.0,0.889,1.0
+2,base + output description,qwen/qwen3.5-9b,rescuelogic,"['template_method', 'strategy', 'proxy']","['strategy', 'template_method']",1.0,0.667,0.0,0.0,0.0,1.0,1.0
+3,base + output description,qwen/qwen3.5-9b,traffic_light,"['state', 'proxy', 'strategy']","['state', 'strategy']",1.0,0.741,0.0,1.0,0.333,1.0,0.889
+5,base + output description,qwen/qwen3.5-9b,Stall,"['state', 'command', 'strategy', 'proxy']","['strategy', 'state']",1.0,0.63,0.0,0.0,0.0,1.0,0.889
+6,base + output description,qwen/qwen3.5-9b,rover,"['command', 'proxy', 'strategy']","['builder', 'strategy']",0.0,0.278,0.143,0.0,0.0,0.5,0.333
+8,base + output description,qwen/qwen3.5-9b,bankaccount,"['command', 'strategy', 'proxy', 'decorator']","['command', 'decorator']",1.0,0.694,0.0,1.0,0.25,1.0,0.833
+9,base + output description,qwen/qwen3.5-9b,Vector,"['strategy', 'template_method', 'adapter', 'command', 'proxy']","['command', 'strategy']",1.0,0.611,0.0,0.0,0.0,1.0,0.833
+10,base + output description,qwen/qwen3.5-9b,validator,"['strategy', 'state', 'template_method', 'proxy']","['strategy', 'template_method']",1.0,0.713,0.0,1.0,0.25,1.0,0.889
+13,base + output description,qwen/qwen3.5-9b,monster,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['abstract_factory', 'strategy']",1.0,0.5,0.0,0.0,0.0,1.0,0.5
+14,base + output description,qwen/qwen3.5-9b,wand,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['strategy', 'factory_method', 'abstract_factory']",1.0,0.652,0.0,0.0,0.0,1.0,0.955
+15,base + output description,qwen/qwen3.5-9b,tv,"['abstract_factory', 'factory_method', 'strategy']","['strategy', 'factory_method']",1.0,0.63,0.0,0.0,0.333,1.0,0.556
+17,base + output description,qwen/qwen3.5-9b,house,"['abstract_factory', 'factory_method', 'strategy', 'proxy']","['factory_method', 'template_method']",1.0,0.5,0.167,0.0,0.0,1.0,0.5
+18,base + output description,qwen/qwen3.5-9b,gamengine,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']","['strategy', 'factory_method', 'abstract_factory']",1.0,0.53,0.0,0.0,0.0,1.0,0.591
+19,base + output description,qwen/qwen3.5-9b,computer,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']","['factory_method', 'strategy', 'template_method']",1.0,0.47,0.0,0.0,0.0,1.0,0.409
+22,base + output description,qwen/qwen3.5-9b,tenant,['proxy'],"['template_method', 'strategy']",0.0,0.0,0.222,0.0,0.0,0.0,0.0
+23,base + output description,qwen/qwen3.5-9b,ledger,['proxy'],"['template_method', 'strategy', 'adapter']",0.0,0.0,0.333,0.0,0.0,0.0,0.0
+24,base + output description,qwen/qwen3.5-9b,water_flow,"['proxy', 'decorator', 'command']","['template_method', 'adapter']",0.0,0.0,0.286,0.0,0.0,0.0,0.0
+25,base + output description,qwen/qwen3.5-9b,sword,"['decorator', 'factory_method', 'strategy', 'proxy']","['decorator', 'strategy', 'command', 'builder', 'adapter', 'factory_method']",1.0,0.692,0.5,1.0,0.167,0.909,1.0
+27,base + output description,qwen/qwen3.5-9b,cafecito,"['decorator', 'builder', 'strategy', 'factory_method', 'proxy']","['command', 'builder', 'strategy', 'factory_method']",0.0,0.594,0.2,0.0,0.6,0.591,0.591
+28,base + output description,qwen/qwen3.5-9b,roundhole,['adapter'],['strategy'],0.0,0.0,0.111,0.0,0.0,0.0,0.0
+29,base + output description,qwen/qwen3.5-9b,calculator,"['adapter', 'command', 'strategy', 'proxy']",['strategy'],1.0,0.444,0.0,0.0,0.0,1.0,0.333

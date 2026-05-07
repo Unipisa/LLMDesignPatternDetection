@@ -386,14 +386,14 @@ contiene dei codici refactored aggiunti per espandere il dataset di partenza.
 # # WEEKS 8-9 (27-04-2026 - 13-05-2026)
 
 - aggiungere accuracy top 1 effettiva, introdurre ndcg a parametri invertiti, similarità posizionale e media di queste
-  ultime 3 (FPS)—> 7 metriche in totale.
+  ultime 3 (BNPS aka Bidirectional Ndcg & Positional Score)—> 7 metriche in totale.
 - introdurre iperparametro della temperatura (valori: 0.0, 0.3, 0.5, 0.7)
 - correggere prompt (return lista ordinata deve essere sostituita con descrizione output atteso)
 - introdurre varianti di prompt dove scambio l’ordine dei moduli base, role e rules 
 - introdurre un prompt dove chiedo un miglioramento a chat gpt 
 - eseguire grid search, selezionare iperparametri migliori
 - fissati gli iperparametri (shot type incluso), tracciare grafici sulle tre categorie di design patterns considerando 
-  le metriche fake accuracy top 1 e FPS per esibire la performance sulle varie categorie
+  le metriche fake accuracy top 1 e BNPS per esibire la performance sulle varie categorie
 - (opzionale) considerate di modificare l’esempio dato in input e ripetere passo precedente. Aggiungere descrizioni in 
   inglese ai codici di tutto il dataset 
 
@@ -403,7 +403,7 @@ sempre in testa per convenzione, è stato ritenuto che permutare anche esso non 
 interessanti.
 
 Le metriche utilizzate per valutare le performance in totale sono 7:
-[precision@1, fps, false_positive_rate, acc_top1, positional_similarity, ndcg_standard, ndcg_inverted].
+[precision@1, BNPS, false_positive_rate, acc_top1, positional_similarity, ndcg_standard, ndcg_inverted].
 Le prime due della lista, di cui la seconda ottenuta come una media aritmetica delle ultime 3, sono state prese come
 riferimento nella scelta delle migliori configurazioni (a livello di shot type, temperatura e prompt sottomesso) per i
 tre modelli. Lo studio è stato condotto eseguendo iterativamente tutte 144 possiibli configurazioni sul training set

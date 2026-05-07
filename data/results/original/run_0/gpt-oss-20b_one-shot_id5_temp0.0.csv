@@ -1,0 +1,22 @@
+id,prompt_used,model,name_baseline,ground_truth,prediction
+0,improved by chatGPT,openai/gpt-oss-20b,departure,"['template_method', 'strategy', 'builder', 'proxy']","['strategy', 'state']"
+2,improved by chatGPT,openai/gpt-oss-20b,rescuelogic,"['template_method', 'strategy', 'proxy']","['strategy', 'template_method']"
+3,improved by chatGPT,openai/gpt-oss-20b,traffic_light,"['state', 'proxy', 'strategy']",['state']
+5,improved by chatGPT,openai/gpt-oss-20b,Stall,"['state', 'command', 'strategy', 'proxy']",['state']
+6,improved by chatGPT,openai/gpt-oss-20b,rover,"['command', 'proxy', 'strategy']",['strategy']
+8,improved by chatGPT,openai/gpt-oss-20b,bankaccount,"['command', 'strategy', 'proxy', 'decorator']",['strategy']
+9,improved by chatGPT,openai/gpt-oss-20b,Vector,"['strategy', 'template_method', 'adapter', 'command', 'proxy']","['builder', 'strategy']"
+10,improved by chatGPT,openai/gpt-oss-20b,validator,"['strategy', 'state', 'template_method', 'proxy']",['strategy']
+13,improved by chatGPT,openai/gpt-oss-20b,monster,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['factory_method', 'builder']"
+14,improved by chatGPT,openai/gpt-oss-20b,wand,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['factory_method', 'abstract_factory']"
+15,improved by chatGPT,openai/gpt-oss-20b,tv,"['abstract_factory', 'factory_method', 'strategy']","['strategy', 'adapter']"
+17,improved by chatGPT,openai/gpt-oss-20b,house,"['abstract_factory', 'factory_method', 'strategy', 'proxy']","['strategy', 'factory_method']"
+18,improved by chatGPT,openai/gpt-oss-20b,gamengine,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']","['strategy', 'template_method']"
+19,improved by chatGPT,openai/gpt-oss-20b,computer,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']","['factory_method', 'strategy']"
+22,improved by chatGPT,openai/gpt-oss-20b,tenant,['proxy'],"['proxy', 'strategy']"
+23,improved by chatGPT,openai/gpt-oss-20b,ledger,['proxy'],['proxy']
+24,improved by chatGPT,openai/gpt-oss-20b,water_flow,"['proxy', 'decorator', 'command']","['state', 'strategy']"
+25,improved by chatGPT,openai/gpt-oss-20b,sword,"['decorator', 'factory_method', 'strategy', 'proxy']",['decorator']
+27,improved by chatGPT,openai/gpt-oss-20b,cafecito,"['decorator', 'builder', 'strategy', 'factory_method', 'proxy']",['decorator']
+28,improved by chatGPT,openai/gpt-oss-20b,roundhole,['adapter'],"['adapter', 'strategy']"
+29,improved by chatGPT,openai/gpt-oss-20b,calculator,"['adapter', 'command', 'strategy', 'proxy']",['strategy']

@@ -2,31 +2,31 @@
     {
         "id": 0,
         "prompt": "You will be given a written Python code. Your task is to identify which design patterns from the following list should be applied to refactor and improve it: [abstract_factory, factory_method, builder, command, strategy, template_method, state, proxy, decorator, adapter]. Return an ordered subset of this design patterns' list, most recommended first.",
-        "label": "base + output_description"
+        "label": "base + output description"
     },
     {
         "id": 1,
         "prompt": "You are an expert software engineer specialized in design patterns. You will be given a written Python code. Your task is to identify which design patterns from the following list should be applied to refactor and improve it: [abstract_factory, factory_method, builder, command, strategy, template_method, state, proxy, decorator, adapter]. Return an ordered subset of this design patterns' list, most recommended first.",
-        "label": "role + base + output_description"
+        "label": "role + base + output description"
     },
     {
         "id": 2,
         "prompt": "You are an expert software engineer specialized in design patterns. You will be given a written Python code. Your task is to identify which design patterns from the following list should be applied to refactor and improve it: [abstract_factory, factory_method, builder, command, strategy, template_method, state, proxy, decorator, adapter]. Rules: (1) Include a pattern if there is clear structural evidence in the code that justifies its application. (2) Do not suggest a pattern just because it could theoretically apply: the code must exhibit concrete signals (e.g. duplicated logic, missing abstraction, hardcoding...). Return an ordered subset of this design patterns' list, most recommended first.",
-        "label": "role + base + rules + output_description"
+        "label": "role + base + rules + output description"
     },
     {
         "id": 3,
         "prompt": "You are an expert software engineer specialized in design patterns. You will be given a written Python code. Your task is to identify which design patterns from the following list should be applied to refactor and improve it: [abstract_factory, factory_method, builder, command, strategy, template_method, state, proxy, decorator, adapter]. Return an ordered subset of this design patterns' list, most recommended first. Rules: (1) Include a pattern if there is clear structural evidence in the code that justifies its application. (2) Do not suggest a pattern just because it could theoretically apply: the code must exhibit concrete signals (e.g. duplicated logic, missing abstraction, hardcoding...).",
-        "label": "role + base + output_description + rules"
+        "label": "role + base + output description + rules"
     },
     {
         "id": 4,
         "prompt": "You are an expert software engineer specialized in design patterns. Rules: (1) Include a pattern if there is clear structural evidence in the code that justifies its application. (2) Do not suggest a pattern just because it could theoretically apply: the code must exhibit concrete signals (e.g. duplicated logic, missing abstraction, hardcoding...). You will be given a written Python code. Your task is to identify which design patterns from the following list should be applied to refactor and improve it: [abstract_factory, factory_method, builder, command, strategy, template_method, state, proxy, decorator, adapter]. Return an ordered subset of this design patterns' list, most recommended first.",
-        "label": "role + rules + base + output_description"
+        "label": "role + rules + base + output description"
     },
     {
         "id": 5,
         "prompt": "You are an expert software engineer specialized in design patterns. You will be given a Python code snippet. Your task is to identify which design patterns from the following list should be applied to refactor and improve it: [abstract_factory, factory_method, builder, command, strategy, template_method, state, proxy, decorator, adapter]. Rules: 1. Include a pattern only if there is clear structural evidence in the code that justifies its application. 2. Structural evidence means that the code exhibits concrete, observable characteristics such as: duplicated or repeated logic, hardcoded conditionals or type-based branching, missing abstraction or lack of interchangeable behavior, tight coupling between components, code structure that directly matches a known refactoring scenario for the pattern. 3. A pattern can be included if it leads to a clear improvement, but ONLY if that improvement is directly supported by the current structure of the code (not hypothetical future requirements). 4. Do not include a pattern if its applicability depends on assumptions, missing context, or imagined extensions of the code. 5. Each pattern decision must be based only on what is explicitly present in the given code. 6. Return an ordered subset of the patterns, sorted by priority of application: patterns that address the most evident structural issues should come first, patterns that solve more significant or more widespread issues should be ranked higher. Return only the ordered list.",
-        "label": "improved_by_chatGPT"
+        "label": "improved by chatGPT"
     }
 ]
