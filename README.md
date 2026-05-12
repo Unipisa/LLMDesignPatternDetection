@@ -425,6 +425,7 @@ Tale aspetto invece non emerge su mac, che per sua natura non garantisce riprodu
 Per misurare più accuratamente le performance delle varie configurazioni, tutte le run sono state eseguite senza seed 
 fissato. 
 
+Tempo di esecuzione totale misurato: 10 ore e 41 minuti circa.
 
 TODO: 
 - (opzionale) considerate di modificare l’esempio dato in input e ripetere passo precedente.
