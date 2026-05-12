@@ -64,11 +64,11 @@ def plot_model_shot_performance(df):
 
 
 def plot_design_patterns_performance():
-    best_confs = ["gemma-4-e4b_zero-shot_id5_temp0.0.csv", "qwen3.5-9b_one-shot_id2_temp0.7.csv", "gpt-oss-20b_one-shot_id1_temp0.0.csv"]
+    best_confs = ["gemma-4-e4b_zero-shot_id5_temp0.0.csv", "qwen3.5-9b_one-shot_id2_temp0.7.csv", "gpt-oss-20b_one-shot_id0_temp0.0.csv"]
     names = {
         "gemma-4-e4b_zero-shot_id5_temp0.0.csv": "gemma-4-e4b_zero-shot_id5_temp0.0",
         "qwen3.5-9b_one-shot_id2_temp0.7.csv": "qwen3.5-9b_one-shot_id2_temp0.7",
-        "gpt-oss-20b_one-shot_id1_temp0.0.csv": "gpt-oss-20b_one-shot_id1_temp0.0"
+        "gpt-oss-20b_one-shot_id0_temp0.0.csv": "gpt-oss-20b_one-shot_id0_temp0.0"
     }
     for best_conf in best_confs:
         # average results extraction for each conf.
