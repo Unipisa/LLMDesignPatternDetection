@@ -385,42 +385,47 @@ contiene dei codici refactored aggiunti per espandere il dataset di partenza.
 
 # # WEEKS 8-9 (27-04-2026 - 13-05-2026)
 
-- aggiungere accuracy top 1 effettiva, introdurre ndcg a parametri invertiti, similarità posizionale e media di queste
+- aggiunte accuracy top 1 effettiva, introdurre ndcg a parametri invertiti, similarità posizionale e media di queste
   ultime 3 (BNPS aka Bidirectional Ndcg & Positional Score)—> 7 metriche in totale.
-- introdurre iperparametro della temperatura (valori: 0.0, 0.3, 0.5, 0.7)
-- correggere prompt (return lista ordinata deve essere sostituita con descrizione output atteso)
-- introdurre varianti di prompt dove scambio l’ordine dei moduli base, role e rules 
-- introdurre un prompt dove chiedo un miglioramento a chat gpt 
-- eseguire grid search, selezionare iperparametri migliori
-- fissati gli iperparametri (shot type incluso), tracciare grafici sulle tre categorie di design patterns considerando 
-  le metriche fake accuracy top 1 e BNPS per esibire la performance sulle varie categorie
-- (opzionale) considerate di modificare l’esempio dato in input e ripetere passo precedente. Aggiungere descrizioni in 
-  inglese ai codici di tutto il dataset 
+- introdotto iperparametro della temperatura (valori: 0.0, 0.3, 0.5, 0.7)
+- corretta la descrizione dell'output atteso nei prompt 
+- introdotte varianti di prompt dove si scambia l’ordine dei moduli base, role e rules 
+- introdotto un prompt dove si domanda un miglioramento a chat gpt 
+- eseguita una grid search selezionando iperparametri migliori (model assessment)
+- eseguite 4 run complete dell'esperimento
+- creati alcuni grafici per spiegare i risultati ottenuti
 
-Sono stati inseriti nuovi prompt riordianando "id 2" con due varianti significative: anticipare la descrizione 
-dell'output e invertendo l'assegnamento del task con le regole. "Role" non è stato cambiato di posizione in quanto 
-sempre in testa per convenzione, è stato ritenuto che permutare anche esso non avrebbe quindi prodotto alternative
+Sono stati inseriti nuovi prompt riordianando il promot "id 2" con due varianti significative: anticipando la
+descrizione dell'output e invertendo l'assegnamento del task con le regole. "Role" non è stato cambiato di posizione in
+quanto sempre in testa per convenzione: è stato ritenuto che permutare anche esso non avrebbe prodotto alternative 
 interessanti.
 
 Le metriche utilizzate per valutare le performance in totale sono 7:
 [precision@1, BNPS, false_positive_rate, acc_top1, positional_similarity, ndcg_standard, ndcg_inverted].
 Le prime due della lista, di cui la seconda ottenuta come una media aritmetica delle ultime 3, sono state prese come
 riferimento nella scelta delle migliori configurazioni (a livello di shot type, temperatura e prompt sottomesso) per i
-tre modelli. Lo studio è stato condotto eseguendo iterativamente tutte 144 possiibli configurazioni sul training set
-(3 modelli * 2 shot_type * 4 temperature * 6 prompt_label) su una macchina Windows, considerando quindi per necessità
-architetturali solo le versioni GGUF. Gpt-oss-20b ha richiesto di essere eseguito in versione quantizzata (Q8) per 
-causa di limiti hardware.
+tre modelli. Lo studio è stato condotto sottomettendo iterativamente i prompt a tutte 144 possiibli configurazioni, 
+considerando solo codici appartenenti al training set (3 modelli * 2 shot_type * 4 temperature * 6 prompt_label = 144) 
+L'esecuzione è avvenuta su una macchina Windows, considerando quindi per necessità architetturali solo le versioni GGUF
+dei modelli. Gpt-oss-20b ha richiesto di essere eseguito in versione quantizzata (Q8) a causa di limiti hardware.
 
 Al fine di contratstare l'aleatoreità dei risultati, l'esperimento è stato ripetuto in 5 run differenti. È emerso un 
-problema con gpt-oss 20b e qwen i quali, a causa di un probabile bug nel motore locale di LM studio, non rispettano 
-il vincolo di fornire in output items unici: ne consegue che in alcune predizioni il modello "spamma" più volte lo 
+problema con gpt-oss 20b il quale, a causa di un probabile bug nel motore locale di LM studio, non ha rispettato 
+il vincolo di fornire in output items unici: ne consegue che in alcune predizioni il modello abbia ripetuto più volte lo 
 stesso pattern (https://github.com/lmstudio-ai/lmstudio-bug-tracker/issues/1105).
-Ciò degrada probabilmente la qualità dell'intera predizione, il problema dovrebbe essere comunque limitato a pochi csv,
-Per risolvere è stato applicato del post processing sui file csv al fine di eliminare i duplicati dalle liste di
-predizione, eliminando i duplicati.
+Ciò degrada probabilmente la qualità dell'intera predizione, il problema è circoscritto solo a predizioni effettuate con
+temperature più elevate (0.5 e 0,7). Per risolvere è stato applicato post processing sui file csv contenenti tali 
+predizioni "errate", al fine di eliminare i duplicati dalle liste di predizione mantenendo l'ordine originale scelto dal
+modello.
+
 È emersa inoltre una seconda caratteristica: su Windows, col seed fissato, l'esperimento è riproducibile in qualsiasi
 conigurazione, indipendentemente quindi dalla scelta del modello, della temperatura, dello shot type o del prompt. 
-Tale aspetto invece non emerge su macos, che per sua natura non garantisce riproducibilità col seed fissato
+Tale aspetto invece non emerge su mac, che per sua natura non garantisce riproducibilità col seed fissato
 (https://adityakarnam.com/mlx-non-determinism-apple-silicon/). 
 Per misurare più accuratamente le performance delle varie configurazioni, tutte le run sono state eseguite senza seed 
 fissato. 
+
+
+TODO: 
+- (opzionale) considerate di modificare l’esempio dato in input e ripetere passo precedente.
+- Aggiungere descrizioni in inglese ai codici di tutto il dataset 

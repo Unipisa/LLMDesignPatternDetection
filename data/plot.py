@@ -124,45 +124,42 @@ def plot_design_patterns_performance():
         plt.savefig(output_path)
 
 def plot_stability():
-    best_confs = ["gemma-4-e4b_zero-shot_id5_temp0.0.csv", "qwen3.5-9b_one-shot_id2_temp0.7.csv",
-                  "gpt-oss-20b_one-shot_id1_temp0.0.csv"]
-    names = {
-        "gemma-4-e4b_zero-shot_id5_temp0.0.csv": "gemma-4-e4b_zero-shot_id5_temp0.0",
-        "qwen3.5-9b_one-shot_id2_temp0.7.csv": "qwen3.5-9b_one-shot_id2_temp0.7",
-        "gpt-oss-20b_one-shot_id1_temp0.0.csv": "gpt-oss-20b_one-shot_id1_temp0.0"
-    }
 
+    rows = []
+    # average results extraction for each conf.
+    base_dir = "avg_results/runs_avg_results"
+    if not os.path.exists(base_dir):
+        print(f"{base_dir} does not exist", file=sys.stderr)
+        exit(1)
+    if not os.path.isdir(base_dir):
+        print(f"{base_dir} is not a directory", file=sys.stderr)
+        exit(1)
 
-    standard_deviations = []
-    for best_conf in best_confs:
-        # average results extraction for each conf.
-        base_dir = "results/evaluated"
-        run_dirs = [d for d in os.listdir(base_dir) if
-                    d.startswith("run_") and os.path.isfile(os.path.join(base_dir, d, best_conf))]
-        if not run_dirs:
-            print(f"No run found for {best_conf}", file=sys.stderr)
+    rows = []
+    for run_avg_results in os.listdir(base_dir):
+        if not run_avg_results.endswith(".csv"):
+            print(f"{run_avg_results} is not a csv file", file=sys.stderr)
             continue
 
-        frames = []
-        for run_dir in run_dirs:
-            tmp = pd.read_csv(os.path.join(base_dir, run_dir, best_conf))
-            frames.append(tmp)
+        tmp = pd.read_csv(os.path.join(base_dir, run_avg_results))
+        tmp[METRICS] = tmp[METRICS].astype(float)
+        tmp = tmp.groupby("model")[METRICS].mean()      # avg performance per run
+        rows.append(tmp)
 
-        df = pd.concat(frames)
+    combine = pd.concat(rows)
 
-        # average results per run
-        run_means = pd.DataFrame([f[METRICS].mean() for f in frames])
-        std = run_means.std()       # std between runs, on std per metric: it's a Pandas series with index=metrics
-        std["configuration"] = names[best_conf]
-        standard_deviations.append(std)
+    # average results per run
+    std = combine.groupby("model").std()       # std between runs, on std per metric: it's a Pandas series with index=metrics
+    std = std.T         # models are now columns, metrics on rows
+    ax = std.plot.bar(figsize=(15, 8))
+    for container in ax.containers:
+        ax.bar_label(container, fmt="%.4f", padding=3, fontsize= 5)
 
-    color = [METRIC_COLORS[m] for m in METRICS]
-    df = pd.DataFrame(standard_deviations).set_index("configuration")
-    df.plot.bar(figsize=(15, 8), color=color)
     plt.xticks(rotation=0)
     plt.grid(True)
-    plt.title("Stability across runs — Standard deviation of metrics for top-3 configurations")
+    plt.title("Stability across runs — Standard deviation per model")
     plt.ylabel("Standard deviation")
+    plt.rcParams['figure.dpi'] = 300
     output_path = "plots/stability-across-runs.png"
     plt.savefig(output_path)
 
