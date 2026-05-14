@@ -429,4 +429,18 @@ Tempo di esecuzione totale misurato: 10 ore e 41 minuti circa.
 
 TODO: 
 - (opzionale) considerate di modificare l’esempio dato in input e ripetere passo precedente.
-- Aggiungere descrizioni in inglese ai codici di tutto il dataset 
+- Aggiungere descrizioni in inglese ai codici di tutto il dataset
+
+
+# WEEKS 8-9-10 (13-05-2026 - 03-06-2026)
+
+Introduzione di una nuova metrica: robust BNPS. Non è un BNPS "puro", ma una versione che penalizza anche per l'instabilità di una configurazione tra le varie run. Per prompt ablation la scelta sarà ponderata sul prompt_score = avg(top 3 robust_bnps).
+
+robust_BNPS = BNPS_mean - BNPS_std
+
+
+Iniziato un'ablation study sui risultati ottenuti, che passa attaverso diversi step. 
+0. Creazione di 12 tabelle di partenza per la selezione del prompt migliore. A ciascuna tabella corrisponde una coppia prompt-shot_type, sulle righe sono riportate le coppie modello-temperatura, sulle colonne le 7 metriche. Le 12 tabelle sono ottenute effettuando una media aritmetica, per ogni configurazione selezionata, dei risultati ottenuti nelle 4 run. Il risultato di ogni cella è riportato nella forma "media +- std", derivando questa stirnga dalla concatenazione dei risultati delle colonne bnps_mean e bnps_std.
+1. Prompt ablation. Scelgo la coppia prompt-shot_type migliore tra le 12 tabelle di partenza, operando in base alla media aritmetica delle top 3 celle per robust_BNPS = BNPS-std (è una nuova colonna nella tabellona di partenza prima di raggruppare, premia buone performance e penalizza instabilità tra le run). La tecnica usata è una sorta di "top quartile robusto": per la scelta della migliore tabella vengono prese in consideraizone le prime 3 celle per robust_BNPS, in quanto rappresentano il 25% (quindi un quartile) del numero di righe ciascuna tabella (12), evitando quindi di selezionare in base a un singolo picco massimo. Si procede la prompt ablation creando due grafici. Bar plot: asse x le coppie prompt-shot, sulle y il prompt score (ottenuto dalla media delle top 3 robust_bnps)) + grafico di supporto che illustra bnps medio delle top 3 celle affiancando la error bar della std (media della bnps_std delle top 3 celle) per ciascuna coppia prompt-shot_type (bar plot: x = prompt + shot, y = prompt_score (BNPS_mean medio delle top 3 righe), error bar = BNPS_std medio delle top 3 righe). 
+2. Seleziono la coppia prompt-shot type in base a prompt score, fpr, precision@1 (massimizzo prompt_score, a parità sclgo fpr + basso, se sono ancora vicini uso precision@1).
+3. Model ablation. Avviene considerando di aver il prompt migliore (prompt label + shot type) al punto 3. Grafico iniziale per ciascun modello dove, fissato prompt shot type, faccio vedere come la variazione della temperatura incida poco sulla bnps e aumenti i falsi positivi con l'aumentare della temperatura. Line plot unico per tutti e tre i modleli insieme: uno per bnps_mean + bnps_std (error bar), uno per i falsi positivi. Alla bnps_mean viene affiancata una error bar (bnps_std) in modo sottolineare la varianza. Si aggiunge, come grafico opzionale, una heatmap (x temperatura, y modello, valore robust_bnps). Analizzato quindi il trend dei modelli e rispettive temperature, scelgo la migliore riga dentro la tabella prompt-shot_type fissata al punto 2, andando rispettivamente per robust_bnps, fpr basso, precision@1 alta, acc_top1 alta.
