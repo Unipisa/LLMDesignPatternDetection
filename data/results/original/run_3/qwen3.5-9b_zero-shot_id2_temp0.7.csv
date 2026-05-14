@@ -1,0 +1,22 @@
+id,prompt_used,model,name_baseline,ground_truth,prediction
+0,role + base + rules + output_description,qwen/qwen3.5-9b,departure,"['template_method', 'strategy', 'builder', 'proxy']","['strategy', 'template_method', 'builder']"
+2,role + base + rules + output_description,qwen/qwen3.5-9b,rescuelogic,"['template_method', 'strategy', 'proxy']","['strategy', 'template_method']"
+3,role + base + rules + output_description,qwen/qwen3.5-9b,traffic_light,"['state', 'proxy', 'strategy']",['state']
+5,role + base + rules + output_description,qwen/qwen3.5-9b,Stall,"['state', 'command', 'strategy', 'proxy']",['state']
+6,role + base + rules + output_description,qwen/qwen3.5-9b,rover,"['command', 'proxy', 'strategy']",['strategy']
+8,role + base + rules + output_description,qwen/qwen3.5-9b,bankaccount,"['command', 'strategy', 'proxy', 'decorator']","['command', 'strategy']"
+9,role + base + rules + output_description,qwen/qwen3.5-9b,Vector,"['strategy', 'template_method', 'adapter', 'command', 'proxy']",['factory_method']
+10,role + base + rules + output_description,qwen/qwen3.5-9b,validator,"['strategy', 'state', 'template_method', 'proxy']","['strategy', 'template_method']"
+13,role + base + rules + output_description,qwen/qwen3.5-9b,monster,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['abstract_factory', 'factory_method']"
+14,role + base + rules + output_description,qwen/qwen3.5-9b,wand,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['abstract_factory', 'factory_method', 'decorator']"
+15,role + base + rules + output_description,qwen/qwen3.5-9b,tv,"['abstract_factory', 'factory_method', 'strategy']","['strategy', 'abstract_factory']"
+17,role + base + rules + output_description,qwen/qwen3.5-9b,house,"['abstract_factory', 'factory_method', 'strategy', 'proxy']","['factory_method', 'template_method']"
+18,role + base + rules + output_description,qwen/qwen3.5-9b,gamengine,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']","['factory_method', 'strategy', 'command']"
+19,role + base + rules + output_description,qwen/qwen3.5-9b,computer,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']","['factory_method', 'strategy']"
+22,role + base + rules + output_description,qwen/qwen3.5-9b,tenant,['proxy'],"['template_method', 'state', 'proxy']"
+23,role + base + rules + output_description,qwen/qwen3.5-9b,ledger,['proxy'],"['abstract_factory', 'factory_method', 'builder', 'command', 'strategy', 'template_method', 'state', 'proxy', 'decorator', 'adapter']"
+24,role + base + rules + output_description,qwen/qwen3.5-9b,water_flow,"['proxy', 'decorator', 'command']","['factory_method', 'abstract_factory', 'strategy']"
+25,role + base + rules + output_description,qwen/qwen3.5-9b,sword,"['decorator', 'factory_method', 'strategy', 'proxy']","['decorator', 'strategy']"
+27,role + base + rules + output_description,qwen/qwen3.5-9b,cafecito,"['decorator', 'builder', 'strategy', 'factory_method', 'proxy']","['strategy', 'decorator']"
+28,role + base + rules + output_description,qwen/qwen3.5-9b,roundhole,['adapter'],"['abstract_factory', 'factory_method', 'builder', 'command', 'strategy', 'template_method', 'state', 'proxy', 'decorator', 'adapter']"
+29,role + base + rules + output_description,qwen/qwen3.5-9b,calculator,"['adapter', 'command', 'strategy', 'proxy']","['strategy', 'command']"

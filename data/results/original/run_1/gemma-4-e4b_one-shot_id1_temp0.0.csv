@@ -1,0 +1,22 @@
+id,prompt_used,model,name_baseline,ground_truth,prediction
+0,role + base + output_description,google/gemma-4-e4b,departure,"['template_method', 'strategy', 'builder', 'proxy']","['strategy', 'template_method']"
+2,role + base + output_description,google/gemma-4-e4b,rescuelogic,"['template_method', 'strategy', 'proxy']",['strategy']
+3,role + base + output_description,google/gemma-4-e4b,traffic_light,"['state', 'proxy', 'strategy']",['state']
+5,role + base + output_description,google/gemma-4-e4b,Stall,"['state', 'command', 'strategy', 'proxy']",['state']
+6,role + base + output_description,google/gemma-4-e4b,rover,"['command', 'proxy', 'strategy']",['decorator']
+8,role + base + output_description,google/gemma-4-e4b,bankaccount,"['command', 'strategy', 'proxy', 'decorator']",['command']
+9,role + base + output_description,google/gemma-4-e4b,Vector,"['strategy', 'template_method', 'adapter', 'command', 'proxy']",['decorator']
+10,role + base + output_description,google/gemma-4-e4b,validator,"['strategy', 'state', 'template_method', 'proxy']",['strategy']
+13,role + base + output_description,google/gemma-4-e4b,monster,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['strategy', 'abstract_factory']"
+14,role + base + output_description,google/gemma-4-e4b,wand,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['abstract_factory', 'factory_method']"
+15,role + base + output_description,google/gemma-4-e4b,tv,"['abstract_factory', 'factory_method', 'strategy']",['strategy']
+17,role + base + output_description,google/gemma-4-e4b,house,"['abstract_factory', 'factory_method', 'strategy', 'proxy']","['abstract_factory', 'strategy']"
+18,role + base + output_description,google/gemma-4-e4b,gamengine,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']",['strategy']
+19,role + base + output_description,google/gemma-4-e4b,computer,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']","['strategy', 'factory_method']"
+22,role + base + output_description,google/gemma-4-e4b,tenant,['proxy'],['proxy']
+23,role + base + output_description,google/gemma-4-e4b,ledger,['proxy'],['proxy']
+24,role + base + output_description,google/gemma-4-e4b,water_flow,"['proxy', 'decorator', 'command']",['proxy']
+25,role + base + output_description,google/gemma-4-e4b,sword,"['decorator', 'factory_method', 'strategy', 'proxy']",['decorator']
+27,role + base + output_description,google/gemma-4-e4b,cafecito,"['decorator', 'builder', 'strategy', 'factory_method', 'proxy']",['factory_method']
+28,role + base + output_description,google/gemma-4-e4b,roundhole,['adapter'],['strategy']
+29,role + base + output_description,google/gemma-4-e4b,calculator,"['adapter', 'command', 'strategy', 'proxy']",['strategy']
