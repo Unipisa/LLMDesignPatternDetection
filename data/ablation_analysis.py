@@ -1,6 +1,7 @@
 import sys, os, re
 import textwrap
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 
 from data.evaluate import false_positive_rate, positional_similarity
@@ -10,7 +11,7 @@ TABLES_DIR_PATH = "ablation/tables"
 
 # stable configuration
 PLOTS_PATH = "ablation/plots"
-BEST_PROMPT = "base + output description"
+BEST_PROMPT = "role + base + output description + rules"
 BEST_SHOT = "one-shot"
 BEST_TEMPERATURE = 0.0
 BEST_MODEL = None
@@ -21,6 +22,7 @@ OPTIMAL_SHOT = "zero-shot"
 OPTIMAL_TEMPERATURE = 0.0
 OPTIMAL_MODEL = "gemma-4-e4b"
 
+METRICS = ["precision@1", "BNPS", "false_positive_rate"]
 
 def load_runs():
     """
@@ -95,20 +97,38 @@ def export_prompt_labels(data):
 
 
 
-def plot_prompt_boxplot(data):
+def plot_prompt_plots(data):
     """
-    Generates a boxplot chart for each prompt-shot pair.
+    Generates a chart for each prompt-shot pair, considering BNPS, precision@1 and false-positive rate.
     """
-    fig, ax = plt.subplots(figsize=(18, 6), dpi=300)
-    data.boxplot(column="BNPS", by=["prompt_label", "shot"], ax=ax, grid=True)
-    fig.suptitle("BNPS distribution by prompt-shot configuration")
-    ax.set_xlabel("prompt, shot")
-    ax.set_ylabel("BNPS")
-    labels = [textwrap.fill(label.get_text(), width=17) for label in ax.get_xticklabels()]
-    ax.set_xticklabels(labels, rotation=0, fontsize=6)
-    plt.xticks(rotation=0, fontsize=8)
-    plt.tight_layout()
-    plt.savefig(os.path.join(PLOTS_PATH, "prompt_trends.png"))
+    for metric in ["BNPS", "false_positive_rate"]:
+        fig, ax = plt.subplots(figsize=(18, 6), dpi=300)
+        data.boxplot(column=metric, by=["prompt_label", "shot"], ax=ax, grid=True)
+        fig.suptitle("")
+        ax.set_xlabel("prompt, shot")
+        ax.set_ylabel(metric)
+        labels = [textwrap.fill(label.get_text(), width=17) for label in ax.get_xticklabels()]
+        ax.set_xticklabels(labels, rotation=0, fontsize=6)
+        plt.xticks(rotation=0, fontsize=8)
+        plt.tight_layout()
+        ax.set_title(f"{metric} distribution by prompt-shot configuration")
+        plt.savefig(os.path.join(PLOTS_PATH, f"prompt_boxplot_{metric}.png"))
+
+    for metric in ["acc_top1", "precision@1"]:
+        grouped = data.groupby(["prompt_label", "shot"])[metric].agg(["mean", "std"])
+        fig, ax = plt.subplots(figsize=(18, 6), dpi=300)
+        grouped["mean"].plot.bar(yerr=grouped["std"], ax=ax, capsize=5)
+        labels = [textwrap.fill(label.get_text(), width=17) for label in ax.get_xticklabels()]
+        ax.set_xticklabels(labels, rotation=0, fontsize=6)
+        plt.xticks(rotation=0, fontsize=8)
+        ax.set_xlabel("prompt, shot")
+        plt.title(f"Average {metric} over all prompts")
+        ax.set_ylabel(metric)
+        ax.set_yticks(np.arange(0, 1.01, 0.1))
+        plt.grid(True)
+        plt.tight_layout()
+        plt.savefig(os.path.join(PLOTS_PATH, f"prompt_barplot_{metric}.png"))
+
 
 def plot_temperature_lineplot(data):
     """
@@ -227,6 +247,6 @@ if __name__ == "__main__":
     df = load_runs()
     config_stats = compute_config_stats(df)
     export_prompt_labels(config_stats)
-    plot_prompt_boxplot(df)
+    plot_prompt_plots(df)
     plot_temperature_lineplot(config_stats)
     temperature_boxolpot(df)
