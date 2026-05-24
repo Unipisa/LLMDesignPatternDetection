@@ -56,12 +56,12 @@ def compute_config_stats(data):
     Adds a new "robust_BNPS" column.
     """
     to_process = data.groupby(["prompt_label", "shot", "model", "temperature"]).agg(
-        precision_1_mean = ("precision@1", "mean"),
-        precision_1_std = ("precision@1", "std"),
         BNPS_mean = ("BNPS", "mean"),
         BNPS_std = ("BNPS", "std"),
         false_positive_rate_mean =("false_positive_rate", "mean"),
         false_positive_rate_std = ("false_positive_rate", "std"),
+        precision_1_mean = ("precision@1", "mean"),
+        precision_1_std = ("precision@1", "std"),
         acc_top1_mean = ("acc_top1", "mean"),
         acc_top1_std = ("acc_top1", "std"),
         positional_similarity_mean = ("positional_similarity", "mean"),
@@ -71,7 +71,6 @@ def compute_config_stats(data):
         ndcg_inverted_mean =("ndcg_inverted", "mean"),
         ndcg_inverted_std = ("ndcg_inverted", "std"),
     )
-    to_process["robust_BNPS"] = to_process["BNPS_mean"] - to_process["BNPS_std"]
     to_process.reset_index(inplace=True)
     return to_process.round(3)
 
@@ -82,10 +81,10 @@ def export_prompt_labels(data):
     """
     grouped = data.groupby(["prompt_label", "shot"])
     for (prompt_label, shot), table in grouped:
-        table["precision@1"] = table["precision_1_mean"].astype(str) + " +- " + table["precision_1_std"].astype(str)
-        table["BNPS"] = table["BNPS_mean"].astype(str) + " +- " + table["BNPS_std"].astype(str)
-        table["false_positive_rate"] = table["false_positive_rate_mean"].astype(str) + " +- " + table["false_positive_rate_std"].astype(str)
-        table["acc_top1"] = table["acc_top1_mean"].astype(str) + " +- " + table["acc_top1_std"].astype(str)
+        table["BNPS"] = table["BNPS_mean"].astype(str) + " ± " + table["BNPS_std"].astype(str)
+        table["false_positive_rate"] = table["false_positive_rate_mean"].astype(str) + " ± " + table["false_positive_rate_std"].astype(str)
+        table["precision@1"] = table["precision_1_mean"].astype(str) + " ± " + table["precision_1_std"].astype(str)
+        table["acc_top1"] = table["acc_top1_mean"].astype(str) + " ± " + table["acc_top1_std"].astype(str)
         name = f"{prompt_label}_{shot}"
         name = re.sub(r"[\s+]+", "_", name)
         name = re.sub(r"_+", "_", name)
