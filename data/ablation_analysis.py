@@ -129,6 +129,46 @@ def plot_prompt_plots(data):
         plt.tight_layout()
         plt.savefig(os.path.join(PLOTS_PATH, f"prompt_barplot_{metric}.png"))
 
+def plot_temperature_avg(data):
+    """
+    Description
+    """
+    models = sorted(data["model"].unique())
+    fig, axes = plt.subplots(
+        1,
+        len(models),
+        figsize=(18, 6),
+        dpi=300,
+        sharey=True
+    )
+    avg_by_model_temperature = data.groupby(["model", "shot", "temperature"]).agg(
+        BNPS_mean=("BNPS", "mean"),
+        BNPS_std=("BNPS", "std"),
+        false_positive_rate_mean=("false_positive_rate", "mean"),
+        false_positive_rate_std=("false_positive_rate", "std")
+    )
+    avg_by_model_temperature.reset_index(inplace=True)
+    for metric, std in zip(["BNPS_mean", "false_positive_rate_mean"], ["BNPS_std", "false_positive_rate_std"]):
+        for ax, model in zip(axes, models):
+            table = avg_by_model_temperature.loc[avg_by_model_temperature["model"] == model].sort_values("temperature")
+            for shot, table in table.groupby("shot"):
+                ax.errorbar(
+                    table["temperature"],
+                    table[metric],
+                    yerr=table[std],
+                    capsize=5,
+                    marker="o",
+                    label = f"{metric} ({shot})",
+                )
+                ax.grid(True)
+                ax.set_xlabel("temperature")
+                ax.set_title(model)
+
+    fig.suptitle("Average BNPS and false-positive rate over all prompt configurations by temperature and shot", fontsize=16)
+    plt.legend(loc="best")
+    plt.tight_layout()
+    fig.savefig(os.path.join(PLOTS_PATH, f"avg_temperature_performance.png"))
+
 
 def plot_temperature_lineplot(data):
     """
@@ -248,5 +288,6 @@ if __name__ == "__main__":
     config_stats = compute_config_stats(df)
     export_prompt_labels(config_stats)
     plot_prompt_plots(df)
+    plot_temperature_avg(df)
     plot_temperature_lineplot(config_stats)
     temperature_boxolpot(df)
