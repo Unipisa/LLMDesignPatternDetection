@@ -85,6 +85,9 @@ def export_prompt_labels(data):
         table["false_positive_rate"] = table["false_positive_rate_mean"].astype(str) + " ± " + table["false_positive_rate_std"].astype(str)
         table["precision@1"] = table["precision_1_mean"].astype(str) + " ± " + table["precision_1_std"].astype(str)
         table["acc_top1"] = table["acc_top1_mean"].astype(str) + " ± " + table["acc_top1_std"].astype(str)
+        table["positional_similarity"] = table["positional_similarity_mean"].astype(str) + " ± " + table["positional_similarity_std"].astype(str)
+        table["ndcg_standard"] = table["ndcg_standard_mean"].astype(str) + " ± " + table["ndcg_standard_std"].astype(str)
+        table["ndcg_inverted"] = table["ndcg_inverted_mean"].astype(str) + " ± " + table["ndcg_inverted_std"].astype(str)
         name = f"{prompt_label}_{shot}"
         name = re.sub(r"[\s+]+", "_", name)
         name = re.sub(r"_+", "_", name)
@@ -262,6 +265,29 @@ def temperature_boxolpot (data):
     plt.tight_layout()
     plt.savefig(os.path.join(PLOTS_PATH, "temperature_boxplots.png"))
 
+def model_barplot(data):
+    data = data.loc[
+        (data["prompt_label"] == BEST_PROMPT)
+        & (data["shot"] == BEST_SHOT)
+        & (data["temperature"] == BEST_TEMPERATURE)
+    ]
+    fig, ax = plt.subplots(figsize=(18, 6), dpi=300)
+    data.plot.bar(x="model",
+                  y=["BNPS_mean", "false_positive_rate_mean", "precision_1_mean"],
+                  figsize=(18, 6),
+                  grid=True,
+                  ax=ax
+                  )
+    ax.set_yticks(np.arange(0, 1.01, 0.1))
+    ax.legend(loc="best")
+    ax.set_title(f"Model performance considering prompt {BEST_PROMPT} ({BEST_SHOT}) and T = {BEST_TEMPERATURE}")
+    plt.xticks(rotation=0)
+    for container in ax.containers:
+        ax.bar_label(container, fmt="%.3f")
+    plt.tight_layout()
+    fig.savefig(os.path.join(PLOTS_PATH, "model_barplots_prompt_stable.png"))
+
+
 
 if __name__ == "__main__":
     if not os.path.exists(AVG_RUNS_RESULTS_PATH):
@@ -290,3 +316,4 @@ if __name__ == "__main__":
     plot_temperature_avg(df)
     plot_temperature_lineplot(config_stats)
     temperature_boxolpot(df)
+    model_barplot(config_stats)
