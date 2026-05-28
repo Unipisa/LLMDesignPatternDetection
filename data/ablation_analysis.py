@@ -3,6 +3,8 @@ import textwrap
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import json
+import seaborn as sns
 
 from data.evaluate import false_positive_rate, positional_similarity
 
@@ -14,7 +16,6 @@ PLOTS_PATH = "ablation/plots"
 BEST_PROMPT = "role + base + output description + rules"
 BEST_SHOT = "one-shot"
 BEST_TEMPERATURE = 0.0
-BEST_MODEL = None
 
 # configuration with best performance, without considering std
 OPTIMAL_PROMPT = "improved by chatGPT"
@@ -23,6 +24,7 @@ OPTIMAL_TEMPERATURE = 0.0
 OPTIMAL_MODEL = "gemma-4-e4b"
 
 METRICS = ["precision@1", "BNPS", "false_positive_rate"]
+MODELS = ["gemma-4-e4b", "gpt-oss-20b", "qwen3.5-9b"]
 
 def load_runs():
     """
@@ -287,6 +289,75 @@ def model_barplot(data):
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "model_barplots_prompt_stable.png"))
 
+def plot_design_patterns_performance():
+    """
+    Creates heatmap on design patterns considering the selected configurations (ablation end). This function averages
+    metric values across runs and does not report standard deviation.
+    """
+    with open("config/prompts.json", "r") as f:
+        prompts = json.load(f)
+    prompt_label_to_id = {p["label"]: p["id"] for p in prompts}
+    prompt_id_to_label = {p["id"]: p["label"] for p in prompts}
+
+    best_confs = [f"{model}_{BEST_SHOT}_id{prompt_label_to_id[BEST_PROMPT]}_temp{BEST_TEMPERATURE}" for model in MODELS]
+    best_confs.append(f"{OPTIMAL_MODEL}_{OPTIMAL_SHOT}_id{prompt_label_to_id[OPTIMAL_PROMPT]}_temp{OPTIMAL_TEMPERATURE}")
+    for metric in METRICS:
+        metric_series = []
+        for best_conf in best_confs:
+            # average results extraction for each conf.
+            base_dir = "results/evaluated"
+            run_dirs = [d for d in os.listdir(base_dir) if d.startswith("run_")
+                        and os.path.isfile(os.path.join(base_dir, d,  best_conf+".csv"))]
+            if not run_dirs:
+                print(f"No run found for {best_conf}", file=sys.stderr)
+                continue
+            frames = []
+            for run_dir in run_dirs:
+                tmp = pd.read_csv(os.path.join(base_dir, run_dir, best_conf+".csv"))
+                tmp["id"] = tmp["id"].astype(int)
+                frames.append(tmp)
+            metric_by_pattern = pd.concat(frames).groupby("id")[metric].mean().sort_index()
+            metric_by_pattern.name = best_conf
+            metric_series.append(metric_by_pattern)
+
+        # plotting
+        df_metric = pd.concat(metric_series, axis=1).T  # index contains the selected configurations
+        readable_labels = []
+        for conf in df_metric.index:
+            model, rest = conf.split("_", 1)
+            shot, rest = rest.split("_id", 1)
+            prompt_id, temperature = rest.split("_temp", 1)
+            prompt_label = prompt_id_to_label[int(prompt_id)]
+            label = f"{prompt_label} ({shot}), T={temperature}, {model}"
+            readable_labels.append(textwrap.fill(label, width=30))
+        df_metric.index = readable_labels
+
+        fig, ax = plt.subplots(figsize=(18, 6), dpi=300)
+        sns.heatmap(
+            df_metric,
+            ax=ax,
+            annot=True,
+            fmt=".3f",
+            vmin=0,
+            vmax=1,
+            cmap="viridis"
+        )
+        ax.collections[0].colorbar.set_label(metric, labelpad=25)       # colorbar label
+        ax.set_xlabel("Design pattern id")
+        ax.set_title(f"{metric} per design pattern across selected configurations", pad =30, fontweight="bold")
+
+        # category separators
+        ax.axvline(8, color="white", linewidth=3)  # after behavioural
+        ax.axvline(14, color="white", linewidth=3)  # after creational
+
+        # category labels
+        ax.text(4, -0.15, "Behavioural", ha="center", va="center", fontsize=10)
+        ax.text(11, -0.15, "Creational", ha="center", va="center", fontsize=10)
+        ax.text(17.5, -0.15, "Structural", ha="center", va="center", fontsize=10)
+
+        plt.tight_layout()
+        output_path = f"{PLOTS_PATH}/design-patterns-performance-by_{metric}.png"
+        plt.savefig(output_path)
 
 
 if __name__ == "__main__":
@@ -317,3 +388,4 @@ if __name__ == "__main__":
     plot_temperature_lineplot(config_stats)
     temperature_boxolpot(df)
     model_barplot(config_stats)
+    plot_design_patterns_performance()

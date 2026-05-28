@@ -442,4 +442,4 @@ Iniziato un'ablation study sui risultati ottenuti, che passa attaverso diversi s
 3. Temperature ablation. Si esibisce l'andamento delle prestazioni all'aumentare della temperatura, si ipotizza che la scelta T=0.0 sia ottimale.
 4. Model ablation
 
-Iniziata la stesura della tesi, organizzata in un'apposita cartella "thesis".
+Avviata la valutazione delle configurazioni scelte sul test set; iniziata la stesura della tesi (organizzata in un'apposita cartella "thesis")
