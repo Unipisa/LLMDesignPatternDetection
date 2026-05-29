@@ -2,33 +2,33 @@
 \label{ch:introduction}
 
 \section{Context and motivations}\label{sec:context-and-motivations}
-Today, design pattern detection represents an important problem in software engineering, as it can improve software
-quality, reduce technical debt, support the identification of code smells and increase maintainability.
-This task is closely related to refactoring, a systematic process of improving code without creating new functionality,
-making it cleaner, simpler and easier to maintain.
+Design pattern detection has become a crucial aspect of software engineering, as it supports quality assurance,
+technical debt management, code smell identification, and overall maintainability.
+This process is closely related to refactoring, a systematic method to updating code without changing its
+external behavior, enhancing its readability and structure.
 
-Code smells can arise from codebase growth or poor programming practices, manifesting themselves as indicators of
-problems that can be addressed during refactoring: they are often easy to find and fix, however, they may be just
-symptoms of a deeper problem with the code.
-Technical debt refers to the maintenance cost that grows over time due to suboptimal design or implementation choices:
-while in the short term they can speed up code development, in the long term they make the system more complex to
-understand, modify, test and evolve.
+Code smells typically arise from codebase growth or poor programming practices, acting as indicators of
+underlying issues that can be addressed during refactoring: while they are often easy to find and fix, they may be just
+symptoms of deeper archithectural flaws.
+Technical debt refers to the maintenance cost growth due to suboptimal design or implementation choices: although in the
+short term they can speed up code development, over time they make the system more complex to understand, modify, test,
+and evolve.
 
-Design patterns can be used as a means to deal with design problems and guide refactoring decisions, as they represent
-a solution to common problems in software design. Since patterns are described at a high level of abstraction, the same
-pattern may lead to different concrete implementations.
-Design patterns are useful, but not trivial: forcing their application in unsuitable contexts leads to overengineering,
-as well as an increase in technical debt.
+Design patterns can be used as a means to deal with structural issues and guide refactoring decisions, as they represent
+a solution to common problems in software development. Since patterns are described at a high level of abstraction, there
+are several ways to choose and apply them, leading to different concrete implementations.
+While useful, design patterns should not be applied indiscriminately, since forcing their application in unsuitable
+contexts may lead to overengineering, as well as an increase in technical debt.
 
 However, the identification and application of design patterns are not fully deterministic processes, since they rely on
-the project context, the considered abstraction level and the developer interpretation.
+the project context, the considered abstraction level, and the developer interpretation.
 As a result, it may not be possible to establish a universally valid answer to the question of which design pattern to
 use: such an answer is inevitably influenced by subjective factors.
 
 In particular, LLMs may help to solve this problem, since they can help automate and speed up refactoring, despite
 the subjective nature of the task. Design pattern detection requires, in fact, a semantic and contextual understanding
 of the source code: this need makes the use of such models particularly relevant, precisely because they do not merely
-search for rigid patterns, but are able to analyze structure, class responsibilities and the relationships between
+search for rigid patterns, but are able to analyze structure, class responsibilities, and the relationships between
 components.
 This process represents an application of artificial intelligence to a branch of software engineering, named
 \underline{AI4SE}.
@@ -51,14 +51,14 @@ will be challenged by architectural ambiguity.
 The main purpose in terms of implementation is to create an end-to-end tool, which will support refactoring by taking
 as input Python code and providing a refactored version that applies the most suitable design pattern.
 The work involves an extension of the \underline{LLM Design Pattern Refactoring}
-project\cite{zisa2024llmdesignpatternrefactoring}, which enables the application of a previously selected design
-pattern to the code, by implementing a component that suggests the most suitable design pattern given the code.
+project~\cite{zisa2024llmdesignpatternrefactoring}, which enables the application of a previously selected design
+pattern by implementing a component that suggests the most suitable design pattern given the code.
 
 This thesis makes the following contributions:
 \begin{itemize}
-    \item Expansion of the original dataset created in LLM Design Pattern Refactoring, adding new code examples that implement new patterns that were not covered by the previous project: each example has been provided with a refactored version implementing a specific design pattern and a baseline version, where the design pattern has been removed. Baseline and refactored versions are functionally equivalent.
+    \item Adding new code examples for design patterns that were not present in the dataset of the previous project. Each example has been provided with a refactored version, implementing a specific design pattern, and a baseline version, where the design pattern has been removed. Baseline and refactored versions are functionally equivalent.
     \item Labeling of each baseline example in the dataset with a list of applicable design patterns, ranked by applicability.
-    \item Implementation of a tool for querying a local LLM, aimed at generating a list of design patterns ranked according to their applicability to the analyzed code. Each query is characterized by the specification of the LLM name, textual prompt and model temperature.
+    \item Implementation of a tool for querying a local LLM, aimed at generating a list of design patterns ranked according to their applicability to the analyzed code. Each query is characterized by the specification of the LLM name, textual prompt, and model temperature.
     \item Evaluation of LLM predictions according to seven metrics designed to evaluate the ranking quality of model predictions.
     \item Conduct of an ablation study aimed at establishing which query yields the best results.
 \end{itemize}
@@ -66,7 +66,7 @@ This thesis makes the following contributions:
 \section{Thesis Organization}\label{sec:thesis-organization}
 The thesis is structured as follows:
 \begin{itemize}
-    \item \emph{Chapter 2} provides the necessary concepts to understand design patterns definition and how to interact with Large Language Models.
+    \item \emph{Chapter 2} provides the necessary concepts to understand design pattern definitions and how to interact with Large Language Models.
     \item \emph{Chapter 3} describes the dataset, explaining the refactored examples and which design pattern they implement.
     \item \emph{Chapter 4} introduces the LLM-based design pattern detection tool.
     \item \emph{Chapter 5} defines the evaluation methods for model predictions and discusses the results in light of them.

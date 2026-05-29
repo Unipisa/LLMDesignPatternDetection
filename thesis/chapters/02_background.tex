@@ -1,2 +1,88 @@
 \chapter{Background}\label{ch:background}
 
+\section{Design Patterns}\label{sec:design-patterns}
+
+Design patterns can be defined as a common design structure useful for creating reusable object-oriented designs. They
+are characterized by four essential elements~\cite{gamma1995designpatterns}:
+\begin{itemize}
+    \item The name provides a concise way to refer to the pattern and captures the intended application domain.
+    \item The problem describes the considered design issues and the context.
+    \item The solution is expressed as the elements that make up the design, their relationships, responsibilities, and collaborations.
+    \item The consequences of applying the pattern and its and trade-offs.
+\end{itemize}
+
+This work starts from the original dataset of the LLM Design Pattern Refactoring project~\cite{zisa2024llmdesignpatternrefactoring},
+which contained three examples for each of the following design patterns: Strategy, State, Decorator, Adapter, and
+Factory Method. Each example was provided in two versions: a refactored version implementing the corresponding design
+pattern and a baseline version, where the pattern had been removed.
+
+Starting from this dataset, this project extends the set of considered design patterns by introducing five additional
+patterns, briefly described in the following paragraphs.
+
+The first added pattern is Abstract Factory, which provides an interface for creating families of related or dependent
+objects without specifying their concrete classes~\cite{gamma1995designpatterns}.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/design_patterns_diagrams/abstract_factory}
+    \caption{Abstract Factory pattern structure}
+    \label{fig:abstract-factory-pattern-structure}
+\end{figure}
+\FloatBarrier
+
+Builder pattern separates the construction of a complex object from its representation so that the same construction
+process can create different representations~\cite{gamma1995designpatterns}.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figures/design_patterns_diagrams/builder}
+    \caption{Builder pattern structure}
+    \label{fig:builder-pattern-structure}
+\end{figure}
+\FloatBarrier
+
+Proxy pattern provides a surrogate or placeholder for another object to control access to it~\cite{gamma1995designpatterns}.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figures/design_patterns_diagrams/proxy}
+    \caption{Proxy pattern structure}
+    \label{fig:proxy-pattern-structure}
+\end{figure}
+\FloatBarrier
+
+Command pattern encapsulates a request as an object, thereby letting you parameterize clients with different requests,
+queue or log requests, and support undoable operations~\cite{gamma1995designpatterns}.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.7\textwidth]{figures/design_patterns_diagrams/command}
+    \caption{Command pattern structure}
+    \label{fig:command-pattern-structure}
+\end{figure}
+\FloatBarrier
+
+Template Method pattern defines the skeleton of an algorithm in an operation, deferring some steps to subclasses so that
+they can redefine certain steps without changing the algorithm’s structure~\cite{gamma1995designpatterns}.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.4\textwidth]{figures/design_patterns_diagrams/template_method}
+    \caption{Template Method pattern structure}
+    \label{fig:template-method-pattern-structure}
+\end{figure}
+\FloatBarrier
+
+Each design pattern focuses on a particular object-oriented design problem or issue. It describes when it applies,
+whether it can be applied in view of other design constraints, and the consequences or trade-offs of its use.
+Design patterns are classified into three main categories, depending on their purpose:
+\begin{itemize}
+    \item Creational patterns concern the process of object creation
+    \item Structural patterns deal with the composition of classes or objects.
+    \item Behavioral patterns characterize the ways in which classes or objects interact and distribute responsibility.
+\end{itemize}
+
+In this work, the considered design patterns cover all three categories. Strategy, State, Command, and Template Method
+belong to behavioral patterns; Decorator, Adapter, and Proxy belong to structural patterns; while Factory Method,
+Abstract Factory, and Builder belong to creational patterns.
+
+\section{Large Language Models for Code}\label{sec:large-language-models-for-code}
+
+\section{Structured outputs}\label{sec:structured-outputs}
+
+\section{Ranking-based evaluation}\label{sec:ranking-based-evaluation}
