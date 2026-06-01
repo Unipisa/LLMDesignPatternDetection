@@ -82,7 +82,23 @@ belong to behavioral patterns; Decorator, Adapter, and Proxy belong to structura
 Abstract Factory, and Builder belong to creational patterns.
 
 \section{Large Language Models for Code}\label{sec:large-language-models-for-code}
-
+Large language models applicati al codice sono modelli di linguaggio su larga scala addestrati su corpora contenenti 
+codice sorgente, commenti e documentazione. Questi modelli supportano attività pratiche come il completamento del codice,
+ la generazione da specifiche in linguaggio naturale e il refactoring; la loro valutazione combina metriche testuali 
+ (es. CodeBLEU) e, preferibilmente, metriche funzionali basate sull'esecuzione di test (es. HumanEval / pass@k). 
+ Sebbene aumentino la produttività, presentano limiti (allucinazioni, rischi di licenza e sicurezza) che vanno mitigati 
+ con test automatici, retrieval-augmented methods, analisi statica e revisione umana — pratiche che adotteremo nel 
+ presente lavoro per valutare proposte di refactoring e l'introduzione di design pattern.
+ 
 \section{Structured outputs}\label{sec:structured-outputs}
+As mentioned in the previous section, LLMs generate responsed based on a probabiistic distribution, except when
+their temperature is set to zero. This means that, even when the same prompt is given multiple times, the generated 
+response may differ across runs. This can be a problem when the expected output has a specific structure, such as an ordered 
+list, and the model generates an output that does not conform to the expected structure. To address this issue, this works 
+adopts a strategy to force the model to generate outputs that conform to the expected structure.
+This feature is named \textit{Structured Outputs}, a feature that ensures the model will always generate responses that 
+adhere to a supplied description in JSON Schema~\cite{openai_structured_outputs}. JSON Schema is a declarative language for 
+annotating and validating JSON documents' structure, constraints, and data types: it helps to standardize and define expectations 
+for JSON data.
 
 \section{Ranking-based evaluation}\label{sec:ranking-based-evaluation}
