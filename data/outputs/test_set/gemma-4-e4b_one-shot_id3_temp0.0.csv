@@ -1,0 +1,11 @@
+id,prompt_used,model,name_baseline,ground_truth,prediction,precision@1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
+1,role + base + output description + rules,google/gemma-4-e4b,formfilling,"['template_method', 'strategy', 'builder', 'proxy']","['strategy', 'template_method']",1.0,0.667,0.0,0.0,0.0,1.0,1.0
+4,role + base + output description + rules,google/gemma-4-e4b,elevator,"['state', 'strategy', 'proxy']",['state'],1.0,0.778,0.0,1.0,0.333,1.0,1.0
+7,role + base + output description + rules,google/gemma-4-e4b,restaurant,"['command', 'strategy', 'proxy']",['strategy'],1.0,0.5,0.0,0.0,0.0,1.0,0.5
+11,role + base + output description + rules,google/gemma-4-e4b,graphtraversal,"['strategy', 'template_method', 'proxy']",['strategy'],1.0,0.778,0.0,1.0,0.333,1.0,1.0
+12,role + base + output description + rules,google/gemma-4-e4b,car,"['factory_method', 'abstract_factory', 'strategy', 'proxy']","['factory_method', 'abstract_factory']",1.0,0.833,0.0,1.0,0.5,1.0,1.0
+16,role + base + output description + rules,google/gemma-4-e4b,battle,"['abstract_factory', 'factory_method', 'strategy', 'proxy']","['strategy', 'factory_method']",1.0,0.602,0.0,0.0,0.25,1.0,0.556
+20,role + base + output description + rules,google/gemma-4-e4b,datastructure,"['builder', 'strategy', 'proxy', 'adapter']","['strategy', 'template_method']",1.0,0.5,0.167,0.0,0.0,1.0,0.5
+21,role + base + output description + rules,google/gemma-4-e4b,deliveryvehicles,"['proxy', 'command', 'strategy']",['proxy'],1.0,0.778,0.0,1.0,0.333,1.0,1.0
+26,role + base + output description + rules,google/gemma-4-e4b,icecream,"['decorator', 'builder', 'strategy', 'factory_method', 'proxy']",['builder'],1.0,0.5,0.0,0.0,0.0,1.0,0.5
+30,role + base + output description + rules,google/gemma-4-e4b,gridmovement,"['adapter', 'command', 'strategy', 'proxy']",['state'],0.0,0.0,0.167,0.0,0.0,0.0,0.0
