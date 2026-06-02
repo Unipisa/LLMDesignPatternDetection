@@ -1,0 +1,22 @@
+id,prompt_used,model,name_baseline,ground_truth,prediction,precision@1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
+0,base + output_description,google/gemma-4-e4b,departure,"['template_method', 'strategy', 'builder', 'proxy']","['strategy', 'state', 'template_method']",1.0,0.63,0.167,0.0,0.0,0.889,1.0
+2,base + output_description,google/gemma-4-e4b,rescuelogic,"['template_method', 'strategy', 'proxy']","['strategy', 'factory_method']",1.0,0.5,0.143,0.0,0.0,1.0,0.5
+3,base + output_description,google/gemma-4-e4b,traffic_light,"['state', 'proxy', 'strategy']",['state'],1.0,0.778,0.0,1.0,0.333,1.0,1.0
+5,base + output_description,google/gemma-4-e4b,Stall,"['state', 'command', 'strategy', 'proxy']",['state'],1.0,0.75,0.0,1.0,0.25,1.0,1.0
+6,base + output_description,google/gemma-4-e4b,rover,"['command', 'proxy', 'strategy']",['strategy'],1.0,0.444,0.0,0.0,0.0,1.0,0.333
+8,base + output_description,google/gemma-4-e4b,bankaccount,"['command', 'strategy', 'proxy', 'decorator']","['command', 'strategy']",1.0,0.833,0.0,1.0,0.5,1.0,1.0
+9,base + output_description,google/gemma-4-e4b,Vector,"['strategy', 'template_method', 'adapter', 'command', 'proxy']","['strategy', 'decorator']",1.0,0.733,0.2,1.0,0.2,1.0,1.0
+10,base + output_description,google/gemma-4-e4b,validator,"['strategy', 'state', 'template_method', 'proxy']","['strategy', 'factory_method']",1.0,0.75,0.167,1.0,0.25,1.0,1.0
+13,base + output_description,google/gemma-4-e4b,monster,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['abstract_factory', 'factory_method']",1.0,0.667,0.0,0.0,0.0,1.0,1.0
+14,base + output_description,google/gemma-4-e4b,wand,"['factory_method', 'abstract_factory', 'builder', 'strategy', 'proxy']","['abstract_factory', 'factory_method', 'builder']",1.0,0.733,0.0,0.0,0.2,1.0,1.0
+15,base + output_description,google/gemma-4-e4b,tv,"['abstract_factory', 'factory_method', 'strategy']","['factory_method', 'strategy']",1.0,0.519,0.0,0.0,0.0,1.0,0.556
+17,base + output_description,google/gemma-4-e4b,house,"['abstract_factory', 'factory_method', 'strategy', 'proxy']","['abstract_factory', 'strategy']",1.0,0.713,0.0,1.0,0.25,1.0,0.889
+18,base + output_description,google/gemma-4-e4b,gamengine,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']","['factory_method', 'strategy']",1.0,0.463,0.0,0.0,0.0,1.0,0.389
+19,base + output_description,google/gemma-4-e4b,computer,"['builder', 'abstract_factory', 'factory_method', 'strategy', 'proxy', 'template_method']","['factory_method', 'abstract_factory', 'strategy']",1.0,0.586,0.0,0.0,0.167,1.0,0.591
+22,base + output_description,google/gemma-4-e4b,tenant,['proxy'],['proxy'],1.0,1.0,0.0,1.0,1.0,1.0,1.0
+23,base + output_description,google/gemma-4-e4b,ledger,['proxy'],['proxy'],1.0,1.0,0.0,1.0,1.0,1.0,1.0
+24,base + output_description,google/gemma-4-e4b,water_flow,"['proxy', 'decorator', 'command']","['decorator', 'proxy']",1.0,0.667,0.0,0.0,0.0,1.0,1.0
+25,base + output_description,google/gemma-4-e4b,sword,"['decorator', 'factory_method', 'strategy', 'proxy']",['decorator'],1.0,0.75,0.0,1.0,0.25,1.0,1.0
+27,base + output_description,google/gemma-4-e4b,cafecito,"['decorator', 'builder', 'strategy', 'factory_method', 'proxy']",['factory_method'],1.0,0.417,0.0,0.0,0.0,1.0,0.25
+28,base + output_description,google/gemma-4-e4b,roundhole,['adapter'],['strategy'],0.0,0.0,0.111,0.0,0.0,0.0,0.0
+29,base + output_description,google/gemma-4-e4b,calculator,"['adapter', 'command', 'strategy', 'proxy']","['strategy', 'factory_method']",1.0,0.444,0.167,0.0,0.0,1.0,0.333
