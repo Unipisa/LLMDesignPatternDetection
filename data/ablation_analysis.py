@@ -8,7 +8,7 @@ import seaborn as sns
 
 from data.evaluate import false_positive_rate, positional_similarity
 
-AVG_RUNS_RESULTS_PATH = "avg_results/runs_avg_results"
+AVG_RUNS_RESULTS_PATH = "outputs/training_set/avg_results/runs_avg_results"
 TABLES_DIR_PATH = "ablation/tables"
 
 # stable configuration
@@ -305,7 +305,7 @@ def plot_design_patterns_performance():
         metric_series = []
         for best_conf in best_confs:
             # average results extraction for each conf.
-            base_dir = "results/evaluated"
+            base_dir = "outputs/training_set/results/evaluated"
             run_dirs = [d for d in os.listdir(base_dir) if d.startswith("run_")
                         and os.path.isfile(os.path.join(base_dir, d,  best_conf+".csv"))]
             if not run_dirs:

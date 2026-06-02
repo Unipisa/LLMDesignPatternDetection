@@ -40,87 +40,137 @@ class PDFDataMiner:
 
 ANSWER = '{"prediction": ["template_method", "strategy", "proxy"]}'
 
+RESPONSE_FORMAT={
+    "type": "json_schema",
+    "json_schema": {
+        "name": "design_pattern_response",
+        "strict": True,  # response MUST follow this response format
+        "schema": {
+            "type": "object",
+            "properties": {
+                "prediction": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                             "abstract_factory",
+                             "factory_method",
+                             "builder",
+                             "command",
+                             "strategy",
+                             "template_method",
+                             "state",
+                             "proxy",
+                             "decorator",
+                             "adapter"
+                        ]
+                    },
+                    "minItems": 1,
+                    "uniqueItems": True,
+                "description": "List of design patterns detected in the code."
+                }
+            },
+            "required": ["prediction"],
+            "additionalProperties": False
+        }
+    }
+}
+
+def load_dataset(dataset_path: str):
+    with open(dataset_path, "r") as f:
+        dataset = json.load(f)
+    return dataset
+
+def get_example_info(example: dict):
+    path_baseline = example["path_baseline"]
+    id_example = example["id"]
+    name = os.path.basename(path_baseline)
+    name = os.path.splitext(name)[0]
+    name = name.replace("_baseline", "")
+    ground_truth = example["pattern"]
+    return id_example, path_baseline, name, ground_truth
+
+def read_code(path_baseline: str) -> str:
+    with open(path_baseline, "r") as g:
+        return g.read()
+
+def build_message(prompt_used: str, code: str, one_shot: bool):
+    msg = [{"role": "system", "content": prompt_used}]
+    if one_shot:
+        msg.append({"role": "user", "content": EXAMPLE})
+        msg.append({"role": "assistant", "content": ANSWER})
+    msg.append({"role": "user", "content": code})
+    return msg
 
 # noinspection PyTypeChecker
-def start(prompt_used: str, model_used: str, url: str, key : str, label_used: str,  tem: float, one_shot: bool = False):
+def call_model(client: OpenAI, model_used: str, msg: list, tem: float):
+    response = client.chat.completions.create(
+        model=model_used,
+        messages=msg,
+        temperature=tem,
+        response_format=RESPONSE_FORMAT
+    )
+    return response
+
+def parse_prediction(response, name:str):
+    try:
+        ris = response.choices[0].message.content  # this is a string, not a dict ==> parsing with json
+        if not ris:  # fallback for thinking models (es. Qwen)
+            ris = response.choices[0].message.model_extra.get("reasoning_content", "")
+        ris = json.loads(ris)
+        ris = ris["prediction"]
+    except Exception as e:
+        print(f"Errore nel parsing del file {name}: {e}")
+        ris = ["ERRORE_PARSING"]
+    return ris
+
+
+def process_example(
+        client: OpenAI,
+        example: dict,
+        prompt_used: str,
+        model_used: str,
+        label_used: str,
+        tem: float,
+        one_shot: bool):
+    id_example, path_baseline, name, ground_truth = get_example_info(example)
+    code = read_code(path_baseline)
+    msg = build_message(prompt_used, code, one_shot)
+    response = call_model(client, model_used, msg, tem)
+    ris = parse_prediction(response, name)
+    return {
+        "id": id_example,
+        "prompt_used": label_used,
+        "model": model_used,
+        "name_baseline": name,
+        "ground_truth": ground_truth,
+        "prediction": ris
+    }
+
+def start(
+        prompt_used: str,
+        model_used: str,
+        url: str,
+        key : str,
+        label_used: str,
+        tem: float,
+        dataset_path: str,
+        one_shot: bool = False) -> pd.DataFrame:
     client = OpenAI(base_url = url, api_key = key)
+    dataset = load_dataset(dataset_path)
+    rows = []
 
-    df = pd.DataFrame(columns=["id", "prompt_used", "model", "name_baseline", "ground_truth", "prediction"])
-
-    with open("config/training_set.json", "r") as f:
-        training_set = json.load(f)
-        for example in training_set:
-            path_baseline = example["path_baseline"]
-            id_example = example["id"]
-            name = os.path.basename(path_baseline)
-            name = os.path.splitext(name)[0]  # remove extension
-            name = name.replace("_baseline", "")  # removing naming convension
-            ground_truth = example["pattern"]
-
-            with open(path_baseline, "r") as g:
-                code = g.read()
-
-                msg = [{"role": "system", "content": prompt_used}]
-                if one_shot:
-                    msg.append({"role": "user", "content": EXAMPLE})
-                    msg.append({"role": "assistant", "content": ANSWER})
-                msg.append({"role": "user", "content": code})
-
-                response = client.chat.completions.create(
-                    model=model_used,
-                    messages=msg,
-                    temperature=tem,
-
-                    # uses structyured output (subset of json schema language)
-                    response_format={
-                        "type": "json_schema",
-                        "json_schema": {
-                            "name": "design_pattern_response",
-                            "strict": True,  # response MUST follow this response format
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "prediction": {
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string",
-                                            "enum": [
-                                                 "abstract_factory",
-                                                 "factory_method",
-                                                 "builder",
-                                                 "command",
-                                                 "strategy",
-                                                 "template_method",
-                                                 "state",
-                                                 "proxy",
-                                                 "decorator",
-                                                 "adapter"
-                                            ]
-                                        },
-                                        "minItems": 1,
-                                        "uniqueItems": True,
-                                    "description": "List of design patterns detected in the code."
-                                    }
-                                },
-                                "required": ["prediction"],
-                                "additionalProperties": False
-                            }
-                        }
-                    }
-                )
-                try:
-                    ris = response.choices[0].message.content  # this is a string, not a dict ==> parsing with json
-                    if not ris:  # fallback per thinking models (es. Qwen)
-                        ris = response.choices[0].message.model_extra.get("reasoning_content", "")
-                    ris = json.loads(ris)
-                    ris = ris["prediction"]
-                except Exception as e:
-                    print(f"Errore nel parsing del file {name}: {e}")
-                    ris = ["ERRORE_PARSING"]
-
-                df.loc[len(df)] = [id_example, label_used, model_used, name, ground_truth, ris]
-
-        return df
+    for example in dataset:
+        row = process_example(
+            client = client,
+            example = example,
+            prompt_used = prompt_used,
+            model_used= model_used,
+            label_used= label_used,
+            tem=tem,
+            one_shot = one_shot)
+        rows.append(row)
+    return pd.DataFrame(rows, columns=["id", "prompt_used", "model", "name_baseline", "ground_truth", "prediction"])
 
 def unload_model(model_name: str):
     url = "http://127.0.0.1:1234/api/v1/models/unload"
@@ -144,6 +194,8 @@ if __name__ == "__main__":
     parser.add_argument("--one_shot", action= "store_true", help= "Model will receive a pair of example-answer to help solving the task")
     parser.add_argument("--temperature", type=float, help= "Temperature to use for the model", required= True)
     parser.add_argument("--run_id", type=int, required=True, help="Run id to create output dir")
+    parser.add_argument("--dataset", type=str, required=True, help="Dataset path to use")
+    parser.add_argument("--output_dir", type=str, default="results/original", help="Directory to save results")
 
     args = parser.parse_args()
     prompts = json.load(open("config/prompts.json", "r"))
@@ -159,7 +211,7 @@ if __name__ == "__main__":
             subprocess.run("lms server start", shell=True)  # launches <lms server start> command on shell
 
         print(f"Starting shot: {args.model}")
-        output = start(prompt, args.model, args.base_url, args.api_key, label, args.temperature, args.one_shot)  # this is a pandas.Dataframe object
+        output = start(prompt, args.model, args.base_url, args.api_key, label, args.temperature, args.dataset, args.one_shot)  # this is a pandas.Dataframe object
         print("Shot completed: ", args.model)
     finally:
         if local:
@@ -180,7 +232,8 @@ if __name__ == "__main__":
 
     model_safe = args.model.split("/")[-1]
 
-    if not os.path.exists(f"results/original/run_{run_id}"):
-        os.makedirs(f"results/original/run_{run_id}", exist_ok=True)
+    run_output_dir = os.path.join(args.output_dir, f"run_{run_id}")
+    if not os.path.exists(run_output_dir):
+        os.makedirs(run_output_dir, exist_ok=True)
 
-    output.to_csv(f"results/original/run_{run_id}/{model_safe}_{shot}_id{args.id}_temp{args.temperature}.csv", index=False)
+    output.to_csv(os.path.join(run_output_dir, f"{model_safe}_{shot}_id{args.id}_temp{args.temperature}.csv"), index=False)

@@ -1,5 +1,5 @@
 import sys
-
+import argparse
 import pandas as pd
 import json
 import os
@@ -86,11 +86,16 @@ def extract_configuration (filename):
 
 
 if __name__ == "__main__":
-    ris_path = "results/original"
-    output_path = "results/evaluated"
-    avg_path = "avg_results"
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--experiment_dir", type=str, default=".", help="Experiment directory")
+    args = parser.parse_args()
+    ris_path = os.path.join(args.experiment_dir, "results", "original")
+    output_path = os.path.join(args.experiment_dir, "results", "evaluated")
+    avg_path = os.path.join(args.experiment_dir, "avg_results")
+
+    os.makedirs(output_path, exist_ok=True)
+    os.makedirs(os.path.join(avg_path, "runs_avg_results"), exist_ok=True)
+
 
     metrics = ["precision@1", "BNPS", "false_positive_rate", "acc_top1", "positional_similarity",
                "ndcg_standard", "ndcg_inverted"]

@@ -4,12 +4,12 @@
 \section{Context and motivations}\label{sec:context-and-motivations}
 Design pattern detection has become a crucial aspect of software engineering, as it supports quality assurance,
 technical debt management, code smell identification, and overall maintainability.
-This process is closely related to refactoring, a systematic method to updating code without changing its
+This process is closely related to refactoring, a systematic method for improving code without changing its
 external behavior, enhancing its readability and structure.
 
 Code smells typically arise from codebase growth or poor programming practices, acting as indicators of
 underlying issues that can be addressed during refactoring: while they are often easy to find and fix, they may be just
-symptoms of deeper archithectural flaws.
+symptoms of deeper architectural flaws.
 Technical debt refers to the maintenance cost growth due to suboptimal design or implementation choices: although in the
 short term they can speed up code development, over time they make the system more complex to understand, modify, test,
 and evolve.
@@ -49,10 +49,10 @@ scenarios. The applicability of a specific pattern depends on multiple factors, 
 will be challenged by architectural ambiguity.
 
 The main purpose in terms of implementation is to create an end-to-end tool, which will support refactoring by taking
-as input Python code and providing a refactored version that applies the most suitable design pattern.
+as input Python code and providing a refactored version based on a suggested design pattern.
 The work involves an extension of the \underline{LLM Design Pattern Refactoring}
-project~\cite{zisa2024llmdesignpatternrefactoring}, which enables the application of a previously selected design
-pattern by implementing a component that suggests the most suitable design pattern given the code.
+project~\cite{zisa2024llmdesignpatternrefactoring}, which applies a previously selected design pattern to a given
+codebase by adding a component that suggests the most suitable design pattern for the input code.
 
 This thesis makes the following contributions:
 \begin{itemize}
