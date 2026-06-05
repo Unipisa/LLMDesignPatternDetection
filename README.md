@@ -298,17 +298,17 @@ Modifiche rilevanti effettuate:
   a prevedere la possibilità di “privilegiare” (lista in ordine di priorità, accuracy@top-k) i pattern che sarebbe 
   meglio applicare.
 
-## Fase 1: partizionare il dataset in training set e test set 
-Creati due nuovi file JSON, training_set.json e test_set.json, rispettivamente contenenti i dati di training e di 
+## Fase 1: partizionare il dataset in validation set e test set 
+Creati due nuovi file JSON, validation_set.json e test_set.json, rispettivamente contenenti i dati di validation e di 
 test. Le partizioni sono state strutturate selezionando un esempio per pattern da inserire nel test set, lasciando al
-training set i restanti esempi.
+validation set i restanti esempi.
 
-- Training set: [0,2,3,5,6,8,9,10,13,14,15,17,18,19,22,23,24,25,27,28,29]
+- Validation set: [0,2,3,5,6,8,9,10,13,14,15,17,18,19,22,23,24,25,27,28,29]
 - Test set: [1,4,7,11,12,16,20,21,26,30]
 
 Gli esempi scelti per il test sono, a mio avviso, tra i baseline più “challenging” e meno banali per il pattern di 
-riferimento(responsabilità mescolate, alternative plausibili nella lista di priorità dei pattern applicabli). 
-L'obiettivo non è penalizzare in fase di valutazione o semplificare il training del modello (che ha già a disposizione 
+riferimento(responsabilità mescolate, alternative plausibili nella lista di priorità dei pattern applicabili). 
+L'obiettivo non è penalizzare in fase di valutazione o semplificare la validazione del modello (che ha già a disposizione 
 esempi interessanti), ma avere la sicurezza nella fase di test di sottoporlo a situazioni più "realistiche" evitando 
 query composte da esempi "didattici" o "troppo semplici".
 
@@ -316,7 +316,7 @@ query composte da esempi "didattici" o "troppo semplici".
 Richiedere un insieme di predizioni su un dataset talmente strutturato, con 21 codici baseline, rende meno invitante
 gestire "manualmente" il prompting ai modelli e il salvataggio dei risultati. Per questo motivo ho creato una procedura
 automatizzata, nello script prompts_engineering.py, che, leggendo da un file json dove sono memorizzati le 
-configurazioni prompt-modello ("prompts.json"), itera richiedendo predizioni sull'intero training set. Per implementarlo
+configurazioni prompt-modello ("prompts.json"), itera richiedendo predizioni sull'intero validation set. Per implementarlo
 ho consultato alcune sezioni della libreria offerta da OpenAI (in particolare
 https://platform.openai.com/docs/api-reference/chat/create), che offre la possibilità di interagire senza problemi con
 modelli locali caricati sul programma "LM studio". Lo script, dopo aver interrogato LLM, salva la predizione calcolata e 
@@ -360,11 +360,11 @@ strategy, più comune e flessibile al contesto. Ad aggravare ulteriormente il pr
 mentre strategy alterna algoritmi per composizione, template_method è penalizzato in quanto usa l'ereditarietà a tale 
 scopo, ritenuta meno pratica.
 Il vantaggio principale di aver adottato una strategia automatizzata è quello di poter valutare facilmente ogni 
-predizione, oltre alle peformance totali dell'intera epoch. Per "farsi un'idea" di come ha performato LLM sul training 
+predizione, oltre alle peformance totali dell'intera epoch. Per "farsi un'idea" di come ha performato LLM sul validation 
 set, ho definito più metriche di valutazione:
 - accuracy@top-1: il primo design pattern suggerito è nella ground truth? Ideale: 1.0
 - NDCG (Normalized Discounted Cumulative Gain): i design pattern corretti sono in cima alla predizione? Ideale: 1.0
-- false_positive_rate: quanti pattern sbagliati sono stati suggeriti? Ideale: 0.0 (1.0 se il mdoello ha "spammato")
+- false_positive_rate: quanti pattern sbagliati sono stati suggeriti? Ideale: 0.0 (1.0 se il modello ha "spammato")
 
 Accuracy@1 svolge il ruolo di capire se il design pattern indicato come "più applicabile" del modello è effettivamente
 presente tra quelli considerati corretti. 
@@ -373,7 +373,7 @@ alla misurazione della qualità del ranking del modello, misurando quindi la sim
 la prediction. 
 False_positive_rate è una metrica il cui obiettivo è suggerire possibili situazioni dove il modello, sebbene possa aver
 azzeccato l'ordine corretto di applicabilità dei pattern producendo score elevati nei casi precedenti, abbia 
-semplicemente inserito tutti i 10 design pattern nella lista, suggerendone di cosneguenza molti sbagliati.
+semplicemente inserito tutti i 10 design pattern nella lista, suggerendone di conseguenza molti sbagliati.
 Per ciascuna coppia prompt-modello sono state calcolate anche le medie di queste 3 misure di performance, al fine di
 avere una stima più generale delle performance.
 
@@ -405,7 +405,7 @@ Le metriche utilizzate per valutare le performance in totale sono 7:
 Le prime due della lista, di cui la seconda ottenuta come una media aritmetica delle ultime 3, sono state prese come
 riferimento nella scelta delle migliori configurazioni (a livello di shot type, temperatura e prompt sottomesso) per i
 tre modelli. Lo studio è stato condotto sottomettendo iterativamente i prompt a tutte 144 possiibli configurazioni, 
-considerando solo codici appartenenti al training set (3 modelli * 2 shot_type * 4 temperature * 6 prompt_label = 144) 
+considerando solo codici appartenenti al validation set (3 modelli * 2 shot_type * 4 temperature * 6 prompt_label = 144) 
 L'esecuzione è avvenuta su una macchina Windows, considerando quindi per necessità architetturali solo le versioni GGUF
 dei modelli. Gpt-oss-20b ha richiesto di essere eseguito in versione quantizzata (Q8) a causa di limiti hardware.
 
@@ -442,4 +442,4 @@ Iniziato un'ablation study sui risultati ottenuti, che passa attaverso diversi s
 3. Temperature ablation. Si esibisce l'andamento delle prestazioni all'aumentare della temperatura, si ipotizza che la scelta T=0.0 sia ottimale.
 4. Model ablation
 
-Avviata la valutazione delle configurazioni scelte sul test set; iniziata la stesura della tesi (organizzata in un'apposita cartella "thesis"), riorganizzazione delle cartelle results del repo distinguendo tra training set e test set. 
+Avviata la valutazione delle configurazioni scelte sul test set; iniziata la stesura della tesi (organizzata in un'apposita cartella "thesis"), riorganizzazione delle cartelle results del repo distinguendo tra validation set e test set. 

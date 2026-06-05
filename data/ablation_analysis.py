@@ -8,7 +8,7 @@ import seaborn as sns
 
 from data.evaluate import false_positive_rate, positional_similarity
 
-AVG_RUNS_RESULTS_PATH = "outputs/training_set/avg_results/runs_avg_results"
+AVG_RUNS_RESULTS_PATH = "outputs/validation_set/avg_results/runs_avg_results"
 TABLES_DIR_PATH = "ablation/tables"
 
 # stable configuration
@@ -299,13 +299,17 @@ def plot_design_patterns_performance():
     prompt_label_to_id = {p["label"]: p["id"] for p in prompts}
     prompt_id_to_label = {p["id"]: p["label"] for p in prompts}
 
+    with open("config/validation_set.json", "r") as f:
+        validation_set = json.load(f)
+        id_to_category = {item["id"]: item["category"] for item in validation_set}
+
     best_confs = [f"{model}_{BEST_SHOT}_id{prompt_label_to_id[BEST_PROMPT]}_temp{BEST_TEMPERATURE}" for model in MODELS]
     best_confs.append(f"{OPTIMAL_MODEL}_{OPTIMAL_SHOT}_id{prompt_label_to_id[OPTIMAL_PROMPT]}_temp{OPTIMAL_TEMPERATURE}")
     for metric in METRICS:
         metric_series = []
         for best_conf in best_confs:
             # average results extraction for each conf.
-            base_dir = "outputs/training_set/results/evaluated"
+            base_dir = "outputs/validation_set/results/evaluated"
             run_dirs = [d for d in os.listdir(base_dir) if d.startswith("run_")
                         and os.path.isfile(os.path.join(base_dir, d,  best_conf+".csv"))]
             if not run_dirs:
@@ -316,7 +320,10 @@ def plot_design_patterns_performance():
                 tmp = pd.read_csv(os.path.join(base_dir, run_dir, best_conf+".csv"))
                 tmp["id"] = tmp["id"].astype(int)
                 frames.append(tmp)
-            metric_by_pattern = pd.concat(frames).groupby("id")[metric].mean().sort_index()
+            df_runs = pd.concat(frames)
+            df_runs ["category"] = df_runs["id"].map(id_to_category)
+            metric_by_pattern = df_runs.groupby("category")[metric].mean().reindex(["behavioural", "creational", "structural"])
+
             metric_by_pattern.name = best_conf
             metric_series.append(metric_by_pattern)
 
@@ -333,6 +340,7 @@ def plot_design_patterns_performance():
         df_metric.index = readable_labels
 
         fig, ax = plt.subplots(figsize=(18, 6), dpi=300)
+        cmap = "viridis_r" if metric == "false_positive_rate" else "viridis"
         sns.heatmap(
             df_metric,
             ax=ax,
@@ -340,20 +348,43 @@ def plot_design_patterns_performance():
             fmt=".3f",
             vmin=0,
             vmax=1,
-            cmap="viridis"
+            cmap=cmap
         )
-        ax.collections[0].colorbar.set_label(metric, labelpad=25)       # colorbar label
-        ax.set_xlabel("Design pattern id")
-        ax.set_title(f"{metric} per design pattern across selected configurations", pad =30, fontweight="bold")
 
-        # category separators
-        ax.axvline(8, color="white", linewidth=3)  # after behavioural
-        ax.axvline(14, color="white", linewidth=3)  # after creational
+        # colorbar label
+        colorbar = ax.collections[0].colorbar
+        colorbar.set_label("")
 
-        # category labels
-        ax.text(4, -0.15, "Behavioural", ha="center", va="center", fontsize=10)
-        ax.text(11, -0.15, "Creational", ha="center", va="center", fontsize=10)
-        ax.text(17.5, -0.15, "Structural", ha="center", va="center", fontsize=10)
+        if metric == "false_positive_rate":
+            # Lower values are better
+            arrow_start = (4, 0.95)
+            arrow_end = (4, 0.05)
+            better_y = 0.03
+            worse_y = 0.97
+        else:
+            # Higher values are better
+            arrow_start = (4, 0.05)
+            arrow_end = (4, 0.95)
+            better_y = 0.97
+            worse_y = 0.03
+
+        colorbar.ax.annotate(
+            "",
+            xy=arrow_end,
+            xytext=arrow_start,
+            xycoords="axes fraction",
+            arrowprops=dict(arrowstyle="-|>", lw=2.5, color="black"),
+            clip_on=False,
+        )
+        colorbar.ax.text(4, better_y, "Better", transform=colorbar.ax.transAxes,
+                         ha="center", va="center", fontsize=10)
+        colorbar.ax.text(4, worse_y, "Worse", transform=colorbar.ax.transAxes,
+                         ha="center", va="center", fontsize=10)
+
+
+
+        ax.set_xlabel("Category")
+        ax.set_title(f"Average {metric} per design pattern category across selected configurations", pad =30)
 
         plt.tight_layout()
         output_path = f"{PLOTS_PATH}/design-patterns-performance-by_{metric}.png"
