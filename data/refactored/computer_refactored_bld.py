@@ -117,7 +117,7 @@ class SurfaceBuilder(ComputerBuilder):
 
 # director
 class Director:
-    def __init__(self, builder):
+    def __init__(self, builder: ComputerBuilder):
         self._builder = builder
     def change_builder(self, builder):
         self._builder = builder

@@ -82,7 +82,7 @@ class TreeBuilder(DataStructureBuilder):
 
 
 class Director:
-    def __init__(self, builder):
+    def __init__(self, builder: DataStructureBuilder):
         self._builder = builder
     def change_builder(self, builder):
         self._builder = builder

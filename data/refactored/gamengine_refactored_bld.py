@@ -78,7 +78,7 @@ class DarkWoodsBuilder(EnvironmentBuilder):
 
 # director
 class Director:
-    def __init__(self, builder):
+    def __init__(self, builder: EnvironmentBuilder):
         self._builder = builder
     def change_builder(self, builder):
         self._builder = builder
