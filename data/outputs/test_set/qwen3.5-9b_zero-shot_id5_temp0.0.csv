@@ -1,0 +1,11 @@
+id,prompt_used,model,name_baseline,ground_truth,prediction,hit_at_1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
+1,improved by chatGPT,qwen/qwen3.5-9b,formfilling,"['template_method', 'strategy', 'builder', 'proxy']","['strategy', 'factory_method']",1.0,0.5,0.167,0.0,0.0,1.0,0.5
+4,improved by chatGPT,qwen/qwen3.5-9b,elevator,"['state', 'strategy', 'proxy']",['state'],1.0,0.778,0.0,1.0,0.333,1.0,1.0
+7,improved by chatGPT,qwen/qwen3.5-9b,restaurant,"['command', 'strategy', 'proxy']","['command', 'strategy']",1.0,0.889,0.0,1.0,0.667,1.0,1.0
+11,improved by chatGPT,qwen/qwen3.5-9b,graphtraversal,"['strategy', 'template_method', 'proxy']",['strategy'],1.0,0.778,0.0,1.0,0.333,1.0,1.0
+12,improved by chatGPT,qwen/qwen3.5-9b,car,"['factory_method', 'abstract_factory', 'strategy', 'proxy']","['factory_method', 'abstract_factory']",1.0,0.833,0.0,1.0,0.5,1.0,1.0
+16,improved by chatGPT,qwen/qwen3.5-9b,battle,"['abstract_factory', 'factory_method', 'strategy', 'proxy']","['strategy', 'factory_method']",1.0,0.602,0.0,0.0,0.25,1.0,0.556
+20,improved by chatGPT,qwen/qwen3.5-9b,datastructure,"['builder', 'strategy', 'proxy', 'adapter']","['factory_method', 'strategy']",0.0,0.417,0.167,0.0,0.25,0.5,0.5
+21,improved by chatGPT,qwen/qwen3.5-9b,deliveryvehicles,"['proxy', 'command', 'strategy']","['template_method', 'strategy']",0.0,0.278,0.143,0.0,0.0,0.5,0.333
+26,improved by chatGPT,qwen/qwen3.5-9b,icecream,"['decorator', 'builder', 'strategy', 'factory_method', 'proxy']","['factory_method', 'builder']",1.0,0.567,0.0,0.0,0.2,1.0,0.5
+30,improved by chatGPT,qwen/qwen3.5-9b,gridmovement,"['adapter', 'command', 'strategy', 'proxy']","['strategy', 'command']",1.0,0.602,0.0,0.0,0.25,1.0,0.556
