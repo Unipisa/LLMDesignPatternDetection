@@ -1,4 +1,4 @@
-model,shot,prompt_label,temperature,precision@1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
+model,shot,prompt_label,temperature,hit_at_1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
 gemma-4-e4b,one-shot,base + output description,0.0,0.857,0.579,0.022,0.381,0.212,0.857,0.667
 gemma-4-e4b,one-shot,base + output description,0.3,0.869,0.589,0.026,0.405,0.199,0.869,0.698
 gemma-4-e4b,one-shot,base + output description,0.5,0.905,0.593,0.016,0.393,0.172,0.905,0.702

@@ -1,4 +1,4 @@
-id,prompt_used,model,name_baseline,ground_truth,prediction,precision@1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
+id,prompt_used,model,name_baseline,ground_truth,prediction,hit_at_1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
 0,role + base + rules + output_description,openai/gpt-oss-20b,departure,"['template_method', 'strategy', 'builder', 'proxy']","['strategy', 'state']",1.0,0.5,0.167,0.0,0.0,1.0,0.5
 2,role + base + rules + output_description,openai/gpt-oss-20b,rescuelogic,"['template_method', 'strategy', 'proxy']","['state', 'strategy']",0.0,0.444,0.143,0.0,0.333,0.5,0.5
 3,role + base + rules + output_description,openai/gpt-oss-20b,traffic_light,"['state', 'proxy', 'strategy']",['state'],1.0,0.778,0.0,1.0,0.333,1.0,1.0

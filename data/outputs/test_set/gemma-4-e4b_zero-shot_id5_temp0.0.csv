@@ -1,4 +1,4 @@
-id,prompt_used,model,name_baseline,ground_truth,prediction,precision@1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
+id,prompt_used,model,name_baseline,ground_truth,prediction,hit_at_1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
 1,improved by chatGPT,google/gemma-4-e4b,formfilling,"['template_method', 'strategy', 'builder', 'proxy']","['strategy', 'factory_method']",1.0,0.5,0.167,0.0,0.0,1.0,0.5
 4,improved by chatGPT,google/gemma-4-e4b,elevator,"['state', 'strategy', 'proxy']",['state'],1.0,0.778,0.0,1.0,0.333,1.0,1.0
 7,improved by chatGPT,google/gemma-4-e4b,restaurant,"['command', 'strategy', 'proxy']","['command', 'strategy']",1.0,0.889,0.0,1.0,0.667,1.0,1.0

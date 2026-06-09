@@ -1,4 +1,4 @@
-model,shot,prompt_label,temperature,precision@1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
+model,shot,prompt_label,temperature,hit_at_1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
 gemma-4-e4b,one-shot,role + base + output description + rules,0.7,0.905,0.622,0.019,0.429,0.222,0.905,0.738
 gpt-oss-20b,one-shot,base + output description,0.7,0.81,0.615,0.055,0.381,0.183,0.881,0.78
 qwen3.5-9b,one-shot,role + base + rules + output description,0.5,0.952,0.648,0.098,0.381,0.178,0.976,0.791

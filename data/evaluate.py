@@ -43,14 +43,14 @@ def evaluate(df: pd.DataFrame):
         if isinstance(prediction, str):
             prediction = eval(prediction)
 
-        precision_1 = 1 if prediction[0] in ground_truth else 0
+        hit_at_1 = 1 if prediction[0] in ground_truth else 0
         top_1 = 1 if prediction[0] == ground_truth[0] else 0
         ndcg_standard = ndcg(prediction, ground_truth)
         ndcg_inverted = ndcg(ground_truth, prediction)
         pos_similarity = positional_similarity(ground_truth, prediction)
         bnps = (ndcg_standard + ndcg_inverted + pos_similarity) / 3
 
-        df.loc[idx, "precision@1"] = round(precision_1, 3)
+        df.loc[idx, "hit_at_1"] = round(hit_at_1, 3)
         df.loc[idx, "BNPS"] = round(bnps, 3)
         df.loc[idx, "false_positive_rate"] = round(false_positive_rate(prediction, ground_truth), 3)
         df.loc[idx, "acc_top1"] = round(top_1, 3)
@@ -97,7 +97,7 @@ if __name__ == "__main__":
     os.makedirs(os.path.join(avg_path, "runs_avg_results"), exist_ok=True)
 
 
-    metrics = ["precision@1", "BNPS", "false_positive_rate", "acc_top1", "positional_similarity",
+    metrics = ["hit_at_1", "BNPS", "false_positive_rate", "acc_top1", "positional_similarity",
                "ndcg_standard", "ndcg_inverted"]
     results = []
     for directory in os.listdir(ris_path):
@@ -134,7 +134,7 @@ if __name__ == "__main__":
             print(f"File {directory} is empty", file=sys.stderr)
             continue
 
-        df = pd.DataFrame(rows)[["model", "shot", "prompt_label", "temperature", "precision@1", "BNPS",
+        df = pd.DataFrame(rows)[["model", "shot", "prompt_label", "temperature", "hit_at_1", "BNPS",
                                  "false_positive_rate", "acc_top1", "positional_similarity", "ndcg_standard",
                                  "ndcg_inverted" ]]
 

@@ -1,4 +1,4 @@
-model,temperature,BNPS,false_positive_rate,precision@1,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
+model,temperature,BNPS,false_positive_rate,hit_at_1,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
 gemma-4-e4b,0.0,0.575 ± 0.0,0.026 ± 0.0,0.857 ± 0.0,0.429 ± 0.0,0.222 ± 0.0,0.857 ± 0.0,0.645 ± 0.0
 gemma-4-e4b,0.3,0.589 ± 0.018,0.022 ± 0.005,0.881 ± 0.028,0.441 ± 0.023,0.227 ± 0.009,0.881 ± 0.028,0.66 ± 0.023
 gemma-4-e4b,0.5,0.583 ± 0.009,0.024 ± 0.004,0.869 ± 0.024,0.441 ± 0.023,0.228 ± 0.01,0.869 ± 0.024,0.651 ± 0.015

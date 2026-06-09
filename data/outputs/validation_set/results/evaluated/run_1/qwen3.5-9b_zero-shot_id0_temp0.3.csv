@@ -1,4 +1,4 @@
-id,prompt_used,model,name_baseline,ground_truth,prediction,precision@1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
+id,prompt_used,model,name_baseline,ground_truth,prediction,hit_at_1,BNPS,false_positive_rate,acc_top1,positional_similarity,ndcg_standard,ndcg_inverted
 0,base + output_description,qwen/qwen3.5-9b,departure,"['template_method', 'strategy', 'builder', 'proxy']","['strategy', 'template_method', 'factory_method', 'adapter']",1.0,0.667,0.333,0.0,0.0,1.0,1.0
 2,base + output_description,qwen/qwen3.5-9b,rescuelogic,"['template_method', 'strategy', 'proxy']","['strategy', 'template_method']",1.0,0.667,0.0,0.0,0.0,1.0,1.0
 3,base + output_description,qwen/qwen3.5-9b,traffic_light,"['state', 'proxy', 'strategy']","['state', 'strategy']",1.0,0.741,0.0,1.0,0.333,1.0,0.889

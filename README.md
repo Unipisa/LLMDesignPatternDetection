@@ -360,13 +360,13 @@ strategy, più comune e flessibile al contesto. Ad aggravare ulteriormente il pr
 mentre strategy alterna algoritmi per composizione, template_method è penalizzato in quanto usa l'ereditarietà a tale 
 scopo, ritenuta meno pratica.
 Il vantaggio principale di aver adottato una strategia automatizzata è quello di poter valutare facilmente ogni 
-predizione, oltre alle peformance totali dell'intera epoch. Per "farsi un'idea" di come ha performato LLM sul validation 
+predizione, oltre alle performance totali dell'intera epoch. Per "farsi un'idea" di come ha performato LLM sul validation 
 set, ho definito più metriche di valutazione:
-- accuracy@top-1: il primo design pattern suggerito è nella ground truth? Ideale: 1.0
+- hit_at_1: il primo design pattern suggerito è nella ground truth? Ideale: 1.0
 - NDCG (Normalized Discounted Cumulative Gain): i design pattern corretti sono in cima alla predizione? Ideale: 1.0
 - false_positive_rate: quanti pattern sbagliati sono stati suggeriti? Ideale: 0.0 (1.0 se il modello ha "spammato")
 
-Accuracy@1 svolge il ruolo di capire se il design pattern indicato come "più applicabile" del modello è effettivamente
+Hit_at_1 svolge il ruolo di capire se il design pattern indicato come "più applicabile" del modello è effettivamente
 presente tra quelli considerati corretti. 
 NDGC è stata proposta (https://it.wikipedia.org/wiki/Apprendimento_di_ranking) in quanto adibita esattamente 
 alla misurazione della qualità del ranking del modello, misurando quindi la similarità tra la lista ground_truth e
@@ -385,7 +385,7 @@ contiene dei codici refactored aggiunti per espandere il dataset di partenza.
 
 # # WEEKS 8-9 (27-04-2026 - 13-05-2026)
 
-- aggiunte accuracy top 1 effettiva, introdurre ndcg a parametri invertiti, similarità posizionale e media di queste
+- aggiunte accuracy top 1 effettiva, introdotta ndcg a parametri invertiti, similarità posizionale e media di queste
   ultime 3 (BNPS aka Bidirectional Ndcg & Positional Score)—> 7 metriche in totale.
 - introdotto iperparametro della temperatura (valori: 0.0, 0.3, 0.5, 0.7)
 - corretta la descrizione dell'output atteso nei prompt 
@@ -395,13 +395,13 @@ contiene dei codici refactored aggiunti per espandere il dataset di partenza.
 - eseguite 4 run complete dell'esperimento
 - creati alcuni grafici per spiegare i risultati ottenuti
 
-Sono stati inseriti nuovi prompt riordianando il promot "id 2" con due varianti significative: anticipando la
+Sono stati inseriti nuovi prompt riordinando il prompt "id 2" con due varianti significative: anticipando la
 descrizione dell'output e invertendo l'assegnamento del task con le regole. "Role" non è stato cambiato di posizione in
 quanto sempre in testa per convenzione: è stato ritenuto che permutare anche esso non avrebbe prodotto alternative 
 interessanti.
 
 Le metriche utilizzate per valutare le performance in totale sono 7:
-[precision@1, BNPS, false_positive_rate, acc_top1, positional_similarity, ndcg_standard, ndcg_inverted].
+[hit_at_1, BNPS, false_positive_rate, acc_top1, positional_similarity, ndcg_standard, ndcg_inverted].
 Le prime due della lista, di cui la seconda ottenuta come una media aritmetica delle ultime 3, sono state prese come
 riferimento nella scelta delle migliori configurazioni (a livello di shot type, temperatura e prompt sottomesso) per i
 tre modelli. Lo studio è stato condotto sottomettendo iterativamente i prompt a tutte 144 possiibli configurazioni, 

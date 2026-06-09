@@ -23,7 +23,7 @@ OPTIMAL_SHOT = "zero-shot"
 OPTIMAL_TEMPERATURE = 0.0
 OPTIMAL_MODEL = "gemma-4-e4b"
 
-METRICS = ["precision@1", "BNPS", "false_positive_rate"]
+METRICS = ["hit_at_1", "BNPS", "false_positive_rate"]
 MODELS = ["gemma-4-e4b", "gpt-oss-20b", "qwen3.5-9b"]
 
 def load_runs():
@@ -62,8 +62,8 @@ def compute_config_stats(data):
         BNPS_std = ("BNPS", "std"),
         false_positive_rate_mean =("false_positive_rate", "mean"),
         false_positive_rate_std = ("false_positive_rate", "std"),
-        precision_1_mean = ("precision@1", "mean"),
-        precision_1_std = ("precision@1", "std"),
+        hit_at_1_mean = ("hit_at_1", "mean"),
+        hit_at_1_std = ("hit_at_1", "std"),
         acc_top1_mean = ("acc_top1", "mean"),
         acc_top1_std = ("acc_top1", "std"),
         positional_similarity_mean = ("positional_similarity", "mean"),
@@ -85,7 +85,7 @@ def export_prompt_labels(data):
     for (prompt_label, shot), table in grouped:
         table["BNPS"] = table["BNPS_mean"].astype(str) + " ± " + table["BNPS_std"].astype(str)
         table["false_positive_rate"] = table["false_positive_rate_mean"].astype(str) + " ± " + table["false_positive_rate_std"].astype(str)
-        table["precision@1"] = table["precision_1_mean"].astype(str) + " ± " + table["precision_1_std"].astype(str)
+        table["hit_at_1"] = table["hit_at_1_mean"].astype(str) + " ± " + table["hit_at_1_std"].astype(str)
         table["acc_top1"] = table["acc_top1_mean"].astype(str) + " ± " + table["acc_top1_std"].astype(str)
         table["positional_similarity"] = table["positional_similarity_mean"].astype(str) + " ± " + table["positional_similarity_std"].astype(str)
         table["ndcg_standard"] = table["ndcg_standard_mean"].astype(str) + " ± " + table["ndcg_standard_std"].astype(str)
@@ -93,7 +93,7 @@ def export_prompt_labels(data):
         name = f"{prompt_label}_{shot}"
         name = re.sub(r"[\s+]+", "_", name)
         name = re.sub(r"_+", "_", name)
-        table.drop(columns=["prompt_label", "shot", "precision_1_mean", "precision_1_std", "BNPS_mean", "BNPS_std",
+        table.drop(columns=["prompt_label", "shot", "hit_at_1_mean", "hit_at_1_std", "BNPS_mean", "BNPS_std",
                             "false_positive_rate_mean", "false_positive_rate_std", "acc_top1_mean", "acc_top1_std",
                             "positional_similarity_mean", "positional_similarity_std", "ndcg_standard_mean",
                             "ndcg_standard_std", "ndcg_inverted_mean", "ndcg_inverted_std"], inplace=True)
@@ -103,7 +103,7 @@ def export_prompt_labels(data):
 
 def plot_prompt_plots(data):
     """
-    Generates a chart for each prompt-shot pair, considering BNPS, precision@1 and false-positive rate.
+    Generates a chart for each prompt-shot pair, considering BNPS, hit_at_1 and false-positive rate.
     """
     for metric in ["BNPS", "false_positive_rate"]:
         fig, ax = plt.subplots(figsize=(18, 6), dpi=300)
@@ -118,7 +118,7 @@ def plot_prompt_plots(data):
         ax.set_title(f"{metric} distribution by prompt-shot configuration")
         plt.savefig(os.path.join(PLOTS_PATH, f"prompt_boxplot_{metric}.png"))
 
-    for metric in ["acc_top1", "precision@1"]:
+    for metric in ["acc_top1", "hit_at_1"]:
         grouped = data.groupby(["prompt_label", "shot"])[metric].agg(["mean", "std"])
         fig, ax = plt.subplots(figsize=(18, 6), dpi=300)
         grouped["mean"].plot.bar(yerr=grouped["std"], ax=ax, capsize=5)
@@ -275,7 +275,7 @@ def model_barplot(data):
     ]
     fig, ax = plt.subplots(figsize=(18, 6), dpi=300)
     data.plot.bar(x="model",
-                  y=["BNPS_mean", "false_positive_rate_mean", "precision_1_mean"],
+                  y=["BNPS_mean", "false_positive_rate_mean", "hit_at_1_mean"],
                   figsize=(18, 6),
                   grid=True,
                   ax=ax
