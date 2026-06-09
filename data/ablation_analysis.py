@@ -10,6 +10,8 @@ from data.evaluate import false_positive_rate, positional_similarity
 
 AVG_RUNS_RESULTS_PATH = "outputs/validation_set/avg_results/runs_avg_results"
 TABLES_DIR_PATH = "ablation/tables"
+AVG_TEST_RESULTS_PATH = "outputs/test_set/test_set_avg_results.csv"
+AVG_VALIDATION_RESULTS_PATH = "outputs/validation_set/avg_results/total_avg_results.csv"
 
 # stable configuration
 PLOTS_PATH = "ablation/plots"
@@ -390,6 +392,43 @@ def plot_design_patterns_performance():
         output_path = f"{PLOTS_PATH}/design-patterns-performance-by_{metric}.png"
         plt.savefig(output_path)
 
+def end_ablation_study():
+    validation = pd.read_csv(AVG_VALIDATION_RESULTS_PATH)
+    test = pd.read_csv(AVG_TEST_RESULTS_PATH)
+    validation = validation.loc[((validation["prompt_label"] == BEST_PROMPT) & (validation["shot"] == BEST_SHOT) & (validation["temperature"] == BEST_TEMPERATURE))|
+                                ((validation["prompt_label"] == OPTIMAL_PROMPT) & (validation["temperature"] == OPTIMAL_TEMPERATURE) & (validation["shot"] == OPTIMAL_SHOT))]
+
+    test = test.loc[((test["prompt_label"] == BEST_PROMPT) & (test["shot"] == BEST_SHOT) & (test["temperature"] == BEST_TEMPERATURE)) |
+                    ((test["prompt_label"] == OPTIMAL_PROMPT) & (test["shot"] == OPTIMAL_SHOT)) & (test["temperature"] == OPTIMAL_TEMPERATURE)]
+
+    validation["config"] = validation["prompt_label"] + "\nshot=" + validation["shot"].astype(str) + " t=" + validation["temperature"].astype(str)
+    test["config"] = test["prompt_label"] + "\nshot=" + test["shot"].astype(str) + " t=" + test["temperature"].astype(str)
+
+    validation = validation.pivot(index="config", columns="model", values="BNPS")
+    test = test.pivot(index="config", columns="model", values="BNPS")
+
+
+    fig1, ax1 = plt.subplots(figsize=(18, 6), dpi=300)
+    fig2, ax2 = plt.subplots(figsize=(18, 6), dpi=300)
+    validation.plot.bar(title="BNPS performance on validation set considering the best and optimal configurations", figsize=(18, 6), grid=True, ax=ax1)
+    output_path_validation = f"{PLOTS_PATH}/stable-optimal-bnps-validation.png"
+    ax1.set_ylim(0, 1)
+    ax1.tick_params(axis="x", labelrotation=0)
+    for container in ax1.containers:
+        ax1.bar_label(container, fmt="%.3f")
+    fig1.tight_layout()
+
+    test.plot.bar(title="BNPS performance on test set considering the best and optimal configurations", figsize=(18, 6), grid=True, ax=ax2)
+    output_path_test = f"{PLOTS_PATH}/stable-optimal-bnps-test.png"
+    ax2.set_ylim(0, 1)
+    ax2.tick_params(axis="x", labelrotation=0)
+    for container in ax2.containers:
+        ax2.bar_label(container, fmt="%.3f")
+    fig2.tight_layout()
+
+    fig1.savefig(output_path_validation)
+    fig2.savefig(output_path_test)
+
 
 if __name__ == "__main__":
     if not os.path.exists(AVG_RUNS_RESULTS_PATH):
@@ -420,3 +459,4 @@ if __name__ == "__main__":
     temperature_boxolpot(df)
     model_barplot(config_stats)
     plot_design_patterns_performance()
+    end_ablation_study()
