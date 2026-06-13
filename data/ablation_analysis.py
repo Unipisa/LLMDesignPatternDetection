@@ -108,7 +108,7 @@ def plot_prompt_plots(data):
     Generates a chart for each prompt-shot pair, considering BNPS, hit_at_1 and false-positive rate.
     """
     for metric in ["BNPS", "false_positive_rate"]:
-        fig, ax = plt.subplots(figsize=(18, 6), dpi=300)
+        fig, ax = plt.subplots(figsize=(18, 6))
         data.boxplot(column=metric, by=["prompt_label", "shot"], ax=ax, grid=True)
         fig.suptitle("")
         ax.set_xlabel("prompt, shot")
@@ -118,11 +118,11 @@ def plot_prompt_plots(data):
         plt.xticks(rotation=0, fontsize=8)
         plt.tight_layout()
         ax.set_title(f"{metric} distribution by prompt-shot configuration")
-        plt.savefig(os.path.join(PLOTS_PATH, f"prompt_boxplot_{metric}.png"))
+        plt.savefig(os.path.join(PLOTS_PATH, f"prompt_boxplot_{metric}.pdf"))
 
     for metric in ["acc_top1", "hit_at_1"]:
         grouped = data.groupby(["prompt_label", "shot"])[metric].agg(["mean", "std"])
-        fig, ax = plt.subplots(figsize=(18, 6), dpi=300)
+        fig, ax = plt.subplots(figsize=(18, 6))
         grouped["mean"].plot.bar(yerr=grouped["std"], ax=ax, capsize=5)
         labels = [textwrap.fill(label.get_text(), width=17) for label in ax.get_xticklabels()]
         ax.set_xticklabels(labels, rotation=0, fontsize=6)
@@ -133,7 +133,7 @@ def plot_prompt_plots(data):
         ax.set_yticks(np.arange(0, 1.01, 0.1))
         plt.grid(True)
         plt.tight_layout()
-        plt.savefig(os.path.join(PLOTS_PATH, f"prompt_barplot_{metric}.png"))
+        plt.savefig(os.path.join(PLOTS_PATH, f"prompt_barplot_{metric}.pdf"))
 
 def plot_temperature_avg(data):
     """
@@ -144,7 +144,6 @@ def plot_temperature_avg(data):
         1,
         len(models),
         figsize=(18, 6),
-        dpi=300,
         sharey=True
     )
     avg_by_model_temperature = data.groupby(["model", "shot", "temperature"]).agg(
@@ -173,7 +172,7 @@ def plot_temperature_avg(data):
     fig.suptitle("Average BNPS and false-positive rate over all prompt configurations by temperature and shot", fontsize=16)
     plt.legend(loc="best")
     plt.tight_layout()
-    fig.savefig(os.path.join(PLOTS_PATH, f"avg_temperature_performance.png"))
+    fig.savefig(os.path.join(PLOTS_PATH, f"avg_temperature_performance.pdf"))
 
 
 def plot_temperature_lineplot(data):
@@ -188,7 +187,6 @@ def plot_temperature_lineplot(data):
         1,
         len(models),
         figsize=(18, 6),
-        dpi=300,
         sharey=True
     )
     for ax, model in zip(axes, models):
@@ -211,7 +209,7 @@ def plot_temperature_lineplot(data):
     fig.suptitle(f"BNPS mean ± std: {BEST_PROMPT} ({BEST_SHOT})")
     axes[0].set_ylim(0.4, 0.75)
     plt.tight_layout()
-    fig.savefig(os.path.join(PLOTS_PATH, "temperature_BNPS_best.png"))
+    fig.savefig(os.path.join(PLOTS_PATH, "temperature_BNPS_best.pdf"))
 
     # LINE PLOT FOR OPTIMAL PROMPT
     data2 = data.loc[(data["prompt_label"] == OPTIMAL_PROMPT) & (data["shot"] == OPTIMAL_SHOT)]
@@ -219,7 +217,6 @@ def plot_temperature_lineplot(data):
         1,
         len(models),
         figsize=(18, 6),
-        dpi=300,
         sharey=True
     )
     for ax, model in zip(axes2, models):
@@ -242,7 +239,7 @@ def plot_temperature_lineplot(data):
     fig2.suptitle(f"BNPS mean ± std: {OPTIMAL_PROMPT} ({OPTIMAL_SHOT})")
     axes2[0].set_ylim(0.4, 0.75)
     plt.tight_layout()
-    fig2.savefig(os.path.join(PLOTS_PATH, "temperature_BNPS_optimal.png"))
+    fig2.savefig(os.path.join(PLOTS_PATH, "temperature_BNPS_optimal.pdf"))
 
 def temperature_boxolpot (data):
     """
@@ -252,7 +249,6 @@ def temperature_boxolpot (data):
         1,
         2,
         figsize=(18, 6),
-        dpi=300,
         sharey=True
     )
     for ax, (prompt, shot) in zip(axes, zip([BEST_PROMPT, OPTIMAL_PROMPT], [BEST_SHOT, OPTIMAL_SHOT])):
@@ -267,7 +263,7 @@ def temperature_boxolpot (data):
     fig.suptitle("BNPS distribution by temperature for selected prompt-shot configurations")
     axes[0].set_ylabel("BNPS")
     plt.tight_layout()
-    plt.savefig(os.path.join(PLOTS_PATH, "temperature_boxplots.png"))
+    plt.savefig(os.path.join(PLOTS_PATH, "temperature_boxplots.pdf"))
 
 def model_barplot(data):
     data = data.loc[
@@ -275,7 +271,7 @@ def model_barplot(data):
         & (data["shot"] == BEST_SHOT)
         & (data["temperature"] == BEST_TEMPERATURE)
     ]
-    fig, ax = plt.subplots(figsize=(18, 6), dpi=300)
+    fig, ax = plt.subplots(figsize=(18, 6))
     data.plot.bar(x="model",
                   y=["BNPS_mean", "false_positive_rate_mean", "hit_at_1_mean"],
                   figsize=(18, 6),
@@ -289,7 +285,7 @@ def model_barplot(data):
     for container in ax.containers:
         ax.bar_label(container, fmt="%.3f")
     plt.tight_layout()
-    fig.savefig(os.path.join(PLOTS_PATH, "model_barplots_prompt_stable.png"))
+    fig.savefig(os.path.join(PLOTS_PATH, "model_barplots_prompt_stable.pdf"))
 
 def plot_design_patterns_performance():
     """
@@ -341,7 +337,7 @@ def plot_design_patterns_performance():
             readable_labels.append(textwrap.fill(label, width=30))
         df_metric.index = readable_labels
 
-        fig, ax = plt.subplots(figsize=(18, 6), dpi=300)
+        fig, ax = plt.subplots(figsize=(18, 6))
         cmap = "viridis_r" if metric == "false_positive_rate" else "viridis"
         sns.heatmap(
             df_metric,
@@ -389,7 +385,7 @@ def plot_design_patterns_performance():
         ax.set_title(f"Average {metric} per design pattern category across selected configurations", pad =30)
 
         plt.tight_layout()
-        output_path = f"{PLOTS_PATH}/design-patterns-performance-by_{metric}.png"
+        output_path = f"{PLOTS_PATH}/design-patterns-performance-by_{metric}.pdf"
         plt.savefig(output_path)
 
 def end_ablation_study():
@@ -408,10 +404,10 @@ def end_ablation_study():
     test = test.pivot(index="config", columns="model", values="BNPS")
 
 
-    fig1, ax1 = plt.subplots(figsize=(18, 6), dpi=300)
-    fig2, ax2 = plt.subplots(figsize=(18, 6), dpi=300)
+    fig1, ax1 = plt.subplots(figsize=(18, 6))
+    fig2, ax2 = plt.subplots(figsize=(18, 6))
     validation.plot.bar(title="BNPS performance on validation set considering the best and optimal configurations", figsize=(18, 6), grid=True, ax=ax1)
-    output_path_validation = f"{PLOTS_PATH}/stable-optimal-bnps-validation.png"
+    output_path_validation = f"{PLOTS_PATH}/stable-optimal-bnps-validation.pdf"
     ax1.set_ylim(0, 1)
     ax1.tick_params(axis="x", labelrotation=0)
     for container in ax1.containers:
@@ -419,7 +415,7 @@ def end_ablation_study():
     fig1.tight_layout()
 
     test.plot.bar(title="BNPS performance on test set considering the best and optimal configurations", figsize=(18, 6), grid=True, ax=ax2)
-    output_path_test = f"{PLOTS_PATH}/stable-optimal-bnps-test.png"
+    output_path_test = f"{PLOTS_PATH}/stable-optimal-bnps-test.pdf"
     ax2.set_ylim(0, 1)
     ax2.tick_params(axis="x", labelrotation=0)
     for container in ax2.containers:
