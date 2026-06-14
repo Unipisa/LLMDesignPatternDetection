@@ -57,7 +57,6 @@ def load_runs():
 def compute_config_stats(data):
     """
     Groups by prompt label, shot, model, temperature and computes mean and std per each metric.
-    Adds a new "robust_BNPS" column.
     """
     to_process = data.groupby(["prompt_label", "shot", "model", "temperature"]).agg(
         BNPS_mean = ("BNPS", "mean"),

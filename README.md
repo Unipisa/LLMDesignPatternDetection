@@ -434,8 +434,6 @@ TODO:
 
 # WEEKS 8-9-10 (13-05-2026 - 03-06-2026)
 
-Introduzione di una nuova metrica: robust BNPS. Non è un BNPS "puro", ma una versione che penalizza anche per l'instabilità di una configurazione tra le varie run.  
-
 Iniziato un'ablation study sui risultati ottenuti, che passa attaverso diversi step. 
 1. Creazione di 12 tabelle di partenza per la selezione del prompt migliore. A ciascuna tabella corrisponde una coppia prompt-shot_type, sulle righe sono riportate le coppie modello-temperatura, sulle colonne le 7 metriche. Le 12 tabelle sono ottenute effettuando una media aritmetica, per ogni configurazione selezionata, dei risultati ottenuti nelle 4 run. Il risultato di ogni cella è riportato nella forma "media ± std", derivando questa stirnga dalla concatenazione dei risultati delle colonne bnps_mean e bnps_std.
 2. Prompt ablation. Seleziono la coppia prompt-shot type osservando le distribuzioni della BNPS, considerando la coppia col massimo più alto e quella col trade-off migliore tra stabilità e performance. Al netto dei risulati è stata identificata una coppia prompt-shot più stabile (role + base + output description + rules, one-shot) e una più sensibile ma contenente le configuraizoni migliori in asosluto (improved by chatGPT, zero-shot)
