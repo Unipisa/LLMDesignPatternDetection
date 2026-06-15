@@ -5,8 +5,8 @@ import sys
 import importlib.util
 
 # Load the module dynamically since it starts with a number
-module_name = '020_gem_3_1'
-module_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), f'{module_name}.py')
+module_name = 'paymentprocessor_refactored_dec'
+module_path = os.path.join(os.path.dirname(__file__), f'{module_name}.py')
 
 spec = importlib.util.spec_from_file_location(module_name, module_path)
 module = importlib.util.module_from_spec(spec)
