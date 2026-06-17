@@ -152,6 +152,10 @@ def plot_temperature_avg(data):
         false_positive_rate_std=("false_positive_rate", "std")
     )
     avg_by_model_temperature.reset_index(inplace=True)
+    shot_colors = dict(zip(
+        sorted(avg_by_model_temperature["shot"].unique()),
+        plt.rcParams["axes.prop_cycle"].by_key()["color"]
+    ))
     for metric, std in zip(["BNPS_mean", "false_positive_rate_mean"], ["BNPS_std", "false_positive_rate_std"]):
         for ax, model in zip(axes, models):
             table = avg_by_model_temperature.loc[avg_by_model_temperature["model"] == model].sort_values("temperature")
@@ -162,6 +166,8 @@ def plot_temperature_avg(data):
                     yerr=table[std],
                     capsize=5,
                     marker="o",
+                    linestyle="--" if metric == "false_positive_rate_mean" else "-",
+                    color=shot_colors[shot],
                     label = f"{metric} ({shot})",
                 )
                 ax.grid(True)
@@ -447,11 +453,11 @@ if __name__ == "__main__":
 
     df = load_runs()
     config_stats = compute_config_stats(df)
-    export_prompt_labels(config_stats)
-    plot_prompt_plots(df)
+    # export_prompt_labels(config_stats)
+    # plot_prompt_plots(df)
     plot_temperature_avg(df)
-    plot_temperature_lineplot(config_stats)
-    temperature_boxolpot(df)
-    model_barplot(config_stats)
-    plot_design_patterns_performance()
-    end_ablation_study()
+    # plot_temperature_lineplot(config_stats)
+    # temperature_boxolpot(df)
+    # model_barplot(config_stats)
+    # plot_design_patterns_performance()
+    # end_ablation_study()
