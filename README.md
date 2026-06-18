@@ -441,3 +441,17 @@ Iniziato un'ablation study sui risultati ottenuti, che passa attaverso diversi s
 4. Model ablation
 
 Avviata la valutazione delle configurazioni scelte sul test set; iniziata la stesura della tesi (organizzata in un'apposita cartella "thesis"), riorganizzazione delle cartelle results del repo distinguendo tra validation set e test set. 
+
+# WEEKS 11-12-13 (03-06-2026 - 24-06-2026)
+Aggiunta una cartella per l'end to end case study, al fine di testare la pipeline componendo l'output del detector con 
+l'input del refactorer. Aggiunti 3 esempi di partenza baseline con annessa creazione delle relative versioni refactored,
+complete di test, per ciascun design pattern a essi applicabili. Si riportano quindi le ground truth associate a tali esempi:
+- `securecommunicator`: ["strategy", "factory_method"]
+- `mediastreaming`: ["factory method", "strategy", "template method"]
+- `paymentprocessor`: ["decorator", "proxy"]
+
+Alcune versioni refactored sono state fornite esternamente e generate da LLMs mentre le restanti, incluse quelle baseline,
+create manualmente. Stessa considerazione per le batterie di test associate. 
+
+Una volta definiti gli esempi rifattorizzati in tutti i possibili pattern supportati, si procede a fornire ciascuna predizione
+del detector in input al refactorer, a patto che siano incluse nelle relative ground truth. 
