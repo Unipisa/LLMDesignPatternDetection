@@ -14,14 +14,13 @@ class StreamingService(ABC):
         pass
 
     # Common step shared by all concrete streaming services.
-    def start_playing(self, audio_output: str):
-        print (f"Playing: {audio_output}")
+    def start_playing(self, audio_output: str) -> str:
+        return f"Playing: {audio_output}"
 
-    # Template Method: fixes the order of the algorithm steps.
-    def play_track(self, track_name: str):
+    def play_track(self, track_name: str) -> str:
         self.start_streaming(track_name)
         audio_output = self.decode_stream()
-        self.start_playing(audio_output)
+        return self.start_playing(audio_output)
 
 
 # Participant: ConcreteClass

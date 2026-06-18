@@ -193,7 +193,6 @@ if __name__ == "__main__":
     parser.add_argument("--api_key", type=str, default="lm-studio", help="API key per OpenAI API")
     parser.add_argument("--one_shot", action= "store_true", help= "Model will receive a pair of example-answer to help solving the task")
     parser.add_argument("--temperature", type=float, help= "Temperature to use for the model", required= True)
-    parser.add_argument("--run_id", type=int, required=True, help="Run id to create output dir")
     parser.add_argument("--dataset", type=str, required=True, help="Dataset path to use")
     parser.add_argument("--output_dir", type=str, default="results/original", help="Directory to save results")
 
@@ -201,8 +200,6 @@ if __name__ == "__main__":
     prompts = json.load(open("config/prompts.json", "r"))
     prompt = prompts[args.id]["prompt"]
     label = prompts[args.id]["label"]
-    run_id = args.run_id
-
     local = (args.base_url == "http://127.0.0.1:1234/v1") and (args.api_key == "lm-studio")
     output = None
     try:
@@ -232,8 +229,7 @@ if __name__ == "__main__":
 
     model_safe = args.model.split("/")[-1]
 
-    run_output_dir = os.path.join(args.output_dir, f"run_{run_id}")
-    if not os.path.exists(run_output_dir):
-        os.makedirs(run_output_dir, exist_ok=True)
+    if not os.path.exists(args.output_dir):
+        os.makedirs(args.output_dir, exist_ok=True)
 
-    output.to_csv(os.path.join(run_output_dir, f"{model_safe}_{shot}_id{args.id}_temp{args.temperature}.csv"), index=False)
+    output.to_csv(os.path.join(args.output_dir, f"{model_safe}_{shot}_id{args.id}_temp{args.temperature}.csv"), index=False)
