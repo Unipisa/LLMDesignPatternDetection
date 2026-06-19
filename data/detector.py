@@ -6,6 +6,8 @@ import argparse
 import subprocess
 import requests
 
+DETECTOR_DIR = os.path.dirname(os.path.abspath(__file__))
+
 
 EXAMPLE = """
 class DocDataMiner:
@@ -195,12 +197,15 @@ if __name__ == "__main__":
     parser.add_argument("--temperature", type=float, help= "Temperature to use for the model", required= True)
     parser.add_argument("--dataset", type=str, required=True, help="Dataset path to use")
     parser.add_argument("--output_dir", type=str, default="results/original", help="Directory to save results")
+    parser.add_argument("--skip_lmstudio_management", action="store_true")
 
     args = parser.parse_args()
-    prompts = json.load(open("config/prompts.json", "r"))
+    prompts_path = os.path.join(DETECTOR_DIR, "config", "prompts.json")
+    prompts = json.load(open(prompts_path, "r"))
     prompt = prompts[args.id]["prompt"]
     label = prompts[args.id]["label"]
-    local = (args.base_url == "http://127.0.0.1:1234/v1") and (args.api_key == "lm-studio")
+    local = (args.base_url == "http://127.0.0.1:1234/v1") and (args.api_key == "lm-studio") and not args.skip_lmstudio_management
+
     output = None
     try:
         if local:

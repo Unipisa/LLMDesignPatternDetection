@@ -1,0 +1,14 @@
+{
+    "code_path": "C:\\Users\\aless\\Downloads\\LLMDesignPatternDetection\\end_to_end_refactoring/examples/mediastreaming/mediastreaming_baseline.py",
+    "refactored_tests_path": "C:\\Users\\aless\\Downloads\\LLMDesignPatternDetection\\end_to_end_refactoring/examples/mediastreaming/mediastreaming_refactored_fm_test.py",
+    "pattern_name": "factorymethod",
+    "prompt_file_path": "src/prompts/promptxml5.txt",
+    "temperature": 0.0,
+    "model_name": "openai/gpt-oss-20b",
+    "max_length": null,
+    "strategy": "lmstudio",
+    "timestamp": "20260619_165848",
+    "prompt_length": 2266,
+    "response_length": 267,
+    "lines_of_code": 58
+}

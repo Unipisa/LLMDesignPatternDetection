@@ -14,7 +14,7 @@ AVG_TEST_RESULTS_PATH = "outputs/test_set/test_set_avg_results.csv"
 AVG_VALIDATION_RESULTS_PATH = "outputs/validation_set/avg_results/total_avg_results.csv"
 
 # stable configuration
-PLOTS_PATH = "ablation/plots"
+PLOTS_PATH = "/Users/alessandrofiumano/Documents/OverleafThesis/figures/ablation_plots"
 BEST_PROMPT = "role + base + output description + rules"
 BEST_SHOT = "one-shot"
 BEST_TEMPERATURE = 0.0
@@ -27,6 +27,28 @@ OPTIMAL_MODEL = "gemma-4-e4b"
 
 METRICS = ["hit_at_1", "BNPS", "false_positive_rate"]
 MODELS = ["gemma-4-e4b", "gpt-oss-20b", "qwen3.5-9b"]
+DOCUMENT_FONT_SIZE = 10
+PROMPT_SHOT_LABEL_FONTSIZE = 8
+CONFIG_LABEL_FONTSIZE = DOCUMENT_FONT_SIZE
+BAR_CONFIG_LABEL_FONTSIZE = DOCUMENT_FONT_SIZE
+FIGURE_WIDTH = 7.4
+PROMPT_FIGSIZE = (FIGURE_WIDTH, 5.0)
+STANDARD_FIGSIZE = (FIGURE_WIDTH, 4.2)
+LINEPLOT_FIGSIZE = (FIGURE_WIDTH, 3.0)
+TEMPERATURE_BOXPLOT_FIGSIZE = (FIGURE_WIDTH, 3.0)
+MODEL_BAR_FIGSIZE = (FIGURE_WIDTH, 4.8)
+HEATMAP_FIGSIZE = (FIGURE_WIDTH, 5.4)
+END_BAR_FIGSIZE = (FIGURE_WIDTH, 5.2)
+
+plt.rcParams.update({
+    "font.size": DOCUMENT_FONT_SIZE,
+    "axes.labelsize": DOCUMENT_FONT_SIZE,
+    "axes.titlesize": DOCUMENT_FONT_SIZE,
+    "xtick.labelsize": DOCUMENT_FONT_SIZE,
+    "ytick.labelsize": DOCUMENT_FONT_SIZE,
+    "legend.fontsize": DOCUMENT_FONT_SIZE,
+    "figure.titlesize": DOCUMENT_FONT_SIZE,
+})
 
 def load_runs():
     """
@@ -107,31 +129,33 @@ def plot_prompt_plots(data):
     Generates a chart for each prompt-shot pair, considering BNPS, hit_at_1 and false-positive rate.
     """
     for metric in ["BNPS", "false_positive_rate"]:
-        fig, ax = plt.subplots(figsize=(18, 6))
+        fig, ax = plt.subplots(figsize=PROMPT_FIGSIZE)
         data.boxplot(column=metric, by=["prompt_label", "shot"], ax=ax, grid=True)
         fig.suptitle("")
         ax.set_title("")
-        ax.set_xlabel("prompt, shot")
-        ax.set_ylabel(metric)
-        labels = [textwrap.fill(label.get_text(), width=17) for label in ax.get_xticklabels()]
-        ax.set_xticklabels(labels, rotation=0, fontsize=6)
-        plt.xticks(rotation=0, fontsize=8)
+        ax.set_xlabel("")
+        ax.set_ylabel("")
+        labels = [textwrap.fill(label.get_text(), width=28, break_long_words=False) for label in ax.get_xticklabels()]
+        ax.set_xticklabels(labels, rotation=90, ha="right", va="center", rotation_mode="anchor", fontsize=PROMPT_SHOT_LABEL_FONTSIZE)
+        ax.tick_params(axis="y", labelsize=DOCUMENT_FONT_SIZE)
         plt.tight_layout()
-        plt.savefig(os.path.join(PLOTS_PATH, f"prompt_boxplot_{metric}.pdf"))
+        fig.savefig(os.path.join(PLOTS_PATH, f"prompt_boxplot_{metric}.pdf"), bbox_inches="tight")
+        plt.close(fig)
 
     for metric in ["acc_top1", "hit_at_1"]:
         grouped = data.groupby(["prompt_label", "shot"])[metric].agg(["mean", "std"])
-        fig, ax = plt.subplots(figsize=(18, 6))
+        fig, ax = plt.subplots(figsize=PROMPT_FIGSIZE)
         grouped["mean"].plot.bar(yerr=grouped["std"], ax=ax, capsize=5)
-        labels = [textwrap.fill(label.get_text(), width=17) for label in ax.get_xticklabels()]
-        ax.set_xticklabels(labels, rotation=0, fontsize=6)
-        plt.xticks(rotation=0, fontsize=8)
-        ax.set_xlabel("prompt, shot")
-        ax.set_ylabel(metric)
+        labels = [textwrap.fill(label.get_text(), width=28, break_long_words=False) for label in ax.get_xticklabels()]
+        ax.set_xticklabels(labels, rotation=90, ha="right", va="center", rotation_mode="anchor", fontsize=PROMPT_SHOT_LABEL_FONTSIZE)
+        ax.tick_params(axis="y", labelsize=DOCUMENT_FONT_SIZE)
+        ax.set_xlabel("")
+        ax.set_ylabel("")
         ax.set_yticks(np.arange(0, 1.01, 0.1))
         plt.grid(True)
         plt.tight_layout()
-        plt.savefig(os.path.join(PLOTS_PATH, f"prompt_barplot_{metric}.pdf"))
+        fig.savefig(os.path.join(PLOTS_PATH, f"prompt_barplot_{metric}.pdf"), bbox_inches="tight")
+        plt.close(fig)
 
 def plot_temperature_avg(data):
     """
@@ -141,7 +165,7 @@ def plot_temperature_avg(data):
     fig, axes = plt.subplots(
         1,
         len(models),
-        figsize=(18, 6),
+        figsize=STANDARD_FIGSIZE,
         sharey=True
     )
     avg_by_model_temperature = data.groupby(["model", "shot", "temperature"]).agg(
@@ -151,6 +175,7 @@ def plot_temperature_avg(data):
         false_positive_rate_std=("false_positive_rate", "std")
     )
     avg_by_model_temperature.reset_index(inplace=True)
+    temperatures = sorted(avg_by_model_temperature["temperature"].unique())
     shot_colors = dict(zip(
         sorted(avg_by_model_temperature["shot"].unique()),
         plt.rcParams["axes.prop_cycle"].by_key()["color"]
@@ -169,14 +194,18 @@ def plot_temperature_avg(data):
                     color=shot_colors[shot],
                     label = f"{metric} ({shot})",
                 )
-                ax.grid(True)
-                ax.set_xlabel("temperature")
-                ax.set_title("")
+            ax.set_xticks(temperatures)
+            ax.grid(True)
+            ax.set_xlabel("temperature")
+            ax.set_title("")
 
     # fig.suptitle("Average BNPS and false-positive rate over all prompt configurations by temperature and shot", fontsize=16)
-    plt.legend(loc="best")
-    plt.tight_layout()
-    fig.savefig(os.path.join(PLOTS_PATH, f"avg_temperature_performance.pdf"))
+    handles, labels = axes[-1].get_legend_handles_labels()
+    fig.legend(handles, labels, loc="lower center", bbox_to_anchor=(0.5, 0.02),
+               ncol=2, fontsize=DOCUMENT_FONT_SIZE)
+    fig.tight_layout(rect=(0, 0.22, 1, 1))
+    fig.savefig(os.path.join(PLOTS_PATH, f"avg_temperature_performance.pdf"), bbox_inches="tight")
+    plt.close(fig)
 
 
 def plot_temperature_lineplot(data):
@@ -187,16 +216,22 @@ def plot_temperature_lineplot(data):
     # LINE PLOT FOR BEST PROMPT
     data1 = data.loc[(data["prompt_label"] == BEST_PROMPT) & (data["shot"] == BEST_SHOT)]
     models = sorted(data["model"].unique())
+    temperatures = sorted(data["temperature"].unique())
+    temperature_positions = np.arange(len(temperatures))
+    temperature_to_position = {
+        temperature: position
+        for position, temperature in enumerate(temperatures)
+    }
     fig, axes = plt.subplots(
         1,
         len(models),
-        figsize=(18, 6),
+        figsize=LINEPLOT_FIGSIZE,
         sharey=True
     )
     for ax, model in zip(axes, models):
         table = data1.loc[data1["model"] == model].sort_values("temperature")
         ax.errorbar(
-            table["temperature"],
+            table["temperature"].map(temperature_to_position),
             table["BNPS_mean"],
             yerr=table["BNPS_std"],
             marker="o",
@@ -206,27 +241,30 @@ def plot_temperature_lineplot(data):
             alpha=0.85,
             label=model,
         )
+        ax.set_xticks(temperature_positions)
+        ax.set_xticklabels(temperatures)
         ax.grid(True, alpha=0.4)
         ax.set_title("")
-        ax.set_xlabel("temperature")
+        ax.set_xlabel("")
     axes[0].set_ylabel("BNPS_mean", labelpad=18)
     # fig.suptitle(f"BNPS mean ± std: {BEST_PROMPT} ({BEST_SHOT})")
     axes[0].set_ylim(0.4, 0.75)
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "temperature_BNPS_best.pdf"))
+    plt.close(fig)
 
     # LINE PLOT FOR OPTIMAL PROMPT
     data2 = data.loc[(data["prompt_label"] == OPTIMAL_PROMPT) & (data["shot"] == OPTIMAL_SHOT)]
     fig2, axes2 = plt.subplots(
         1,
         len(models),
-        figsize=(18, 6),
+        figsize=LINEPLOT_FIGSIZE,
         sharey=True
     )
     for ax, model in zip(axes2, models):
         table = data2.loc[data2["model"] == model].sort_values("temperature")
         ax.errorbar(
-            table["temperature"],
+            table["temperature"].map(temperature_to_position),
             table["BNPS_mean"],
             yerr=table["BNPS_std"],
             marker="o",
@@ -236,38 +274,42 @@ def plot_temperature_lineplot(data):
             alpha=0.85,
             label=model,
         )
+        ax.set_xticks(temperature_positions)
+        ax.set_xticklabels(temperatures)
         ax.grid(True, alpha=0.4)
         ax.set_title("")
-        ax.set_xlabel("temperature")
+        ax.set_xlabel("")
     axes2[0].set_ylabel("BNPS_mean", labelpad=18)
     # fig2.suptitle(f"BNPS mean ± std: {OPTIMAL_PROMPT} ({OPTIMAL_SHOT})")
     axes2[0].set_ylim(0.4, 0.75)
     plt.tight_layout()
     fig2.savefig(os.path.join(PLOTS_PATH, "temperature_BNPS_optimal.pdf"))
+    plt.close(fig2)
 
-def temperature_boxolpot (data):
+def temperature_boxplot (data):
     """
     Generates a boxplot chart for each temperature.
     """
     fig, axes = plt.subplots(
         1,
         2,
-        figsize=(18, 6),
+        figsize=TEMPERATURE_BOXPLOT_FIGSIZE,
         sharey=True
     )
     for ax, (prompt, shot) in zip(axes, zip([BEST_PROMPT, OPTIMAL_PROMPT], [BEST_SHOT, OPTIMAL_SHOT])):
         table = data.loc[(data["prompt_label"] == prompt) & (data["shot"] == shot)]
         table.boxplot(column="BNPS", by="temperature", ax=ax, grid=True)
         ax.set_title("")
-        ax.set_xlabel("temperature")
+        ax.set_xlabel("")
         labels = [textwrap.fill(label.get_text(), width=17) for label in ax.get_xticklabels()]
-        ax.set_xticklabels(labels, rotation=0, fontsize=6)
-        plt.xticks(rotation=0, fontsize=8)
+        ax.set_xticklabels(labels, rotation=0, fontsize=DOCUMENT_FONT_SIZE)
+        ax.tick_params(axis="both", labelsize=DOCUMENT_FONT_SIZE)
 
     axes[0].set_ylabel("BNPS")
     fig.suptitle("")
     plt.tight_layout()
-    plt.savefig(os.path.join(PLOTS_PATH, "temperature_boxplots.pdf"))
+    fig.savefig(os.path.join(PLOTS_PATH, "temperature_boxplots.pdf"), bbox_inches="tight")
+    plt.close(fig)
 
 def model_barplot(data):
     data = data.loc[
@@ -275,21 +317,27 @@ def model_barplot(data):
         & (data["shot"] == BEST_SHOT)
         & (data["temperature"] == BEST_TEMPERATURE)
     ]
-    fig, ax = plt.subplots(figsize=(18, 6))
+    fig, ax = plt.subplots(figsize=MODEL_BAR_FIGSIZE)
     data.plot.bar(x="model",
                   y=["BNPS_mean", "false_positive_rate_mean", "hit_at_1_mean"],
-                  figsize=(18, 6),
+                  figsize=MODEL_BAR_FIGSIZE,
                   grid=True,
                   ax=ax
                   )
     ax.set_yticks(np.arange(0, 1.01, 0.1))
-    ax.legend(loc="best")
+    handles, labels = ax.get_legend_handles_labels()
+    ax.get_legend().remove()
+    fig.legend(handles, labels, loc="upper center", bbox_to_anchor=(0.5, 0.98),
+               ncol=3, fontsize=DOCUMENT_FONT_SIZE)
     # ax.set_title(f"Model performance considering prompt {BEST_PROMPT} ({BEST_SHOT}) and T = {BEST_TEMPERATURE}")
-    plt.xticks(rotation=0)
+    ax.tick_params(axis="both", labelsize=DOCUMENT_FONT_SIZE)
+    ax.set_xlabel("")
+    plt.xticks(rotation=0, fontsize=DOCUMENT_FONT_SIZE)
     for container in ax.containers:
-        ax.bar_label(container, fmt="%.3f")
-    plt.tight_layout()
-    fig.savefig(os.path.join(PLOTS_PATH, "model_barplots_prompt_stable.pdf"))
+        ax.bar_label(container, fmt="%.3f", fontsize=PROMPT_SHOT_LABEL_FONTSIZE)
+    fig.tight_layout(rect=(0, 0, 1, 0.88))
+    fig.savefig(os.path.join(PLOTS_PATH, "model_barplots_prompt_stable.pdf"), bbox_inches="tight")
+    plt.close(fig)
 
 def plot_design_patterns_performance():
     """
@@ -341,7 +389,7 @@ def plot_design_patterns_performance():
             readable_labels.append(textwrap.fill(label, width=30))
         df_metric.index = readable_labels
 
-        fig, ax = plt.subplots(figsize=(18, 6))
+        fig, ax = plt.subplots(figsize=HEATMAP_FIGSIZE)
         cmap = "viridis_r" if metric == "false_positive_rate" else "viridis"
         sns.heatmap(
             df_metric,
@@ -350,12 +398,16 @@ def plot_design_patterns_performance():
             fmt=".3f",
             vmin=0,
             vmax=1,
-            cmap=cmap
+            cmap=cmap,
+            annot_kws={"fontsize": DOCUMENT_FONT_SIZE}
         )
 
         # colorbar label
         colorbar = ax.collections[0].colorbar
         colorbar.set_label("")
+        ax.tick_params(axis="y", labelsize=CONFIG_LABEL_FONTSIZE)
+        ax.tick_params(axis="x", labelsize=DOCUMENT_FONT_SIZE)
+        colorbar.ax.tick_params(labelsize=DOCUMENT_FONT_SIZE)
 
         if metric == "false_positive_rate":
             # Lower values are better
@@ -379,9 +431,9 @@ def plot_design_patterns_performance():
             clip_on=False,
         )
         colorbar.ax.text(4, better_y, "Better", transform=colorbar.ax.transAxes,
-                         ha="center", va="center", fontsize=10)
+                         ha="center", va="center", fontsize=DOCUMENT_FONT_SIZE)
         colorbar.ax.text(4, worse_y, "Worse", transform=colorbar.ax.transAxes,
-                         ha="center", va="center", fontsize=10)
+                         ha="center", va="center", fontsize=DOCUMENT_FONT_SIZE)
 
 
 
@@ -390,7 +442,8 @@ def plot_design_patterns_performance():
 
         plt.tight_layout()
         output_path = f"{PLOTS_PATH}/design-patterns-performance-by_{metric}.pdf"
-        plt.savefig(output_path)
+        fig.savefig(output_path, bbox_inches="tight")
+        plt.close(fig)
 
 def end_ablation_study():
     validation = pd.read_csv(AVG_VALIDATION_RESULTS_PATH)
@@ -401,33 +454,51 @@ def end_ablation_study():
     test = test.loc[((test["prompt_label"] == BEST_PROMPT) & (test["shot"] == BEST_SHOT) & (test["temperature"] == BEST_TEMPERATURE)) |
                     ((test["prompt_label"] == OPTIMAL_PROMPT) & (test["shot"] == OPTIMAL_SHOT)) & (test["temperature"] == OPTIMAL_TEMPERATURE)]
 
-    validation["config"] = validation["prompt_label"] + "\nshot=" + validation["shot"].astype(str) + " t=" + validation["temperature"].astype(str)
-    test["config"] = test["prompt_label"] + "\nshot=" + test["shot"].astype(str) + " t=" + test["temperature"].astype(str)
+    validation["config"] = validation["prompt_label"] + ", shot=" + validation["shot"].astype(str) + ", t=" + validation["temperature"].astype(str)
+    test["config"] = test["prompt_label"] + ", shot=" + test["shot"].astype(str) + ", t=" + test["temperature"].astype(str)
 
     validation = validation.pivot(index="config", columns="model", values="BNPS")
     test = test.pivot(index="config", columns="model", values="BNPS")
 
 
-    fig1, ax1 = plt.subplots(figsize=(18, 6))
-    fig2, ax2 = plt.subplots(figsize=(18, 6))
-    validation.plot.bar(figsize=(18, 6), grid=True, ax=ax1)
+    fig1, ax1 = plt.subplots(figsize=END_BAR_FIGSIZE)
+    fig2, ax2 = plt.subplots(figsize=END_BAR_FIGSIZE)
+    validation.plot.bar(figsize=END_BAR_FIGSIZE, grid=True, ax=ax1)
     output_path_validation = f"{PLOTS_PATH}/stable-optimal-bnps-validation.pdf"
     ax1.set_ylim(0, 1)
-    ax1.tick_params(axis="x", labelrotation=0)
+    ax1.tick_params(axis="x", labelrotation=0, labelsize=PROMPT_SHOT_LABEL_FONTSIZE)
+    ax1.set_xlabel("")
+    labels1_wrapped = [textwrap.fill(label.get_text(), width=20, break_long_words=False) for label in ax1.get_xticklabels()]
+    ax1.set_xticklabels(labels1_wrapped, rotation=0, fontsize=PROMPT_SHOT_LABEL_FONTSIZE)
+    ax1.tick_params(axis="y", labelsize=DOCUMENT_FONT_SIZE)
+    handles1, labels1 = ax1.get_legend_handles_labels()
+    ax1.get_legend().remove()
+    fig1.legend(handles1, labels1, loc="upper center", bbox_to_anchor=(0.5, 0.98),
+                ncol=3, fontsize=DOCUMENT_FONT_SIZE)
     for container in ax1.containers:
-        ax1.bar_label(container, fmt="%.3f")
-    fig1.tight_layout()
+        ax1.bar_label(container, fmt="%.3f", fontsize=PROMPT_SHOT_LABEL_FONTSIZE)
+    fig1.tight_layout(rect=(0, 0, 1, 0.86))
 
-    test.plot.bar(figsize=(18, 6), grid=True, ax=ax2)
+    test.plot.bar(figsize=END_BAR_FIGSIZE, grid=True, ax=ax2)
     output_path_test = f"{PLOTS_PATH}/stable-optimal-bnps-test.pdf"
     ax2.set_ylim(0, 1)
-    ax2.tick_params(axis="x", labelrotation=0)
+    ax2.tick_params(axis="x", labelrotation=0, labelsize=PROMPT_SHOT_LABEL_FONTSIZE)
+    ax2.set_xlabel("")
+    labels2_wrapped = [textwrap.fill(label.get_text(), width=20, break_long_words=False) for label in ax2.get_xticklabels()]
+    ax2.set_xticklabels(labels2_wrapped, rotation=0, fontsize=PROMPT_SHOT_LABEL_FONTSIZE)
+    ax2.tick_params(axis="y", labelsize=DOCUMENT_FONT_SIZE)
+    handles2, labels2 = ax2.get_legend_handles_labels()
+    ax2.get_legend().remove()
+    fig2.legend(handles2, labels2, loc="upper center", bbox_to_anchor=(0.5, 0.98),
+                ncol=3, fontsize=DOCUMENT_FONT_SIZE)
     for container in ax2.containers:
-        ax2.bar_label(container, fmt="%.3f")
-    fig2.tight_layout()
+        ax2.bar_label(container, fmt="%.3f", fontsize=PROMPT_SHOT_LABEL_FONTSIZE)
+    fig2.tight_layout(rect=(0, 0, 1, 0.86))
 
-    fig1.savefig(output_path_validation)
-    fig2.savefig(output_path_test)
+    fig1.savefig(output_path_validation, bbox_inches="tight")
+    fig2.savefig(output_path_test, bbox_inches="tight")
+    plt.close(fig1)
+    plt.close(fig2)
 
 
 if __name__ == "__main__":
@@ -456,7 +527,7 @@ if __name__ == "__main__":
     plot_prompt_plots(df)
     plot_temperature_avg(df)
     plot_temperature_lineplot(config_stats)
-    temperature_boxolpot(df)
+    temperature_boxplot(df)
     model_barplot(config_stats)
     plot_design_patterns_performance()
     end_ablation_study()
