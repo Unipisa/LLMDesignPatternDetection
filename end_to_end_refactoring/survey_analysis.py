@@ -60,7 +60,6 @@ def get_ratings(df):
 
 def plot_demographics(df):
     fig, axes = plt.subplots(1, 2, figsize=(11, 5))
-    fig.suptitle("Participant Demographics", fontsize=14)
 
     for ax, col, title in zip(axes,
                                [EDU_COL, YOE_COL],
@@ -72,8 +71,8 @@ def plot_demographics(df):
             autopct="%1.0f%%",
             startangle=90,
             wedgeprops={"edgecolor": "white", "linewidth": 2},
+            textprops={"fontsize": 14}
         )
-        ax.set_title(title)
 
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "participant_demographics.pdf"), bbox_inches="tight")
@@ -92,23 +91,24 @@ def plot_heatmap(df):
         matrix.append(row)
 
     data = np.array(matrix, dtype=float)
-    dim_labels = [textwrap.fill(d, width=18) for d in DIMENSIONS]
+    dim_labels = [textwrap.fill(d, width=13) for d in DIMENSIONS]
+    case_labels = [textwrap.fill(case, width=16) for case in CASES]
 
-    fig, ax = plt.subplots(figsize=(11, 5))
+    fig, ax = plt.subplots(figsize=(12, 6))
     sns.heatmap(
         data,
         ax=ax,
         annot=True,
+        annot_kws={"fontsize": 12},
         fmt=".2f",
         cmap="viridis",
         vmin=1,
         vmax=5,
         xticklabels=dim_labels,
-        yticklabels=CASES,
-    )
-    ax.set_title("Mean Rating — Case Study", pad=12)
-    ax.tick_params(axis="x", labelsize=9, rotation=0)
-    ax.tick_params(axis="y", labelsize=9, rotation=0)
+        yticklabels=case_labels,
+     )
+    ax.tick_params(axis="x", labelsize=14, rotation=0)
+    ax.tick_params(axis="y", labelsize=14, rotation=0)
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "mean_rating_per_case_study.pdf"), bbox_inches="tight")
 
@@ -124,18 +124,17 @@ def plot_boxplots_per_case(df):
     data_per_case.boxplot(ax=ax, grid=True)
 
     ax.set_xticks(range(1, len(CASES) + 1))
-    wrapped_cases = [textwrap.fill(case, width=20) for case in CASES]
-    ax.set_xticklabels(wrapped_cases, rotation=0, fontsize=8)
+    wrapped_cases = [textwrap.fill(case, width=18) for case in CASES]
+    ax.set_xticklabels(wrapped_cases, rotation=0, fontsize=13)
     ax.set_ylim(0.5, 5.5)
-    ax.set_title("Score Distribution per case study")
     ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
+    ax.tick_params(axis="y", labelsize=13, pad=8)
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "rating_distribution_per_case_study.pdf"), bbox_inches="tight")
 
 
 def plot_overall_ratings(df):
     fig, axes = plt.subplots(1, 2, figsize=(11, 5))
-    fig.suptitle("Overall Judgements", fontsize=14)
 
     for ax, col, title in zip(axes,
                                [SUCCESS_COL, USEFUL_COL],
@@ -143,8 +142,9 @@ def plot_overall_ratings(df):
         counts = df[col].value_counts().sort_index()
         ax.pie(counts.values, labels=counts.index, autopct="%1.0f%%",
                startangle=90,
-               wedgeprops={"edgecolor": "white", "linewidth": 2})
-        ax.set_title(title)
+               wedgeprops={"edgecolor": "white", "linewidth": 2},
+               textprops={"fontsize": 14}
+               )
 
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "overall_judgements.pdf"), bbox_inches="tight")
