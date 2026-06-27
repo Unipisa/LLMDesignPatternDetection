@@ -176,6 +176,11 @@ def plot_temperature_avg(data):
     )
     avg_by_model_temperature.reset_index(inplace=True)
     temperatures = sorted(avg_by_model_temperature["temperature"].unique())
+    temperature_positions = np.arange(len(temperatures))
+    temperature_to_position = {
+        temperature: position
+        for position, temperature in enumerate(temperatures)
+    }
     shot_colors = dict(zip(
         sorted(avg_by_model_temperature["shot"].unique()),
         plt.rcParams["axes.prop_cycle"].by_key()["color"]
@@ -185,7 +190,7 @@ def plot_temperature_avg(data):
             table = avg_by_model_temperature.loc[avg_by_model_temperature["model"] == model].sort_values("temperature")
             for shot, table in table.groupby("shot"):
                 ax.errorbar(
-                    table["temperature"],
+                    table["temperature"].map(temperature_to_position),
                     table[metric],
                     yerr=table[std],
                     capsize=5,
@@ -194,10 +199,13 @@ def plot_temperature_avg(data):
                     color=shot_colors[shot],
                     label = f"{metric} ({shot})",
                 )
-            ax.set_xticks(temperatures)
+            ax.set_xticks(temperature_positions)
+            ax.set_xticklabels(temperatures)
+            ax.set_ylim(0, 0.75)
+            ax.set_yticks(np.arange(0, 0.76, 0.1))
             ax.grid(True)
-            ax.set_xlabel("temperature")
-            ax.set_title("")
+            ax.set_xlabel("temperature" if model == models[len(models) // 2] else "")
+            ax.set_title(model, fontsize=DOCUMENT_FONT_SIZE)
 
     # fig.suptitle("Average BNPS and false-positive rate over all prompt configurations by temperature and shot", fontsize=16)
     handles, labels = axes[-1].get_legend_handles_labels()
@@ -244,7 +252,7 @@ def plot_temperature_lineplot(data):
         ax.set_xticks(temperature_positions)
         ax.set_xticklabels(temperatures)
         ax.grid(True, alpha=0.4)
-        ax.set_title("")
+        ax.set_title(model, fontsize=DOCUMENT_FONT_SIZE)
         ax.set_xlabel("")
     axes[0].set_ylabel("BNPS_mean", labelpad=18)
     # fig.suptitle(f"BNPS mean ± std: {BEST_PROMPT} ({BEST_SHOT})")
@@ -277,7 +285,7 @@ def plot_temperature_lineplot(data):
         ax.set_xticks(temperature_positions)
         ax.set_xticklabels(temperatures)
         ax.grid(True, alpha=0.4)
-        ax.set_title("")
+        ax.set_title(model, fontsize=DOCUMENT_FONT_SIZE)
         ax.set_xlabel("")
     axes2[0].set_ylabel("BNPS_mean", labelpad=18)
     # fig2.suptitle(f"BNPS mean ± std: {OPTIMAL_PROMPT} ({OPTIMAL_SHOT})")
@@ -454,8 +462,8 @@ def end_ablation_study():
     test = test.loc[((test["prompt_label"] == BEST_PROMPT) & (test["shot"] == BEST_SHOT) & (test["temperature"] == BEST_TEMPERATURE)) |
                     ((test["prompt_label"] == OPTIMAL_PROMPT) & (test["shot"] == OPTIMAL_SHOT)) & (test["temperature"] == OPTIMAL_TEMPERATURE)]
 
-    validation["config"] = validation["prompt_label"] + ", shot=" + validation["shot"].astype(str) + ", t=" + validation["temperature"].astype(str)
-    test["config"] = test["prompt_label"] + ", shot=" + test["shot"].astype(str) + ", t=" + test["temperature"].astype(str)
+    validation["config"] = validation["prompt_label"] + ", "+ validation["shot"].astype(str) + ", t=" + validation["temperature"].astype(str)
+    test["config"] = test["prompt_label"] + ", " + test["shot"].astype(str) + ", t=" + test["temperature"].astype(str)
 
     validation = validation.pivot(index="config", columns="model", values="BNPS")
     test = test.pivot(index="config", columns="model", values="BNPS")
@@ -482,10 +490,10 @@ def end_ablation_study():
     test.plot.bar(figsize=END_BAR_FIGSIZE, grid=True, ax=ax2)
     output_path_test = f"{PLOTS_PATH}/stable-optimal-bnps-test.pdf"
     ax2.set_ylim(0, 1)
-    ax2.tick_params(axis="x", labelrotation=0, labelsize=PROMPT_SHOT_LABEL_FONTSIZE)
+    ax2.tick_params(axis="x", labelrotation=0, labelsize=10)
     ax2.set_xlabel("")
     labels2_wrapped = [textwrap.fill(label.get_text(), width=20, break_long_words=False) for label in ax2.get_xticklabels()]
-    ax2.set_xticklabels(labels2_wrapped, rotation=0, fontsize=PROMPT_SHOT_LABEL_FONTSIZE)
+    ax2.set_xticklabels(labels2_wrapped, rotation=0, fontsize=10)
     ax2.tick_params(axis="y", labelsize=DOCUMENT_FONT_SIZE)
     handles2, labels2 = ax2.get_legend_handles_labels()
     ax2.get_legend().remove()
