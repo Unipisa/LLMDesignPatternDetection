@@ -73,6 +73,7 @@ def plot_demographics(df):
             wedgeprops={"edgecolor": "white", "linewidth": 2},
             textprops={"fontsize": 14}
         )
+        ax.set_title(title, fontsize=16)
 
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "participant_demographics.pdf"), bbox_inches="tight")
@@ -145,6 +146,7 @@ def plot_overall_ratings(df):
                wedgeprops={"edgecolor": "white", "linewidth": 2},
                textprops={"fontsize": 14}
                )
+        ax.set_title(title, fontsize=16)
 
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "overall_judgements.pdf"), bbox_inches="tight")
