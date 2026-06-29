@@ -307,13 +307,12 @@ def temperature_boxplot (data):
     for ax, (prompt, shot) in zip(axes, zip([BEST_PROMPT, OPTIMAL_PROMPT], [BEST_SHOT, OPTIMAL_SHOT])):
         table = data.loc[(data["prompt_label"] == prompt) & (data["shot"] == shot)]
         table.boxplot(column="BNPS", by="temperature", ax=ax, grid=True)
-        ax.set_title("")
+        ax.set_title(f"{prompt}, {shot}", fontsize=9)
         ax.set_xlabel("")
         labels = [textwrap.fill(label.get_text(), width=17) for label in ax.get_xticklabels()]
-        ax.set_xticklabels(labels, rotation=0, fontsize=DOCUMENT_FONT_SIZE)
-        ax.tick_params(axis="both", labelsize=DOCUMENT_FONT_SIZE)
+        ax.set_xticklabels(labels, rotation=0, fontsize=9)
+        ax.tick_params(axis="both", labelsize=9)
 
-    axes[0].set_ylabel("BNPS")
     fig.suptitle("")
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "temperature_boxplots.pdf"), bbox_inches="tight")
