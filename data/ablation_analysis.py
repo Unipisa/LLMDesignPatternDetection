@@ -135,8 +135,8 @@ def plot_prompt_plots(data):
         ax.set_title("")
         ax.set_xlabel("")
         ax.set_ylabel("")
-        labels = [textwrap.fill(label.get_text(), width=28, break_long_words=False) for label in ax.get_xticklabels()]
-        ax.set_xticklabels(labels, rotation=90, ha="right", va="center", rotation_mode="anchor", fontsize=PROMPT_SHOT_LABEL_FONTSIZE)
+        labels = [f"P{i}" for i in range(1, len(ax.get_xticklabels()) + 1)]
+        ax.set_xticklabels(labels, rotation=0, fontsize=DOCUMENT_FONT_SIZE)
         ax.tick_params(axis="y", labelsize=DOCUMENT_FONT_SIZE)
         plt.tight_layout()
         fig.savefig(os.path.join(PLOTS_PATH, f"prompt_boxplot_{metric}.pdf"), bbox_inches="tight")
@@ -146,8 +146,8 @@ def plot_prompt_plots(data):
         grouped = data.groupby(["prompt_label", "shot"])[metric].agg(["mean", "std"])
         fig, ax = plt.subplots(figsize=PROMPT_FIGSIZE)
         grouped["mean"].plot.bar(yerr=grouped["std"], ax=ax, capsize=5)
-        labels = [textwrap.fill(label.get_text(), width=28, break_long_words=False) for label in ax.get_xticklabels()]
-        ax.set_xticklabels(labels, rotation=90, ha="right", va="center", rotation_mode="anchor", fontsize=PROMPT_SHOT_LABEL_FONTSIZE)
+        labels = [f"P{i}" for i in range(1, len(ax.get_xticklabels()) + 1)]
+        ax.set_xticklabels(labels, rotation=0, fontsize=DOCUMENT_FONT_SIZE)
         ax.tick_params(axis="y", labelsize=DOCUMENT_FONT_SIZE)
         ax.set_xlabel("")
         ax.set_ylabel("")
