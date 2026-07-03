@@ -15,7 +15,7 @@ DETECTOR_TO_REFACTORER = {
     "state": "state",
 }
 
-REFACTORER_PATH = "C:/Users/aless/Downloads/LLMDesignPatternRefactoring/refactorer.py"
+REFACTORER_PATH = "LLMDesignPatternRefactoring/refactorer.py"
 REFACTORER_ROOT = Path(REFACTORER_PATH).resolve().parent
 REPO_ROOT = Path(__file__).resolve().parent.parent
 

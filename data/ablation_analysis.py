@@ -14,7 +14,7 @@ AVG_TEST_RESULTS_PATH = "outputs/test_set/test_set_avg_results.csv"
 AVG_VALIDATION_RESULTS_PATH = "outputs/validation_set/avg_results/total_avg_results.csv"
 
 # stable configuration
-PLOTS_PATH = "/Users/alessandrofiumano/Documents/OverleafThesis/figures/ablation_plots"
+PLOTS_PATH = "ablation/plots"
 BEST_PROMPT = "role + base + output description + rules"
 BEST_SHOT = "one-shot"
 BEST_TEMPERATURE = 0.0
