@@ -6,15 +6,15 @@ Given a baseline Python snippet, the detector queries an OpenAI-compatible LLM e
 
 ## Repository Structure
 
-- `data/baseline/`: baseline Python snippets.
-- `data/refactored/`: corresponding refactored implementations.
-- `data/tests_baseline/`: tests for baseline snippets.
-- `data/tests_refactored/`: tests for refactored snippets.
+- `data/dataset/baseline/`: baseline Python snippets.
+- `data/dataset/refactored/`: corresponding refactored implementations.
+- `data/dataset/tests_baseline/`: tests for baseline snippets.
+- `data/dataset/tests_refactored/`: tests for refactored snippets.
 - `data/config/`: dataset splits and prompt definitions.
-- `data/detector.py`: LLM-based design pattern detector.
+- `detector.py`: LLM-based design pattern detector.
 - `data/evaluate.py`: evaluation script.
 - `data/outputs/`: experimental outputs.
-- `end_to_end_refactoring/`: controlled detector-to-refactorer case studies.
+- `data/end_to_end_refactoring/`: controlled detector-to-refactorer case studies.
 
 ## Dataset
 
@@ -29,22 +29,20 @@ Each entry links a baseline implementation, one or more refactored versions, the
 
 ## Detector
 
-`data/detector.py` queries an OpenAI-compatible LLM endpoint and saves the ranked design-pattern predictions for each baseline snippet.
+`detector.py` queries an OpenAI-compatible LLM endpoint and saves the ranked design-pattern predictions for each baseline snippet.
 
 It is used to generate the raw prediction files that are later evaluated.
 
 Example:
 
 ```bash
-cd data
-
 python3 detector.py \
   --id 3 \
   --model openai/gpt-oss-20b \
   --one_shot \
   --temperature 0.0 \
-  --dataset config/test_set.json \
-  --output_dir outputs/test_set
+  --dataset data/config/test_set.json \
+  --output_dir data/outputs/test_set
 ```
 
 By default, the detector expects LM Studio at:
@@ -81,20 +79,20 @@ The evaluator computes:
 
 ## End-to-End Pipeline
 
-`end_to_end_refactoring/e2e_pipeline.py` runs the detector on controlled case-study examples and forwards valid predictions to a refactoring tool.
+`data/end_to_end_refactoring/e2e_pipeline.py` runs the detector on controlled case-study examples and forwards valid predictions to a refactoring tool.
 
 It is used to test whether detected design patterns can be consumed by a downstream refactoring pipeline.
 
 Example:
 
 ```bash
-python3 end_to_end_refactoring/e2e_pipeline.py
+python3 data/end_to_end_refactoring/e2e_pipeline.py
 ```
 
 Before running it, update the `REFACTORER_PATH` constant inside:
 
 ```text
-end_to_end_refactoring/e2e_pipeline.py
+data/end_to_end_refactoring/e2e_pipeline.py
 ```
 
 The path must point to the local `refactorer.py` file from the separate `LLMDesignPatternRefactoring` project.
@@ -122,9 +120,9 @@ The detector output is filtered against the case-study ground truth before invok
 
 ## Analysis Utilities
 
-`data/ablation_analysis.py` and the `data/ablation/` folder are only used for analysing the experimental results already produced by the detector and evaluator.
+`data/ablation/ablation_analysis.py` and the `data/ablation/` folder are only used for analysing the experimental results already produced by the detector and evaluator.
 
-`end_to_end_refactoring/survey_analysis.py` is only used for analysing the survey responses collected for the controlled end-to-end case studies.
+`data/end_to_end_refactoring/survey_analysis.py` is only used for analysing the survey responses collected for the controlled end-to-end case studies.
 
 These analysis utilities are not required to run the detector, compute evaluation metrics, execute the end-to-end pipeline, or invoke the refactorer.
 

@@ -1,0 +1,52 @@
+[
+  {
+    "id": 31,
+    "category": "behavioural",
+    "pattern": ["strategy", "factory_method"],
+    "path_refactored": [
+      "data/end_to_end_refactoring/examples/securecommunication/securecommunicator_refactored_str.py",
+      "data/end_to_end_refactoring/examples/securecommunication/securecommunicator_refactored_fm.py"
+    ],
+    "path_baseline": "data/end_to_end_refactoring/examples/securecommunication/securecommunicator_baseline.py",
+    "tests_refactored": [
+      "data/end_to_end_refactoring/examples/securecommunication/securecommunicator_refactored_str_test.py",
+      "data/end_to_end_refactoring/examples/securecommunication/securecommunicator_refactored_fm_test.py"
+    ],
+    "test_baseline": "data/end_to_end_refactoring/examples/securecommunication/securecommunicator_baseline_test.py",
+    "description": ""
+  },
+  {
+    "id": 32,
+    "category": "creational",
+    "pattern": ["factory_method", "strategy", "template_method"],
+    "path_refactored": [
+      "data/end_to_end_refactoring/examples/mediastreaming/mediastreaming_refactored_fm.py",
+      "data/end_to_end_refactoring/examples/mediastreaming/mediastreaming_refactored_str.py",
+      "data/end_to_end_refactoring/examples/mediastreaming/mediastreaming_refactored_tm.py"
+    ],
+    "path_baseline": "data/end_to_end_refactoring/examples/mediastreaming/mediastreaming_baseline.py",
+    "tests_refactored": [
+      "data/end_to_end_refactoring/examples/mediastreaming/mediastreaming_refactored_fm_test.py",
+      "data/end_to_end_refactoring/examples/mediastreaming/mediastreaming_refactored_str_test.py",
+      "data/end_to_end_refactoring/examples/mediastreaming/mediastreaming_refactored_tm_test.py"
+    ],
+    "test_baseline": "data/end_to_end_refactoring/examples/mediastreaming/mediastreaming_baseline_test.py",
+    "description": ""
+  },
+  {
+    "id": 33,
+    "category": "structural",
+    "pattern": ["decorator", "strategy"],
+    "path_refactored": [
+      "data/end_to_end_refactoring/examples/paymentprocessor/paymentprocessor_refactored_dec.py",
+      "data/end_to_end_refactoring/examples/paymentprocessor/paymentprocessor_refactored_str.py"
+    ],
+    "path_baseline": "data/end_to_end_refactoring/examples/paymentprocessor/paymentprocessor_baseline.py",
+    "tests_refactored": [
+      "data/end_to_end_refactoring/examples/paymentprocessor/paymentprocessor_refactored_dec_test.py",
+      "data/end_to_end_refactoring/examples/paymentprocessor/paymentprocessor_refactored_str_test.py"
+    ],
+    "test_baseline": "data/end_to_end_refactoring/examples/paymentprocessor/paymentprocessor_baseline_test.py",
+    "description": ""
+  }
+]

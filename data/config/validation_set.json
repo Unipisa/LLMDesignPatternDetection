@@ -9,13 +9,13 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/departure_refactored_tm.py"
+            "data/dataset/refactored/departure_refactored_tm.py"
         ],
-        "path_baseline": "baseline/departure_baseline.py",
+        "path_baseline": "data/dataset/baseline/departure_baseline.py",
         "tests_refactored": [
-            "tests_refactored/departure_refactored_tm_test.py"
+            "data/dataset/tests_refactored/departure_refactored_tm_test.py"
         ],
-        "test_baseline": "tests_baseline/departure_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/departure_baseline_test.py",
         "description": ""
     },
     {
@@ -27,13 +27,13 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/rescuelogic_refactored_tm.py"
+            "data/dataset/refactored/rescuelogic_refactored_tm.py"
         ],
-        "path_baseline": "baseline/rescuelogic_baseline.py",
+        "path_baseline": "data/dataset/baseline/rescuelogic_baseline.py",
         "tests_refactored": [
-            "tests_refactored/rescuelogic_refactored_tm_test.py"
+            "data/dataset/tests_refactored/rescuelogic_refactored_tm_test.py"
         ],
-        "test_baseline": "tests_baseline/rescuelogic_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/rescuelogic_baseline_test.py",
         "description": ""
     },
     {
@@ -45,13 +45,13 @@
             "strategy"
         ],
         "path_refactored": [
-            "refactored/traffic_light_refactored_state.py"
+            "data/dataset/refactored/traffic_light_refactored_state.py"
         ],
-        "path_baseline": "baseline/traffic_light_baseline.py",
+        "path_baseline": "data/dataset/baseline/traffic_light_baseline.py",
         "tests_refactored": [
-            "tests_refactored/traffic_light_refactored_state_test.py"
+            "data/dataset/tests_refactored/traffic_light_refactored_state_test.py"
         ],
-        "test_baseline": "tests_baseline/traffic_light_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/traffic_light_baseline_test.py",
         "description": ""
     },
     {
@@ -64,13 +64,13 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/Stall_refactored_state.py"
+            "data/dataset/refactored/Stall_refactored_state.py"
         ],
-        "path_baseline": "baseline/Stall_baseline.py",
+        "path_baseline": "data/dataset/baseline/Stall_baseline.py",
         "tests_refactored": [
-            "tests_refactored/Stall_refactored_state_test.py"
+            "data/dataset/tests_refactored/Stall_refactored_state_test.py"
         ],
-        "test_baseline": "tests_baseline/Stall_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/Stall_baseline_test.py",
         "description": ""
     },
     {
@@ -82,13 +82,13 @@
             "strategy"
         ],
         "path_refactored": [
-            "refactored/rover_refactored_cmd.py"
+            "data/dataset/refactored/rover_refactored_cmd.py"
         ],
-        "path_baseline": "baseline/rover_baseline.py",
+        "path_baseline": "data/dataset/baseline/rover_baseline.py",
         "tests_refactored": [
-            "tests_refactored/rover_refactored_cmd_test.py"
+            "data/dataset/tests_refactored/rover_refactored_cmd_test.py"
         ],
-        "test_baseline": "tests_baseline/rover_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/rover_baseline_test.py",
         "description": ""
     },
     {
@@ -101,13 +101,13 @@
             "decorator"
         ],
         "path_refactored": [
-            "refactored/bankaccount_refactored_cmd.py"
+            "data/dataset/refactored/bankaccount_refactored_cmd.py"
         ],
-        "path_baseline": "baseline/bankaccount_baseline.py",
+        "path_baseline": "data/dataset/baseline/bankaccount_baseline.py",
         "tests_refactored": [
-            "tests_refactored/bankaccount_refactored_cmd_test.py"
+            "data/dataset/tests_refactored/bankaccount_refactored_cmd_test.py"
         ],
-        "test_baseline": "tests_baseline/bankaccount_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/bankaccount_baseline_test.py",
         "description": ""
     },
     {
@@ -121,13 +121,13 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/Vector_refactored_str.py"
+            "data/dataset/refactored/Vector_refactored_str.py"
         ],
-        "path_baseline": "baseline/Vector_baseline.py",
+        "path_baseline": "data/dataset/baseline/Vector_baseline.py",
         "tests_refactored": [
-            "tests_refactored/Vector_refactored_str_test.py"
+            "data/dataset/tests_refactored/Vector_refactored_str_test.py"
         ],
-        "test_baseline": "tests_baseline/Vector_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/Vector_baseline_test.py",
         "description": ""
     },
     {
@@ -140,13 +140,13 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/validator_refactored_str.py"
+            "data/dataset/refactored/validator_refactored_str.py"
         ],
-        "path_baseline": "baseline/validator_baseline.py",
+        "path_baseline": "data/dataset/baseline/validator_baseline.py",
         "tests_refactored": [
-            "tests_refactored/validator_refactored_str_test.py"
+            "data/dataset/tests_refactored/validator_refactored_str_test.py"
         ],
-        "test_baseline": "tests_baseline/validator_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/validator_baseline_test.py",
         "description": ""
     },
     {
@@ -160,15 +160,15 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/monster_refactored_fm.py",
-            "refactored/monster_refactored_af.py"
+            "data/dataset/refactored/monster_refactored_fm.py",
+            "data/dataset/refactored/monster_refactored_af.py"
         ],
-        "path_baseline": "baseline/monster_baseline.py",
+        "path_baseline": "data/dataset/baseline/monster_baseline.py",
         "tests_refactored": [
-            "tests_refactored/monster_refactored_fm_test.py",
-            "tests_refactored/monster_refactored_af_test.py"
+            "data/dataset/tests_refactored/monster_refactored_fm_test.py",
+            "data/dataset/tests_refactored/monster_refactored_af_test.py"
         ],
-        "test_baseline": "tests_baseline/monster_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/monster_baseline_test.py",
         "description": ""
     },
     {
@@ -182,15 +182,15 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/wand_refactored_fm.py",
-            "refactored/wand_refactored_af.py"
+            "data/dataset/refactored/wand_refactored_fm.py",
+            "data/dataset/refactored/wand_refactored_af.py"
         ],
-        "path_baseline": "baseline/wand_baseline.py",
+        "path_baseline": "data/dataset/baseline/wand_baseline.py",
         "tests_refactored": [
-            "tests_refactored/wand_refactored_fm_test.py",
-            "tests_refactored/wand_refactored_af_test.py"
+            "data/dataset/tests_refactored/wand_refactored_fm_test.py",
+            "data/dataset/tests_refactored/wand_refactored_af_test.py"
         ],
-        "test_baseline": "tests_baseline/wand_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/wand_baseline_test.py",
         "description": ""
     },
     {
@@ -202,15 +202,15 @@
             "strategy"
         ],
         "path_refactored": [
-            "refactored/tv_refactored_af.py",
-            "refactored/tv_refactored_fm.py"
+            "data/dataset/refactored/tv_refactored_af.py",
+            "data/dataset/refactored/tv_refactored_fm.py"
         ],
-        "path_baseline": "baseline/tv_baseline.py",
+        "path_baseline": "data/dataset/baseline/tv_baseline.py",
         "tests_refactored": [
-            "tests_refactored/tv_refactored_af_test.py",
-            "tests_refactored/tv_refactored_fm_test.py"
+            "data/dataset/tests_refactored/tv_refactored_af_test.py",
+            "data/dataset/tests_refactored/tv_refactored_fm_test.py"
         ],
-        "test_baseline": "tests_baseline/tv_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/tv_baseline_test.py",
         "description": ""
     },
     {
@@ -223,15 +223,15 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/house_refactored_af.py",
-            "refactored/house_refactored_fm.py"
+            "data/dataset/refactored/house_refactored_af.py",
+            "data/dataset/refactored/house_refactored_fm.py"
         ],
-        "path_baseline": "baseline/house_baseline.py",
+        "path_baseline": "data/dataset/baseline/house_baseline.py",
         "tests_refactored": [
-            "tests_refactored/house_refactored_af_test.py",
-            "tests_refactored/house_refactored_fm_test.py"
+            "data/dataset/tests_refactored/house_refactored_af_test.py",
+            "data/dataset/tests_refactored/house_refactored_fm_test.py"
         ],
-        "test_baseline": "tests_baseline/house_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/house_baseline_test.py",
         "description": ""
     },
     {
@@ -246,13 +246,13 @@
             "template_method"
         ],
         "path_refactored": [
-            "refactored/gamengine_refactored_bld.py"
+            "data/dataset/refactored/gamengine_refactored_bld.py"
         ],
-        "path_baseline": "baseline/gamengine_baseline.py",
+        "path_baseline": "data/dataset/baseline/gamengine_baseline.py",
         "tests_refactored": [
-            "tests_refactored/gamengine_refactored_bld_test.py"
+            "data/dataset/tests_refactored/gamengine_refactored_bld_test.py"
         ],
-        "test_baseline": "tests_baseline/gamengine_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/gamengine_baseline_test.py",
         "description": ""
     },
     {
@@ -267,13 +267,13 @@
             "template_method"
         ],
         "path_refactored": [
-            "refactored/computer_refactored_bld.py"
+            "data/dataset/refactored/computer_refactored_bld.py"
         ],
-        "path_baseline": "baseline/computer_baseline.py",
+        "path_baseline": "data/dataset/baseline/computer_baseline.py",
         "tests_refactored": [
-            "tests_refactored/computer_refactored_bld_test.py"
+            "data/dataset/tests_refactored/computer_refactored_bld_test.py"
         ],
-        "test_baseline": "tests_baseline/computer_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/computer_baseline_test.py",
         "description": ""
     },
     {
@@ -283,13 +283,13 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/tenant_refactored_proxy.py"
+            "data/dataset/refactored/tenant_refactored_proxy.py"
         ],
-        "path_baseline": "baseline/tenant_baseline.py",
+        "path_baseline": "data/dataset/baseline/tenant_baseline.py",
         "tests_refactored": [
-            "tests_refactored/tenant_refactored_proxy_test.py"
+            "data/dataset/tests_refactored/tenant_refactored_proxy_test.py"
         ],
-        "test_baseline": "tests_baseline/tenant_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/tenant_baseline_test.py",
         "description": ""
     },
     {
@@ -299,13 +299,13 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/ledger_refactored_proxy.py"
+            "data/dataset/refactored/ledger_refactored_proxy.py"
         ],
-        "path_baseline": "baseline/ledger_baseline.py",
+        "path_baseline": "data/dataset/baseline/ledger_baseline.py",
         "tests_refactored": [
-            "tests_refactored/ledger_refactored_proxy_test.py"
+            "data/dataset/tests_refactored/ledger_refactored_proxy_test.py"
         ],
-        "test_baseline": "tests_baseline/ledger_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/ledger_baseline_test.py",
         "description": ""
     },
     {
@@ -317,13 +317,13 @@
             "command"
         ],
         "path_refactored": [
-            "refactored/water_flow_refactored_proxy.py"
+            "data/dataset/refactored/water_flow_refactored_proxy.py"
         ],
-        "path_baseline": "baseline/water_flow_baseline.py",
+        "path_baseline": "data/dataset/baseline/water_flow_baseline.py",
         "tests_refactored": [
-            "tests_refactored/water_flow_refactored_proxy_test.py"
+            "data/dataset/tests_refactored/water_flow_refactored_proxy_test.py"
         ],
-        "test_baseline": "tests_baseline/water_flow_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/water_flow_baseline_test.py",
         "description": ""
     },
     {
@@ -336,13 +336,13 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/sword_refactored_dec.py"
+            "data/dataset/refactored/sword_refactored_dec.py"
         ],
-        "path_baseline": "baseline/sword_baseline.py",
+        "path_baseline": "data/dataset/baseline/sword_baseline.py",
         "tests_refactored": [
-            "tests_refactored/sword_refactored_dec_test.py"
+            "data/dataset/tests_refactored/sword_refactored_dec_test.py"
         ],
-        "test_baseline": "tests_baseline/sword_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/sword_baseline_test.py",
         "description": ""
     },
     {
@@ -356,13 +356,13 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/cafecito_refactored_dec.py"
+            "data/dataset/refactored/cafecito_refactored_dec.py"
         ],
-        "path_baseline": "baseline/cafecito_baseline.py",
+        "path_baseline": "data/dataset/baseline/cafecito_baseline.py",
         "tests_refactored": [
-            "tests_refactored/cafecito_refactored_dec_test.py"
+            "data/dataset/tests_refactored/cafecito_refactored_dec_test.py"
         ],
-        "test_baseline": "tests_baseline/cafecito_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/cafecito_baseline_test.py",
         "description": ""
     },
     {
@@ -372,13 +372,13 @@
             "adapter"
         ],
         "path_refactored": [
-            "refactored/roundhole_refactored_adp.py"
+            "data/dataset/refactored/roundhole_refactored_adp.py"
         ],
-        "path_baseline": "baseline/roundhole_baseline.py",
+        "path_baseline": "data/dataset/baseline/roundhole_baseline.py",
         "tests_refactored": [
-            "tests_refactored/roundhole_refactored_adp_test.py"
+            "data/dataset/tests_refactored/roundhole_refactored_adp_test.py"
         ],
-        "test_baseline": "tests_baseline/roundhole_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/roundhole_baseline_test.py",
         "description": ""
     },
     {
@@ -391,13 +391,13 @@
             "proxy"
         ],
         "path_refactored": [
-            "refactored/calculator_refactored_adp.py"
+            "data/dataset/refactored/calculator_refactored_adp.py"
         ],
-        "path_baseline": "baseline/calculator_baseline.py",
+        "path_baseline": "data/dataset/baseline/calculator_baseline.py",
         "tests_refactored": [
-            "tests_refactored/calculator_refactored_adp_test.py"
+            "data/dataset/tests_refactored/calculator_refactored_adp_test.py"
         ],
-        "test_baseline": "tests_baseline/calculator_baseline_test.py",
+        "test_baseline": "data/dataset/tests_baseline/calculator_baseline_test.py",
         "description": ""
     }
 ]

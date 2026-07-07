@@ -1,0 +1,240 @@
+from openai import OpenAI
+import pandas as pd
+import json
+import os
+import argparse
+import subprocess
+import requests
+
+REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+
+EXAMPLE = """
+class DocDataMiner:
+    def mine(self, path):
+        file = open(path, "rb")
+        raw = file.read()
+        data = raw.decode().split("\n")          # parse DOC
+        analysis = {"righe": len(data), "parole": sum(len(r.split()) for r in data)}
+        print(analysis)
+        file.close()
+
+class CSVDataMiner:
+    def mine(self, path):
+        file = open(path, "rb")
+        raw = file.read()
+        lines = raw.decode().split("\n")
+        h = lines[0].split(",")
+        data = [dict(zip(h, r.split(","))) for r in lines[1:] if r]  # parse CSV
+        analysis = {"righe": len(data), "parole": sum(len(str(r).split()) for r in data)}
+        print(analysis)
+        file.close()
+
+class PDFDataMiner:
+    def mine(self, path):
+        file = open(path, "rb")
+        raw = file.read()
+        data = [r for r in raw.decode("latin-1").split("\n") if r.strip()]  # parse PDF
+        analysis = {"righe": len(data), "parole": sum(len(r.split()) for r in data)}
+        print(analysis)
+        file.close()
+"""
+
+ANSWER = '{"prediction": ["template_method", "strategy", "proxy"]}'
+
+RESPONSE_FORMAT={
+    "type": "json_schema",
+    "json_schema": {
+        "name": "design_pattern_response",
+        "strict": True,  # response MUST follow this response format
+        "schema": {
+            "type": "object",
+            "properties": {
+                "prediction": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                             "abstract_factory",
+                             "factory_method",
+                             "builder",
+                             "command",
+                             "strategy",
+                             "template_method",
+                             "state",
+                             "proxy",
+                             "decorator",
+                             "adapter"
+                        ]
+                    },
+                    "minItems": 1,
+                    "uniqueItems": True,
+                "description": "List of design patterns detected in the code."
+                }
+            },
+            "required": ["prediction"],
+            "additionalProperties": False
+        }
+    }
+}
+
+def load_dataset(dataset_path: str):
+    with open(dataset_path, "r") as f:
+        dataset = json.load(f)
+    return dataset
+
+def get_example_info(example: dict):
+    path_baseline = example["path_baseline"]
+    id_example = example["id"]
+    name = os.path.basename(path_baseline)
+    name = os.path.splitext(name)[0]
+    name = name.replace("_baseline", "")
+    ground_truth = example["pattern"]
+    return id_example, path_baseline, name, ground_truth
+
+def read_code(path_baseline: str) -> str:
+    with open(path_baseline, "r") as g:
+        return g.read()
+
+def build_message(prompt_used: str, code: str, one_shot: bool):
+    msg = [{"role": "system", "content": prompt_used}]
+    if one_shot:
+        msg.append({"role": "user", "content": EXAMPLE})
+        msg.append({"role": "assistant", "content": ANSWER})
+    msg.append({"role": "user", "content": code})
+    return msg
+
+# noinspection PyTypeChecker
+def call_model(client: OpenAI, model_used: str, msg: list, tem: float):
+    response = client.chat.completions.create(
+        model=model_used,
+        messages=msg,
+        temperature=tem,
+        response_format=RESPONSE_FORMAT
+    )
+    return response
+
+def parse_prediction(response, name:str):
+    try:
+        ris = response.choices[0].message.content  # this is a string, not a dict ==> parsing with json
+        if not ris:  # fallback for thinking models (es. Qwen)
+            ris = response.choices[0].message.model_extra.get("reasoning_content", "")
+        ris = json.loads(ris)
+        ris = ris["prediction"]
+    except Exception as e:
+        print(f"Errore nel parsing del file {name}: {e}")
+        ris = ["ERRORE_PARSING"]
+    return ris
+
+
+def process_example(
+        client: OpenAI,
+        example: dict,
+        prompt_used: str,
+        model_used: str,
+        label_used: str,
+        tem: float,
+        one_shot: bool):
+    id_example, path_baseline, name, ground_truth = get_example_info(example)
+    code = read_code(path_baseline)
+    msg = build_message(prompt_used, code, one_shot)
+    response = call_model(client, model_used, msg, tem)
+    ris = parse_prediction(response, name)
+    return {
+        "id": id_example,
+        "prompt_used": label_used,
+        "model": model_used,
+        "name_baseline": name,
+        "ground_truth": ground_truth,
+        "prediction": ris
+    }
+
+def start(
+        prompt_used: str,
+        model_used: str,
+        url: str,
+        key : str,
+        label_used: str,
+        tem: float,
+        dataset_path: str,
+        one_shot: bool = False) -> pd.DataFrame:
+    client = OpenAI(base_url = url, api_key = key)
+    dataset = load_dataset(dataset_path)
+    rows = []
+
+    for example in dataset:
+        row = process_example(
+            client = client,
+            example = example,
+            prompt_used = prompt_used,
+            model_used= model_used,
+            label_used= label_used,
+            tem=tem,
+            one_shot = one_shot)
+        rows.append(row)
+    return pd.DataFrame(rows, columns=["id", "prompt_used", "model", "name_baseline", "ground_truth", "prediction"])
+
+def unload_model(model_name: str):
+    url = "http://127.0.0.1:1234/api/v1/models/unload"
+    payload = {"instance_id": model_name}
+
+    response = requests.post(url, json=payload)
+
+    if response.status_code == 200:
+        print(f"Model {model_name} unloaded successfully")
+    else:
+        print(f"Failed to unload model {model_name}: {response.text}")
+        exit(1)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--id", type=int, required=True, help="ID of the prompt_used to use")
+    parser.add_argument("--model", type=str, required=True, help="Model to use")
+    parser.add_argument("--base_url", type=str, default="http://127.0.0.1:1234/v1", help="Base URL per OpenAI API")
+    parser.add_argument("--api_key", type=str, default="lm-studio", help="API key per OpenAI API")
+    parser.add_argument("--one_shot", action= "store_true", help= "Model will receive a pair of example-answer to help solving the task")
+    parser.add_argument("--temperature", type=float, help= "Temperature to use for the model", required= True)
+    parser.add_argument("--dataset", type=str, required=True, help="Dataset path to use")
+    parser.add_argument("--output_dir", type=str, default="results/original", help="Directory to save results")
+    parser.add_argument("--skip_lmstudio_management", action="store_true")
+
+    args = parser.parse_args()
+    prompts_path = os.path.join(REPO_ROOT, "data", "config", "prompts.json")
+    prompts = json.load(open(prompts_path, "r"))
+    prompt = prompts[args.id]["prompt"]
+    label = prompts[args.id]["label"]
+    local = (args.base_url == "http://127.0.0.1:1234/v1") and (args.api_key == "lm-studio") and not args.skip_lmstudio_management
+
+    output = None
+    try:
+        if local:
+            print("Starting lm studio server...")
+            subprocess.run("lms server start", shell=True)  # launches <lms server start> command on shell
+
+        print(f"Starting shot: {args.model}")
+        output = start(prompt, args.model, args.base_url, args.api_key, label, args.temperature, args.dataset, args.one_shot)  # this is a pandas.Dataframe object
+        print("Shot completed: ", args.model)
+    finally:
+        if local:
+            # unloads all uploaded models and stops server
+            unload_model(args.model)
+            print("Stopping lm studio server...")
+            subprocess.run("lms server stop", shell=True)
+
+    if output is None:
+        print("No output from OpenAI API")
+        exit(1)
+
+
+    if args.one_shot:
+        shot = "one-shot"
+    else:
+        shot = "zero-shot"
+
+    model_safe = args.model.split("/")[-1]
+
+    if not os.path.exists(args.output_dir):
+        os.makedirs(args.output_dir, exist_ok=True)
+
+    output.to_csv(os.path.join(args.output_dir, f"{model_safe}_{shot}_id{args.id}_temp{args.temperature}.csv"), index=False)
