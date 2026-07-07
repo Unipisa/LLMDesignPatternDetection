@@ -15,8 +15,8 @@ TABLES_DIR_PATH = "data/ablation/tables"
 AVG_TEST_RESULTS_PATH = "data/outputs/test_set/test_set_avg_results.csv"
 AVG_VALIDATION_RESULTS_PATH = "data/outputs/validation_set/avg_results/total_avg_results.csv"
 
-# stable configuration
 PLOTS_PATH = "data/ablation/plots"
+# stable configuration
 BEST_PROMPT = "role + base + output description + rules"
 BEST_SHOT = "one-shot"
 BEST_TEMPERATURE = 0.0
@@ -26,6 +26,25 @@ OPTIMAL_PROMPT = "improved by chatGPT"
 OPTIMAL_SHOT = "zero-shot"
 OPTIMAL_TEMPERATURE = 0.0
 OPTIMAL_MODEL = "gemma-4-e4b"
+
+PROMPT_SHOT_ACRONYMS = {
+    ("base + output description", "one-shot"): "BO1",
+    ("base + output description", "zero-shot"): "BO0",
+    ("improved by chatGPT", "one-shot"): "I1",
+    ("improved by chatGPT", "zero-shot"): "I0",
+    ("role + base + output description", "one-shot"): "RBO1",
+    ("role + base + output description", "zero-shot"): "RBO0",
+    ("role + base + output description + rules", "one-shot"): "RBOR1",
+    ("role + base + output description + rules", "zero-shot"): "RBOR0",
+    ("role + base + rules + output description", "one-shot"): "RBRO1",
+    ("role + base + rules + output description", "zero-shot"): "RBRO0",
+    ("role + rules + base + output description", "one-shot"): "RRBO1",
+    ("role + rules + base + output description", "zero-shot"): "RRBO0",
+}
+
+PROMPT_DISPLAY_LABELS = {
+    "improved by chatGPT": "improved by ChatGPT",
+}
 
 METRICS = ["hit_at_1", "BNPS", "false_positive_rate"]
 MODELS = ["gemma-4-e4b", "gpt-oss-20b", "qwen3.5-9b"]
@@ -51,6 +70,15 @@ plt.rcParams.update({
     "legend.fontsize": DOCUMENT_FONT_SIZE,
     "figure.titlesize": DOCUMENT_FONT_SIZE,
 })
+
+def prompt_shot_acronym(prompt, shot):
+    return PROMPT_SHOT_ACRONYMS[(prompt, shot)]
+
+def prompt_display_label(prompt):
+    return PROMPT_DISPLAY_LABELS.get(prompt, prompt)
+
+def prompt_shot_label(prompt, shot):
+    return f"{prompt_display_label(prompt)}, {shot} ({prompt_shot_acronym(prompt, shot)})"
 
 def load_runs():
     """
@@ -137,8 +165,8 @@ def plot_prompt_plots(data):
         ax.set_title("")
         ax.set_xlabel("")
         ax.set_ylabel("")
-        labels = [f"P{i}" for i in range(1, len(ax.get_xticklabels()) + 1)]
-        ax.set_xticklabels(labels, rotation=0, fontsize=DOCUMENT_FONT_SIZE)
+        labels = [prompt_shot_acronym(prompt, shot) for prompt, shot in data.groupby(["prompt_label", "shot"]).groups.keys()]
+        ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=DOCUMENT_FONT_SIZE)
         ax.tick_params(axis="y", labelsize=DOCUMENT_FONT_SIZE)
         plt.tight_layout()
         fig.savefig(os.path.join(PLOTS_PATH, f"prompt_boxplot_{metric}.pdf"), bbox_inches="tight")
@@ -148,8 +176,8 @@ def plot_prompt_plots(data):
         grouped = data.groupby(["prompt_label", "shot"])[metric].agg(["mean", "std"])
         fig, ax = plt.subplots(figsize=PROMPT_FIGSIZE)
         grouped["mean"].plot.bar(yerr=grouped["std"], ax=ax, capsize=5)
-        labels = [f"P{i}" for i in range(1, len(ax.get_xticklabels()) + 1)]
-        ax.set_xticklabels(labels, rotation=0, fontsize=DOCUMENT_FONT_SIZE)
+        labels = [prompt_shot_acronym(prompt, shot) for prompt, shot in grouped.index]
+        ax.set_xticklabels(labels, rotation=45, ha="right", fontsize=DOCUMENT_FONT_SIZE)
         ax.tick_params(axis="y", labelsize=DOCUMENT_FONT_SIZE)
         ax.set_xlabel("")
         ax.set_ylabel("")
@@ -309,7 +337,7 @@ def temperature_boxplot (data):
     for ax, (prompt, shot) in zip(axes, zip([BEST_PROMPT, OPTIMAL_PROMPT], [BEST_SHOT, OPTIMAL_SHOT])):
         table = data.loc[(data["prompt_label"] == prompt) & (data["shot"] == shot)]
         table.boxplot(column="BNPS", by="temperature", ax=ax, grid=True)
-        ax.set_title(f"{prompt}, {shot}", fontsize=9)
+        ax.set_title(prompt_shot_acronym(prompt, shot), fontsize=9)
         ax.set_xlabel("")
         labels = [textwrap.fill(label.get_text(), width=17) for label in ax.get_xticklabels()]
         ax.set_xticklabels(labels, rotation=0, fontsize=9)
@@ -394,7 +422,7 @@ def plot_design_patterns_performance():
             shot, rest = rest.split("_id", 1)
             prompt_id, temperature = rest.split("_temp", 1)
             prompt_label = prompt_id_to_label[int(prompt_id)]
-            label = f"{prompt_label} ({shot}), T={temperature}, {model}"
+            label = f"{prompt_display_label(prompt_label)} ({shot}), T={temperature}, {model}"
             readable_labels.append(textwrap.fill(label, width=30))
         df_metric.index = readable_labels
 
@@ -463,8 +491,14 @@ def end_ablation_study():
     test = test.loc[((test["prompt_label"] == BEST_PROMPT) & (test["shot"] == BEST_SHOT) & (test["temperature"] == BEST_TEMPERATURE)) |
                     ((test["prompt_label"] == OPTIMAL_PROMPT) & (test["shot"] == OPTIMAL_SHOT)) & (test["temperature"] == OPTIMAL_TEMPERATURE)]
 
-    validation["config"] = validation["prompt_label"] + ", "+ validation["shot"].astype(str) + ", t=" + validation["temperature"].astype(str)
-    test["config"] = test["prompt_label"] + ", " + test["shot"].astype(str) + ", t=" + test["temperature"].astype(str)
+    validation["config"] = validation.apply(
+        lambda row: f"{prompt_shot_label(row['prompt_label'], row['shot'])}, t={row['temperature']}",
+        axis=1,
+    )
+    test["config"] = test.apply(
+        lambda row: f"{prompt_shot_label(row['prompt_label'], row['shot'])}, t={row['temperature']}",
+        axis=1,
+    )
 
     validation = validation.pivot(index="config", columns="model", values="BNPS")
     test = test.pivot(index="config", columns="model", values="BNPS")
