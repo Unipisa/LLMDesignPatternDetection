@@ -8,7 +8,7 @@ import textwrap
 import seaborn as sns
 
 CSV_PATH = "/Users/alessandrofiumano/Downloads/survey_results.csv"
-PLOTS_PATH = "/Users/alessandrofiumano/Documents/OverleafThesis/figures/survery_plots"
+PLOTS_PATH = "/Users/alessandrofiumano/Documents/OverleafThesis/figures/survey_plots"
 
 
 DIMENSIONS = [
@@ -102,7 +102,7 @@ def plot_heatmap(df):
         annot=True,
         annot_kws={"fontsize": 12},
         fmt=".2f",
-        cmap="viridis",
+        cmap=sns.blend_palette(["#F5F08A", "#E6E6E6", "#49A900"], as_cmap=True),
         vmin=1,
         vmax=5,
         xticklabels=dim_labels,
@@ -114,25 +114,65 @@ def plot_heatmap(df):
     fig.savefig(os.path.join(PLOTS_PATH, "mean_rating_per_case_study.pdf"), bbox_inches="tight")
 
 
-def plot_boxplots_per_case(df):
+def plot_per_application(df):
     ratings = get_ratings(df)
-    data_per_case = pd.DataFrame({
-        case: ratings.filter(like=case).stack().reset_index(drop=True)
-        for case in CASES
-    })
+    data = []
+
+    for case in CASES:
+        values = ratings.filter(like=case).stack().dropna()
+        counts = []
+        for rating in range(1, 6):
+            counts.append((values == rating).sum() / len(values) * 100)
+        data.append(counts)
 
     fig, ax = plt.subplots(figsize=(11, 5))
-    data_per_case.boxplot(ax=ax, grid=True)
+    left = [0] * len(CASES)
+    colours = ["#F5F08A", "#D6D3A3", "#E6E6E6", "#A6CE8A", "#49A900"]
 
-    ax.set_xticks(range(1, len(CASES) + 1))
-    wrapped_cases = [textwrap.fill(case, width=18) for case in CASES]
-    ax.set_xticklabels(wrapped_cases, rotation=0, fontsize=13)
-    ax.set_ylim(0.5, 5.5)
-    ax.yaxis.set_major_locator(ticker.MultipleLocator(1))
-    ax.tick_params(axis="y", labelsize=13, pad=8)
+    for rating in range(5):
+        widths = [row[rating] for row in data]
+        ax.barh(CASES, widths, left=left, color=colours[rating], edgecolor="black")
+        left = [start + width for start, width in zip(left, widths)]
+
+    ax.set_xlim(0, 100)
+    ax.set_xticks(range(0, 101, 25))
+    ax.tick_params(axis="x", labelsize=13)
+    ax.tick_params(axis="y", labelsize=13)
+    ax.invert_yaxis()
+    ax.grid(axis="x", linestyle="--", alpha=0.7)
+    ax.set_axisbelow(True)
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "rating_distribution_per_case_study.pdf"), bbox_inches="tight")
 
+def plot_per_question(df):
+    ratings = get_ratings(df)
+    data = []
+
+    for dimension in DIMENSIONS:
+        values = ratings.filter(like=dimension).stack().dropna()
+        counts = []
+        for rating in range(1, 6):
+            counts.append((values == rating).sum() / len(values) * 100)
+        data.append(counts)
+
+    fig, ax = plt.subplots(figsize=(11, 5))
+    left = [0] * len(DIMENSIONS)
+    colours = ["#F5F08A", "#D6D3A3", "#E6E6E6", "#A6CE8A", "#49A900"]
+
+    for rating in range(5):
+        widths = [row[rating] for row in data]
+        ax.barh(DIMENSIONS, widths, left=left, color=colours[rating], edgecolor="black")
+        left = [start + width for start, width in zip(left, widths)]
+
+    ax.set_xlim(0, 100)
+    ax.set_xticks(range(0, 101, 25))
+    ax.tick_params(axis="x", labelsize=13)
+    ax.tick_params(axis="y", labelsize=13)
+    ax.invert_yaxis()
+    ax.grid(axis="x", linestyle="--", alpha=0.7)
+    ax.set_axisbelow(True)
+    plt.tight_layout()
+    fig.savefig(os.path.join(PLOTS_PATH, "rating_distribution_per_question.pdf"), bbox_inches="tight")
 
 def plot_overall_ratings(df):
     fig, axes = plt.subplots(1, 2, figsize=(11, 5))
@@ -141,8 +181,11 @@ def plot_overall_ratings(df):
                                [SUCCESS_COL, USEFUL_COL],
                                ["Overall Refactoring Success", "Usefulness of the System"]):
         counts = df[col].value_counts().sort_index()
+        palette = ["#F5F08A", "#D6D3A3", "#E6E6E6", "#A6CE8A", "#49A900"]
+        colours = [palette[int(rating) - 1] for rating in counts.index]
         ax.pie(counts.values, labels=counts.index, autopct="%1.0f%%",
                startangle=90,
+               colors=colours,
                wedgeprops={"edgecolor": "white", "linewidth": 2},
                textprops={"fontsize": 14}
                )
@@ -159,5 +202,6 @@ if __name__ == "__main__":
         sys.exit(1)
     plot_demographics(df)
     plot_heatmap(df)
-    plot_boxplots_per_case(df)
+    plot_per_application(df)
+    plot_per_question(df)
     plot_overall_ratings(df)
