@@ -509,10 +509,10 @@ def end_ablation_study():
     validation.plot.bar(figsize=END_BAR_FIGSIZE, grid=True, ax=ax1)
     output_path_validation = f"{PLOTS_PATH}/stable-optimal-bnps-validation.pdf"
     ax1.set_ylim(0, 1)
-    ax1.tick_params(axis="x", labelrotation=0, labelsize=PROMPT_SHOT_LABEL_FONTSIZE)
+    ax1.tick_params(axis="x", labelrotation=0, labelsize=10)
     ax1.set_xlabel("")
     labels1_wrapped = [textwrap.fill(label.get_text(), width=20, break_long_words=False) for label in ax1.get_xticklabels()]
-    ax1.set_xticklabels(labels1_wrapped, rotation=0, fontsize=PROMPT_SHOT_LABEL_FONTSIZE)
+    ax1.set_xticklabels(labels1_wrapped, rotation=0, fontsize=10)
     ax1.tick_params(axis="y", labelsize=DOCUMENT_FONT_SIZE)
     handles1, labels1 = ax1.get_legend_handles_labels()
     ax1.get_legend().remove()
