@@ -6,8 +6,9 @@ import os
 import textwrap
 import seaborn as sns
 
-CSV_PATH = "/Users/alessandrofiumano/Downloads/survey_results.csv"
-PLOTS_PATH = "/Users/alessandrofiumano/Documents/OverleafThesis/figures/survey_plots"
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+CSV_PATH = os.path.join(SCRIPT_DIR, "survey_results.csv")
+PLOTS_PATH = os.path.join(SCRIPT_DIR, "plots")
 
 
 DIMENSIONS = [
@@ -94,12 +95,12 @@ def plot_heatmap(df):
     dim_labels = [textwrap.fill(d, width=13) for d in DIMENSIONS]
     case_labels = [textwrap.fill(case, width=16) for case in CASES]
 
-    fig, ax = plt.subplots(figsize=(12, 6))
+    fig, ax = plt.subplots(figsize=(6.8, 3.5))
     sns.heatmap(
         data,
         ax=ax,
         annot=True,
-        annot_kws={"fontsize": 12},
+        annot_kws={"fontsize": 7},
         fmt=".2f",
         cmap=sns.blend_palette(["#F5F08A", "#E6E6E6", "#49A900"], as_cmap=True),
         vmin=1,
@@ -107,8 +108,9 @@ def plot_heatmap(df):
         xticklabels=dim_labels,
         yticklabels=case_labels,
      )
-    ax.tick_params(axis="x", labelsize=14, rotation=0)
-    ax.tick_params(axis="y", labelsize=14, rotation=0)
+    ax.tick_params(axis="x", labelsize=7, rotation=0)
+    ax.tick_params(axis="y", labelsize=7, rotation=0)
+    ax.collections[0].colorbar.ax.tick_params(labelsize=7)
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "mean_rating_per_case_study.pdf"), bbox_inches="tight")
 
@@ -130,7 +132,7 @@ def plot_per_application(df):
 
     for rating in range(5):
         widths = [row[rating] for row in data]
-        ax.barh(CASES, widths, left=left, color=colours[rating], edgecolor="black")
+        ax.barh(CASES, widths, left=left, color=colours[rating], edgecolor="black",  label=str(rating + 1))
         left = [start + width for start, width in zip(left, widths)]
 
     ax.set_xlim(0, 100)
@@ -140,6 +142,8 @@ def plot_per_application(df):
     ax.invert_yaxis()
     ax.grid(axis="x", linestyle="--", alpha=0.7)
     ax.set_axisbelow(True)
+    ax.legend(title="Likert rating", ncol=5, fontsize=7, title_fontsize=7,
+              loc="lower center", bbox_to_anchor=(0.5, 1.02), frameon=False)
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "rating_distribution_per_case_study.pdf"), bbox_inches="tight")
 
@@ -154,27 +158,29 @@ def plot_per_question(df):
             counts.append((values == rating).sum() / len(values) * 100)
         data.append(counts)
 
-    fig, ax = plt.subplots(figsize=(11, 5))
+    fig, ax = plt.subplots(figsize=(6.8, 3))
     left = [0] * len(DIMENSIONS)
     colours = ["#F5F08A", "#D6D3A3", "#E6E6E6", "#A6CE8A", "#49A900"]
 
     for rating in range(5):
         widths = [row[rating] for row in data]
-        ax.barh(DIMENSIONS, widths, left=left, color=colours[rating], edgecolor="black")
+        ax.barh(DIMENSIONS, widths, left=left, color=colours[rating], edgecolor="black", label=str(rating + 1))
         left = [start + width for start, width in zip(left, widths)]
 
     ax.set_xlim(0, 100)
     ax.set_xticks(range(0, 101, 25))
-    ax.tick_params(axis="x", labelsize=13)
-    ax.tick_params(axis="y", labelsize=13)
+    ax.tick_params(axis="x", labelsize=7)
+    ax.tick_params(axis="y", labelsize=7)
     ax.invert_yaxis()
     ax.grid(axis="x", linestyle="--", alpha=0.7)
     ax.set_axisbelow(True)
+    ax.legend(title="Rating (1 = Not at all; 5 = Completely)", ncol=5, fontsize=7, title_fontsize=7,
+              loc="lower center", bbox_to_anchor=(0.5, 1.02), frameon=False)
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "rating_distribution_per_question.pdf"), bbox_inches="tight")
 
 def plot_overall_ratings(df):
-    fig, axes = plt.subplots(1, 2, figsize=(11, 5))
+    fig, axes = plt.subplots(1, 2, figsize=(6.8, 3))
 
     for ax, col, title in zip(axes,
                                [SUCCESS_COL, USEFUL_COL],
@@ -186,15 +192,16 @@ def plot_overall_ratings(df):
                startangle=90,
                colors=colours,
                wedgeprops={"edgecolor": "white", "linewidth": 2},
-               textprops={"fontsize": 14}
+               textprops={"fontsize": 7}
                )
-        ax.set_title(title, fontsize=16)
+        ax.set_title(title, fontsize=7)
 
     plt.tight_layout()
     fig.savefig(os.path.join(PLOTS_PATH, "overall_judgements.pdf"), bbox_inches="tight")
 
 
 if __name__ == "__main__":
+    os.makedirs(PLOTS_PATH, exist_ok=True)
     df = load_data()
     if df.empty:
         print("No responses yet — populate the CSV and re-run.")

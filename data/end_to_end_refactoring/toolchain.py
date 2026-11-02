@@ -1,4 +1,5 @@
 import subprocess
+import sys
 from pathlib import Path
 import pandas as pd
 import os
@@ -15,9 +16,9 @@ DETECTOR_TO_REFACTORER = {
     "state": "state",
 }
 
-REFACTORER_PATH = "/Users/alessandrofiumano/Documents/LLMDesignPatternRefactoring/refactorer.py"
-REFACTORER_ROOT = Path(REFACTORER_PATH).resolve().parent
 REPO_ROOT = Path(__file__).resolve().parents[2]
+REFACTORER_PATH = str(REPO_ROOT.parent / "LLMDesignPatternRefactoring" / "refactorer.py")
+REFACTORER_ROOT = Path(REFACTORER_PATH).resolve().parent
 
 def unload_model(model_name: str):
     url = "http://127.0.0.1:1234/api/v1/models/unload"
@@ -33,8 +34,8 @@ def unload_model(model_name: str):
 
 def launch_detector():
     cmd = [
-        "python",
-        "detector.py",
+        sys.executable,
+        "data/detector/detector.py",
         "--id", "3",
         "--model", "openai/gpt-oss-20b", 
         "--one_shot",
@@ -72,7 +73,7 @@ def launch_refactorer(df):
             save_folder = os.path.join(REPO_ROOT, "data/end_to_end_refactoring/results/refactorer")
 
             cmd = [
-                "python",
+                sys.executable,
                 REFACTORER_PATH,
                 str(code_path),
                 str(test_refactored),

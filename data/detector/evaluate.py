@@ -4,6 +4,8 @@ import pandas as pd
 import json
 import os
 
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 def ndcg(prediction: list, ground_truth: list, k: int = None) -> float:
     if k:
         prediction = prediction[:k]
@@ -76,7 +78,7 @@ def extract_configuration (filename):
     model = fields[0]
     shot = fields[1]
 
-    with open("config/prompts.json", "r") as f:
+    with open(os.path.join(REPO_ROOT, "data/config/prompts.json"), "r") as f:
         prompts = json.load(f)
     id_prompt = int(fields[2].replace("id", ""))
     prompt_label = prompts[id_prompt]["label"]

@@ -1,133 +1,138 @@
 # LLM Design Pattern Detection
 
-Research prototype for recommending applicable GoF design patterns for Python code snippets using Large Language Models.
+Research prototype for recommending applicable GoF design patterns for Python code snippets using Large Language Models. The detector returns a ranked list of candidate patterns, evaluated against a manually defined ranked ground truth. A controlled toolchain connects the detector to a separate refactoring tool.
 
-Given a baseline Python snippet, the detector queries an OpenAI-compatible LLM endpoint and returns a ranked list of candidate design patterns. Predictions are evaluated against a human-defined ranked ground truth.
+## Setup
 
-## Repository Structure
-
-- `data/dataset/baseline/`: baseline Python snippets.
-- `data/dataset/refactored/`: corresponding refactored implementations.
-- `data/dataset/tests_baseline/`: tests for baseline snippets.
-- `data/dataset/tests_refactored/`: tests for refactored snippets.
-- `data/config/`: dataset splits and prompt definitions.
-- `detector.py`: LLM-based design pattern detector.
-- `data/evaluate.py`: evaluation script.
-- `data/outputs/`: experimental outputs.
-- `data/end_to_end_refactoring/`: controlled detector-to-refactorer case studies.
-
-## Dataset
-
-The dataset contains Python examples annotated with ranked lists of applicable design patterns.
-
-The full dataset is split into:
-
-- `data/config/validation_set.json`
-- `data/config/test_set.json`
-
-Each entry links a baseline implementation, one or more refactored versions, the associated tests, and the expected ranked pattern list.
-
-## Detector
-
-`detector.py` queries an OpenAI-compatible LLM endpoint and saves the ranked design-pattern predictions for each baseline snippet.
-
-It is used to generate the raw prediction files that are later evaluated.
-
-Example:
+Use **Python 3.12 or newer**, as required by some dataset examples. Run the commands below from the repository root:
 
 ```bash
-python3 detector.py \
+python3 -m pip install -r requirements.txt
+```
+
+This installs the detector, analysis and test dependencies. Live model inference also requires LM Studio and a compatible local model, or another OpenAI-compatible endpoint. Analysing the stored results does not require a running LLM.
+
+## Dataset and repository structure
+
+The dataset contains **31 Python examples**, split into **21 validation examples** and **10 test examples**. Each entry provides a baseline implementation, corresponding refactored versions, unit tests and a ranked list of applicable design patterns.
+
+| Location | Contents |
+|---|---|
+| `data/config/` | Full dataset metadata, validation/test splits and prompt definitions |
+| `data/dataset/baseline/` | Baseline implementations |
+| `data/dataset/refactored/` | Reference refactored implementations |
+| `data/dataset/tests_baseline/`, `data/dataset/tests_refactored/` | Dataset unit tests |
+| `data/detector/detector.py` | Design pattern recommender |
+| `data/detector/evaluate.py` | Ranking metrics and validation-run evaluation |
+| `data/detector/ablation/` | Analysis script, figures and exported tables |
+| `data/random_baseline_generator.py` | Frequency-weighted random recommender |
+| `data/end_to_end_refactoring/` | Controlled case studies, toolchain and survey analysis |
+
+## Results by research question
+
+| Research question | Results |
+|---|---|
+| **RQ1 — Design pattern detection** | Predictions, evaluated validation runs and aggregate scores in `data/detector/results/validation_set/`; test predictions and aggregate scores in `data/detector/results/test_set/`; random-reference results in `data/detector/results/random_baseline/`. Figures and tables are in `data/detector/ablation/`. |
+| **RQ2 — Design pattern refactoring** | Maintained in the separate [LLMDesignPatternRefactoring repository](https://github.com/Unipisa/LLMDesignPatternRefactoring). |
+| **RQ3 — Overall toolchain** | Detector outputs and generated refactorings in `data/end_to_end_refactoring/results/`; case-study inputs in `examples/`; responses in `survey_results.csv`; stored survey figures in `survey/`, all under `data/end_to_end_refactoring/`. |
+
+## Run the detector
+
+The default endpoint is LM Studio at `http://127.0.0.1:1234/v1`. The default local execution starts the server and attempts to unload the selected model and stop the server afterwards. The `lms` command must be available on your PATH.
+
+```bash
+python3 data/detector/detector.py \
   --id 3 \
   --model openai/gpt-oss-20b \
   --one_shot \
   --temperature 0.0 \
   --dataset data/config/test_set.json \
-  --output_dir data/outputs/test_set
+  --output_dir data/detector/results/test_set
 ```
 
-By default, the detector expects LM Studio at:
+Use an identifier available in your LM Studio installation for `--model`. `--id` selects a prompt from `data/config/prompts.json`; omitting `--one_shot` selects zero-shot prompting. The command processes every example in the supplied dataset JSON and writes a prediction CSV to `--output_dir`.
 
-```text
-http://127.0.0.1:1234/v1
-```
+Use `--skip_lmstudio_management` when the local server and model are already managed separately. For another OpenAI-compatible endpoint, pass `--base_url` and `--api_key`.
 
-A different OpenAI-compatible endpoint can be used through `--base_url` and `--api_key`.
+## Evaluate predictions
 
-## Evaluation
+The evaluator computes `hit_at_1`, `BNPS`, `false_positive_rate`, `acc_top1`, `positional_similarity`, `ndcg_standard` and `ndcg_inverted`.
 
-`data/evaluate.py` reads prediction CSV files, computes ranking metrics against the ground truth, and writes evaluated outputs and aggregate summaries.
-
-It is used to measure how well each model/prompt/temperature configuration performs.
-
-For validation-style outputs organized under `results/original/run_*`:
+For validation runs arranged as `results/original/run_*/<model>_<shot>_id<N>_temp<T>.csv`, run:
 
 ```bash
-cd data
-
-python3 evaluate.py --experiment_dir outputs/validation_set
+python3 data/detector/evaluate.py \
+  --experiment_dir data/detector/results/validation_set
 ```
 
-The evaluator computes:
+Within the experiment directory, it writes evaluated CSVs to `results/evaluated/`, per-run summaries to `avg_results/runs_avg_results/`, and the overall summary to `avg_results/total_avg_results.csv`.
 
-- `hit_at_1`
-- `BNPS`
-- `false_positive_rate`
-- `acc_top1`
-- `positional_similarity`
-- `ndcg_standard`
-- `ndcg_inverted`
+This CLI expects the run-directory structure above. To evaluate an individual CSV, including a test prediction file or the random reference, import `evaluate` as shown below. The function adds metric columns to the supplied DataFrame; save it explicitly to retain the results.
 
-## End-to-End Pipeline
+## Frequency-weighted random reference
 
-`data/end_to_end_refactoring/e2e_pipeline.py` runs the detector on controlled case-study examples and forwards valid predictions to a refactoring tool.
-
-It is used to test whether detected design patterns can be consumed by a downstream refactoring pipeline.
-
-Example:
+Generate one prediction per test example:
 
 ```bash
-python3 data/end_to_end_refactoring/e2e_pipeline.py
+python3 data/random_baseline_generator.py --seed 42
 ```
 
-Before running it, update the `REFACTORER_PATH` constant inside:
+Pattern frequencies are estimated from validation ground truths only. Each test prediction samples distinct patterns sequentially without replacement, weighted by these frequencies. Its length equals the corresponding test ground truth length, so the reference has access to the correct list length. The seed makes the generation reproducible; this is one sampled list per example, not an average over repeated random generations.
 
-```text
-data/end_to_end_refactoring/e2e_pipeline.py
+Evaluate and save the predictions by running this Python code from the repository root:
+
+```python
+import pandas as pd
+from data.detector.evaluate import evaluate
+
+folder = "data/detector/results/random_baseline"
+results = pd.read_csv(f"{folder}/random_weighted_predictions.csv")
+evaluate(results)
+results.to_csv(f"{folder}/random_weighted_evaluated.csv", index=False)
+print(results["BNPS"].mean())
 ```
 
-The path must point to the local `refactorer.py` file from the separate `LLMDesignPatternRefactoring` project.
+The test-set comparison plot reads `random_weighted_evaluated.csv` and draws its mean BNPS as a horizontal reference. Generate and evaluate this file before regenerating the ablation figures if it is not already present. These steps make no LLM calls.
 
-That project is not vendored in this repository: the end-to-end pipeline assumes an external local checkout of `LLMDesignPatternRefactoring`, because the refactoring component belongs to a separate codebase.
+## Regenerate figures and tables
 
-## Refactorer Dependency
+The scripts analyse stored data and overwrite generated files with matching names:
 
-The end-to-end pipeline depends on the external refactoring tool provided by `LLMDesignPatternRefactoring`.
+```bash
+python3 data/detector/ablation/ablation_analysis.py
+python3 data/end_to_end_refactoring/survey_analysis.py
+```
 
-The expected setup is:
+- **Ablation:** reads the detector's validation/test results and evaluated random reference. Saves figures to `data/detector/ablation/plots/` and tables to `data/detector/ablation/tables/`.
+- **Survey:** reads `data/end_to_end_refactoring/survey_results.csv`. Saves regenerated figures to `data/end_to_end_refactoring/plots/`; the existing `survey/` folder contains stored figures.
+
+Both scripts resolve their data paths from their own location and create output directories if necessary. Copy the required PDFs into the manuscript project separately.
+
+## Run the controlled toolchain
+
+`data/end_to_end_refactoring/toolchain.py` runs the detector on the case-study dataset and forwards predictions that belong to each example's ground truth to the refactorer. This filtering makes the experiment controlled rather than fully autonomous.
+
+The refactorer is an external dependency. Install its dependencies according to its own README and keep the checkouts side by side:
 
 ```text
 LLMDesignPatternDetection/
 LLMDesignPatternRefactoring/
 ```
 
-Then configure `REFACTORER_PATH` accordingly, for example:
+By default, `REFACTORER_PATH` in `toolchain.py` points to the sibling project's `refactorer.py`. Update that constant if your checkout is elsewhere. The script currently uses `openai/gpt-oss-20b`, prompt ID 3, one-shot prompting and temperature 0.0; ensure the model is available locally or update the model identifiers in the script.
 
-```python
-REFACTORER_PATH = "/absolute/path/to/LLMDesignPatternRefactoring/refactorer.py"
+```bash
+python3 data/end_to_end_refactoring/toolchain.py
 ```
 
-The detector output is filtered against the case-study ground truth before invoking the refactorer. Therefore, the current end-to-end setup is controlled rather than fully autonomous.
+The toolchain starts and stops the LM Studio server and invokes the refactorer with the same Python interpreter. Results are written under `data/end_to_end_refactoring/results/detector/` and `data/end_to_end_refactoring/results/refactorer/`.
 
-## Analysis Utilities
+## Tests
 
-`data/ablation/ablation_analysis.py` and the `data/ablation/` folder are only used for analysing the experimental results already produced by the detector and evaluator.
+Run the dataset and case-study tests from the repository root:
 
-`data/end_to_end_refactoring/survey_analysis.py` is only used for analysing the survey responses collected for the controlled end-to-end case studies.
+```bash
+python3 -m pytest
+```
 
-These analysis utilities are not required to run the detector, compute evaluation metrics, execute the end-to-end pipeline, or invoke the refactorer.
-
-## Notes
-
-This repository is a research artifact, not a packaged Python library.
-
-Some runtime assumptions are local to the experimental setup, especially LM Studio and the external `LLMDesignPatternRefactoring` repository used by the end-to-end pipeline.
+These tests do not require live LLM calls. This repository is a research artifact rather than a packaged Python library.

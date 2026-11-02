@@ -6,7 +6,7 @@ import argparse
 import subprocess
 import requests
 
-REPO_ROOT = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 EXAMPLE = """
@@ -79,7 +79,7 @@ RESPONSE_FORMAT={
 }
 
 def load_dataset(dataset_path: str):
-    with open(dataset_path, "r") as f:
+    with open(os.path.join(REPO_ROOT, dataset_path), "r") as f:
         dataset = json.load(f)
     return dataset
 
@@ -93,7 +93,7 @@ def get_example_info(example: dict):
     return id_example, path_baseline, name, ground_truth
 
 def read_code(path_baseline: str) -> str:
-    with open(path_baseline, "r") as g:
+    with open(os.path.join(REPO_ROOT, path_baseline), "r") as g:
         return g.read()
 
 def build_message(prompt_used: str, code: str, one_shot: bool):

@@ -1,0 +1,11 @@
+id,prompt_used,model,name_baseline,ground_truth,prediction
+1,random weighted by validation frequency; ground-truth length,random-weighted,formfilling_baseline,"[""template_method"", ""strategy"", ""builder"", ""proxy""]","[""proxy"", ""abstract_factory"", ""command"", ""decorator""]"
+4,random weighted by validation frequency; ground-truth length,random-weighted,elevator_baseline,"[""state"", ""strategy"", ""proxy""]","[""strategy"", ""proxy"", ""template_method""]"
+7,random weighted by validation frequency; ground-truth length,random-weighted,restaurant_baseline,"[""command"", ""strategy"", ""proxy""]","[""adapter"", ""proxy"", ""abstract_factory""]"
+11,random weighted by validation frequency; ground-truth length,random-weighted,graphtraversal_baseline,"[""strategy"", ""template_method"", ""proxy""]","[""command"", ""proxy"", ""abstract_factory""]"
+12,random weighted by validation frequency; ground-truth length,random-weighted,car_baseline,"[""factory_method"", ""abstract_factory"", ""strategy"", ""proxy""]","[""command"", ""state"", ""proxy"", ""builder""]"
+16,random weighted by validation frequency; ground-truth length,random-weighted,battle_baseline,"[""abstract_factory"", ""factory_method"", ""strategy"", ""proxy""]","[""proxy"", ""strategy"", ""abstract_factory"", ""state""]"
+20,random weighted by validation frequency; ground-truth length,random-weighted,datastructure_baseline,"[""builder"", ""strategy"", ""proxy"", ""adapter""]","[""state"", ""factory_method"", ""builder"", ""template_method""]"
+21,random weighted by validation frequency; ground-truth length,random-weighted,deliveryvehicles_baseline,"[""proxy"", ""command"", ""strategy""]","[""factory_method"", ""adapter"", ""builder""]"
+26,random weighted by validation frequency; ground-truth length,random-weighted,icecream_baseline,"[""decorator"", ""builder"", ""strategy"", ""factory_method"", ""proxy""]","[""strategy"", ""proxy"", ""state"", ""factory_method"", ""command""]"
+30,random weighted by validation frequency; ground-truth length,random-weighted,gridmovement_baseline,"[""adapter"", ""command"", ""strategy"", ""proxy""]","[""template_method"", ""factory_method"", ""proxy"", ""strategy""]"

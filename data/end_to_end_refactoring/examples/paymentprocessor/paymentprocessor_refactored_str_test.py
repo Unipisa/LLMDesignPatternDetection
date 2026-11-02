@@ -6,7 +6,7 @@ import importlib.util
 
 # Load the module dynamically since it starts with a number
 module_name = 'paymentprocessor_refactored_str'
-module_path = "/Users/alessandrofiumano/Documents/LLMDesignPatternDetection/data/end_to_end_refactoring/results/refactorer/paymentprocessor_strategy/paymentprocessor_e2e_str.py"
+module_path = os.path.join(os.path.dirname(__file__), "../../..", 'end_to_end_refactoring/results/refactorer/paymentprocessor_strategy/paymentprocessor_e2e_str.py')
 
 spec = importlib.util.spec_from_file_location(module_name, module_path)
 module = importlib.util.module_from_spec(spec)

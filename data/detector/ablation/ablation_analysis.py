@@ -6,16 +6,16 @@ import pandas as pd
 import json
 import seaborn as sns
 
-REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+REPO_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 sys.path.insert(0, REPO_ROOT)
 
 
-AVG_RUNS_RESULTS_PATH = "data/outputs/validation_set/avg_results/runs_avg_results"
-TABLES_DIR_PATH = "data/ablation/tables"
-AVG_TEST_RESULTS_PATH = "data/outputs/test_set/test_set_avg_results.csv"
-AVG_VALIDATION_RESULTS_PATH = "data/outputs/validation_set/avg_results/total_avg_results.csv"
+AVG_RUNS_RESULTS_PATH = os.path.join(REPO_ROOT, "data/detector/results/validation_set/avg_results/runs_avg_results")
+TABLES_DIR_PATH = os.path.join(REPO_ROOT, "data/detector/ablation/tables")
+AVG_TEST_RESULTS_PATH = os.path.join(REPO_ROOT, "data/detector/results/test_set/test_set_avg_results.csv")
+AVG_VALIDATION_RESULTS_PATH = os.path.join(REPO_ROOT, "data/detector/results/validation_set/avg_results/total_avg_results.csv")
 
-PLOTS_PATH = "data/ablation/plots"
+PLOTS_PATH = os.path.join(REPO_ROOT, "data/detector/ablation/plots")
 # stable configuration
 BEST_PROMPT = "role + base + output description + rules"
 BEST_SHOT = "one-shot"
@@ -48,18 +48,18 @@ PROMPT_DISPLAY_LABELS = {
 
 METRICS = ["hit_at_1", "BNPS", "false_positive_rate"]
 MODELS = ["gemma-4-e4b", "gpt-oss-20b", "qwen3.5-9b"]
-DOCUMENT_FONT_SIZE = 10
-PROMPT_SHOT_LABEL_FONTSIZE = 8
+DOCUMENT_FONT_SIZE = 7
+PROMPT_SHOT_LABEL_FONTSIZE = 7
 CONFIG_LABEL_FONTSIZE = DOCUMENT_FONT_SIZE
 BAR_CONFIG_LABEL_FONTSIZE = DOCUMENT_FONT_SIZE
-FIGURE_WIDTH = 7.4
-PROMPT_FIGSIZE = (FIGURE_WIDTH, 5.0)
+FIGURE_WIDTH = 6.8
+PROMPT_FIGSIZE = (FIGURE_WIDTH, 3.2)
 STANDARD_FIGSIZE = (FIGURE_WIDTH, 4.2)
 LINEPLOT_FIGSIZE = (FIGURE_WIDTH, 3.0)
 TEMPERATURE_BOXPLOT_FIGSIZE = (FIGURE_WIDTH, 3.0)
 MODEL_BAR_FIGSIZE = (FIGURE_WIDTH, 4.8)
 HEATMAP_FIGSIZE = (FIGURE_WIDTH, 5.4)
-END_BAR_FIGSIZE = (FIGURE_WIDTH, 5.2)
+END_BAR_FIGSIZE = (FIGURE_WIDTH, 3.6)
 
 plt.rcParams.update({
     "font.size": DOCUMENT_FONT_SIZE,
@@ -160,7 +160,18 @@ def plot_prompt_plots(data):
     """
     for metric in ["BNPS", "false_positive_rate"]:
         fig, ax = plt.subplots(figsize=PROMPT_FIGSIZE)
-        data.boxplot(column=metric, by=["prompt_label", "shot"], ax=ax, grid=True)
+        data.boxplot(
+            column=metric,
+            by=["prompt_label", "shot"],
+            ax=ax,
+            grid=True,
+            color={
+                "boxes": "#1f77b4",
+                "whiskers": "#1f77b4",
+                "medians": "#2ca02c",
+                "caps": "black",
+            },
+        )
         fig.suptitle("")
         ax.set_title("")
         ax.set_xlabel("")
@@ -381,12 +392,12 @@ def plot_design_patterns_performance():
     Creates heatmap on design patterns considering the selected configurations (ablation end). This function averages
     metric values across runs and does not report standard deviation.
     """
-    with open("data/config/prompts.json", "r") as f:
+    with open(os.path.join(REPO_ROOT, "data/config/prompts.json"), "r") as f:
         prompts = json.load(f)
     prompt_label_to_id = {p["label"]: p["id"] for p in prompts}
     prompt_id_to_label = {p["id"]: p["label"] for p in prompts}
 
-    with open("data/config/validation_set.json", "r") as f:
+    with open(os.path.join(REPO_ROOT, "data/config/validation_set.json"), "r") as f:
         validation_set = json.load(f)
         id_to_category = {item["id"]: item["category"] for item in validation_set}
 
@@ -396,7 +407,7 @@ def plot_design_patterns_performance():
         metric_series = []
         for best_conf in best_confs:
             # average results extraction for each conf.
-            base_dir = "data/outputs/validation_set/results/evaluated"
+            base_dir = os.path.join(REPO_ROOT, "data/detector/results/validation_set/results/evaluated")
             run_dirs = [d for d in os.listdir(base_dir) if d.startswith("run_")
                         and os.path.isfile(os.path.join(base_dir, d,  best_conf+".csv"))]
             if not run_dirs:
@@ -509,10 +520,10 @@ def end_ablation_study():
     validation.plot.bar(figsize=END_BAR_FIGSIZE, grid=True, ax=ax1)
     output_path_validation = f"{PLOTS_PATH}/stable-optimal-bnps-validation.pdf"
     ax1.set_ylim(0, 1)
-    ax1.tick_params(axis="x", labelrotation=0, labelsize=10)
+    ax1.tick_params(axis="x", labelrotation=0, labelsize=7)
     ax1.set_xlabel("")
     labels1_wrapped = [textwrap.fill(label.get_text(), width=20, break_long_words=False) for label in ax1.get_xticklabels()]
-    ax1.set_xticklabels(labels1_wrapped, rotation=0, fontsize=10)
+    ax1.set_xticklabels(labels1_wrapped, rotation=0, fontsize=7)
     ax1.tick_params(axis="y", labelsize=DOCUMENT_FONT_SIZE)
     handles1, labels1 = ax1.get_legend_handles_labels()
     ax1.get_legend().remove()
@@ -525,15 +536,46 @@ def end_ablation_study():
     test.plot.bar(figsize=END_BAR_FIGSIZE, grid=True, ax=ax2)
     output_path_test = f"{PLOTS_PATH}/stable-optimal-bnps-test.pdf"
     ax2.set_ylim(0, 1)
-    ax2.tick_params(axis="x", labelrotation=0, labelsize=10)
+    ax2.tick_params(axis="x", labelrotation=0, labelsize=7)
     ax2.set_xlabel("")
     labels2_wrapped = [textwrap.fill(label.get_text(), width=20, break_long_words=False) for label in ax2.get_xticklabels()]
-    ax2.set_xticklabels(labels2_wrapped, rotation=0, fontsize=10)
+    ax2.set_xticklabels(labels2_wrapped, rotation=0, fontsize=7)
     ax2.tick_params(axis="y", labelsize=DOCUMENT_FONT_SIZE)
-    handles2, labels2 = ax2.get_legend_handles_labels()
+
+    ## RANDOM GENERATOR TEST SET RESULTS
+    random_results = pd.read_csv(
+        os.path.join(
+            REPO_ROOT,
+            "data/detector/results/random_baseline/random_weighted_evaluated.csv"
+        )
+    )
+    random_bnps = random_results["BNPS"].mean()
+
+    random_line = ax2.axhline(
+        random_bnps,
+        color="black",
+        linestyle="--",
+        linewidth=1,
+        label=f"weighted random recommender ({random_bnps:.3f})"
+    )
+    #########
     ax2.get_legend().remove()
-    fig2.legend(handles2, labels2, loc="upper center", bbox_to_anchor=(0.5, 0.98),
-                ncol=3, fontsize=DOCUMENT_FONT_SIZE)
+    fig2.legend(
+        handles=ax2.containers,
+        labels=list(test.columns),
+        loc="upper center",
+        bbox_to_anchor=(0.5, 0.98),
+        ncol=3,
+        fontsize=DOCUMENT_FONT_SIZE,
+        frameon=False
+    )
+    fig2.legend(
+        handles=[random_line],
+        loc="upper center",
+        bbox_to_anchor=(0.5, 0.91),
+        fontsize=DOCUMENT_FONT_SIZE,
+        frameon=False
+    )
     for container in ax2.containers:
         ax2.bar_label(container, fmt="%.3f", fontsize=PROMPT_SHOT_LABEL_FONTSIZE)
     fig2.tight_layout(rect=(0, 0, 1, 0.86))
@@ -545,6 +587,8 @@ def end_ablation_study():
 
 
 if __name__ == "__main__":
+    os.makedirs(PLOTS_PATH, exist_ok=True)
+    os.makedirs(TABLES_DIR_PATH, exist_ok=True)
     if not os.path.exists(AVG_RUNS_RESULTS_PATH):
         print(f"{AVG_RUNS_RESULTS_PATH} doesn't exist", file=sys.stderr)
         sys.exit(1)

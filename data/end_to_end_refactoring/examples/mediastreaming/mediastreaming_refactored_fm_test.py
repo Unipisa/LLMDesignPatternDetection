@@ -6,7 +6,7 @@ import importlib.util
 
 # Load the module dynamically since it starts with a number
 module_name = 'mediastreaming_refactored_fm'
-module_path = "/Users/alessandrofiumano/Documents/LLMDesignPatternDetection/data/end_to_end_refactoring/results/refactorer/mediastreaming_factory_method/mediastreaming_e2e_fm.py"
+module_path = os.path.join(os.path.dirname(__file__), "../../..", 'end_to_end_refactoring/results/refactorer/mediastreaming_factory_method/mediastreaming_e2e_fm.py')
 
 spec = importlib.util.spec_from_file_location(module_name, module_path)
 module = importlib.util.module_from_spec(spec)
