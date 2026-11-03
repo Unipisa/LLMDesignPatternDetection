@@ -28,13 +28,6 @@ The dataset contains **31 Python examples**, split into **21 validation examples
 | `data/random_baseline_generator.py` | Frequency-weighted random recommender |
 | `data/end_to_end_refactoring/` | Controlled case studies, toolchain and survey analysis |
 
-## Results by research question
-
-| Research question | Results |
-|---|---|
-| **RQ1 — Design pattern detection** | Predictions, evaluated validation runs and aggregate scores in `data/detector/results/validation_set/`; test predictions and aggregate scores in `data/detector/results/test_set/`; random-reference results in `data/detector/results/random_baseline/`. Figures and tables are in `data/detector/ablation/`. |
-| **RQ2 — Design pattern refactoring** | Maintained in the separate [LLMDesignPatternRefactoring repository](https://github.com/Unipisa/LLMDesignPatternRefactoring). |
-| **RQ3 — Overall toolchain** | Detector outputs and generated refactorings in `data/end_to_end_refactoring/results/`; case-study inputs in `examples/`; responses in `survey_results.csv`; stored survey figures in `survey/`, all under `data/end_to_end_refactoring/`. |
 
 ## Run the detector
 
